@@ -53,13 +53,13 @@ class AppChooserActivity : AppCompatActivity() {
                                 }
                             }
                         ),
-                        LedgerSDK.bucket
+                        "fnfsandboxec2odoo"
                     )
-                    LedgerSDK.openLedger(this, "123456", dcName = "DC DBA")
+                    LedgerSDK.openLedger(this, "123456", dcName = "DC DBA", true)
                 },
                 onClickAIMSButton = {
                     LedgerSDK.init(applicationContext, LedgerParentApp.AIMS(), "fnfsandboxec2odoo")
-                    LedgerSDK.openLedger(this, "0010000654", dcName = "DC AIMS")
+                    LedgerSDK.openLedger(this, "0010000654", dcName = "DC AIMS", true)
                 })
         }
     }

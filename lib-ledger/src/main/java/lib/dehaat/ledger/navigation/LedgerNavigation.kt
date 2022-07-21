@@ -21,11 +21,13 @@ import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScr
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
+import lib.dehaat.ledger.presentation.ledger.ui.component.TotalOutstandingDetails
 
 @Composable
 fun LedgerNavigation(
     dcName: String,
     partnerId: String,
+    isDCFinanced: Boolean,
     ledgerColors: LedgerColors,
     ledgerCallbacks: LedgerCallbacks?,
     resultLauncher: ActivityResultLauncher<Intent?>,
@@ -53,6 +55,7 @@ fun LedgerNavigation(
             viewModel.dcName = dcName
             LedgerDetailScreen2(
                 viewModel = viewModel,
+                isDCFinanced = isDCFinanced,
                 ledgerColors = ledgerColors,
                 onBackPress = finishActivity,
                 detailPageNavigationCallback = provideDetailPageNavCallBacks(navController = navController),
@@ -173,6 +176,23 @@ fun LedgerNavigation(
 
         }
 
+        composable(
+            route = LedgerRoutes.LedgerTotalOutstandingDetailsScreen.screen.withArgsPath(
+                LedgerConstants.TITLE
+            ),
+            arguments = listOf(
+                navArgument(LedgerConstants.TITLE) {
+                    type = NavType.StringType
+                }
+            )
+        ) {
+            val title = it.arguments?.get(LedgerConstants.TITLE) as String
+            TotalOutstandingDetails(
+                title = title
+            ) {
+                navController.popBackStack()
+            }
+        }
     }
 }
 
@@ -218,6 +238,15 @@ fun provideDetailPageNavCallBacks(navController: NavHostController) =
                 erpId = erpId,
                 locusId = locusId,
                 mode = mode
+            )
+        }
+
+        override fun navigateToTotalOutstandingDetailPage(
+            title: String
+        ) {
+            navigateToTotalOutstandingDetailScreen(
+                navController = navController,
+                title = title
             )
         }
 
@@ -271,6 +300,13 @@ fun navigateToPaymentDetailScreen(
         )
     )
 }
+
+fun navigateToTotalOutstandingDetailScreen(
+    navController: NavHostController,
+    title: String
+) = navController.navigate(
+    LedgerRoutes.LedgerTotalOutstandingDetailsScreen.screen.withArgs(title)
+)
 
 fun String.withArgs(vararg args: Any?): String {
     return buildString {

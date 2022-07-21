@@ -15,13 +15,14 @@ object LedgerSDK {
         Fresco.initialize(context)
     }
 
-    fun isCurrentAppAvailable() = ::currentApp.isInitialized
+    fun isCurrentAppAvailable() = ::currentApp.isInitialized && ::bucket.isInitialized
 
-    fun openLedger(context: Context, partnerId: String, dcName: String) {
+    fun openLedger(context: Context, partnerId: String, dcName: String, isDcFinanced: Boolean) {
         context.startActivity(
             Intent(context, LedgerDetailActivity::class.java).apply {
                 this.putExtra(LedgerConstants.KEY_PARTNER_ID, partnerId)
                 this.putExtra(LedgerConstants.KEY_DC_NAME, dcName)
+                this.putExtra(LedgerConstants.KEY_DC_FINANCED, isDcFinanced)
             }
         )
     }

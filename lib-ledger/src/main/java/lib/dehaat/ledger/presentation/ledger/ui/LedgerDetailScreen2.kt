@@ -2,10 +2,7 @@
 
 package lib.dehaat.ledger.presentation.ledger.ui
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -39,8 +36,10 @@ import lib.dehaat.ledger.presentation.ledger.bottomsheets.DaysToFilterContent
 import lib.dehaat.ledger.presentation.ledger.bottomsheets.LenderOutStandingDetails
 import lib.dehaat.ledger.presentation.ledger.bottomsheets.OverAllOutStandingDetails
 import lib.dehaat.ledger.presentation.ledger.credits.ui.CreditsScreen
+import lib.dehaat.ledger.presentation.ledger.outstanding.TotalOutstandingCalculation
 import lib.dehaat.ledger.presentation.ledger.state.BottomSheetType
 import lib.dehaat.ledger.presentation.ledger.transactions.ui.TransactionsListScreen
+import lib.dehaat.ledger.presentation.ledger.ui.component.DCFinancedHeader
 import lib.dehaat.ledger.presentation.ledger.ui.component.Header
 import lib.dehaat.ledger.presentation.ledger.ui.component.Tabs
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionSummary
@@ -51,6 +50,7 @@ import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
 @Composable
 fun LedgerDetailScreen2(
     viewModel: LedgerDetailViewModel,
+    isDCFinanced: Boolean,
     ledgerColors: LedgerColors,
     onBackPress: () -> Unit,
     detailPageNavigationCallback: DetailPageNavigationCallback,
@@ -88,7 +88,11 @@ fun LedgerDetailScreen2(
             AnimatedVisibility(
                 visible = bottomBarVisibility.value
             ) {
-                TransactionSummary(viewModel, ledgerColors)
+                if (isDCFinanced) {
+                    TotalOutstandingCalculation()
+                } else {
+                    TransactionSummary(viewModel, ledgerColors)
+                }
             }
         }
     ) {
@@ -128,19 +132,40 @@ fun LedgerDetailScreen2(
             VerticalNestedScrollView(
                 state = nestedScrollViewState,
                 header = {
-                    Header(
-                        creditSummaryData = uiState.creditSummaryViewData,
-                        ledgerColors = ledgerColors,
-                        isLmsActivated = isLmsActivated,
-                        onPayNowClick = onPayNowClick,
-                        onClickTotalOutstandingInfo = {
-                            scope.launch {
-                                viewModel.openAllOutstandingModal()
-                                sheetState.animateTo(ModalBottomSheetValue.Expanded)
+                    if (isDCFinanced) {
+                        DCFinancedHeader(
+                            showLoanList = true,
+                            outstandingNotApplicable = true,
+                            onOutstandingLimitClick = {
+                                detailPageNavigationCallback.navigateToTotalOutstandingDetailPage(
+                                    title = "कुल बकाया विवरण"
+                                )
+                            },
+                            onCreditSummaryClick = {
+                                detailPageNavigationCallback.navigateToTotalOutstandingDetailPage(
+                                    title = "उपलब्ध क्रेडिट लिमिट"
+                                )
+                            },
+                            onLoanListClick = {},
+                            otherPaymentMethodClick = {
+
                             }
-                        },
-                        onPaymentOptionsClick = onPaymentOptionsClick
-                    )
+                        )
+                    } else {
+                        Header(
+                            creditSummaryData = uiState.creditSummaryViewData,
+                            ledgerColors = ledgerColors,
+                            isLmsActivated = isLmsActivated,
+                            onPayNowClick = onPayNowClick,
+                            onClickTotalOutstandingInfo = {
+                                scope.launch {
+                                    viewModel.openAllOutstandingModal()
+                                    sheetState.animateTo(ModalBottomSheetValue.Expanded)
+                                }
+                            },
+                            onPaymentOptionsClick = onPaymentOptionsClick
+                        )
+                    }
                 },
                 content = {
                     val pagerState = rememberPagerState(pageCount = 2)
@@ -150,6 +175,7 @@ fun LedgerDetailScreen2(
                         }
                     }
                     Column(modifier = Modifier.background(ledgerColors.TransactionAndCreditScreenBGColor)) {
+
                         Tabs(pagerState, ledgerColors) { currentPage ->
                             scope.launch {
                                 pagerState.animateScrollToPage(page = currentPage)

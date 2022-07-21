@@ -44,6 +44,7 @@ class LedgerDetailActivity : ComponentActivity() {
 
         val partnerId = intent.getStringExtra(LedgerConstants.KEY_PARTNER_ID)
         val dcName = intent.getStringExtra(LedgerConstants.KEY_DC_NAME)
+        val isDCFinanced = intent.getBooleanExtra(LedgerConstants.KEY_DC_FINANCED, false)
         AWSMobileClient.getInstance().initialize(this).execute()
         partnerId?.let {
             setContent {
@@ -51,6 +52,7 @@ class LedgerDetailActivity : ComponentActivity() {
                     LedgerNavigation(
                         dcName = dcName ?: "Ledger",
                         partnerId = partnerId,
+                        isDCFinanced = isDCFinanced,
                         ledgerColors = LedgerSDK.currentApp.ledgerColors,
                         resultLauncher = resultLauncher,
                         finishActivity = { finish() },

@@ -8,6 +8,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
@@ -178,25 +179,47 @@ fun text14Sp(
     textColor: Color = TextBlack,
     fontWeight: FontWeight = FontWeight.Normal,
     lineHeight: TextUnit = 14.sp,
-    textAlign: TextAlign? = null
+    textAlign: TextAlign? = null,
+    fontFamily: FontFamily? = null,
+    textDecoration: TextDecoration? = null
 ) = TextStyle(
     fontSize = 14.sp,
     lineHeight = lineHeight,
     fontWeight = fontWeight,
     color = textColor,
-    textAlign = textAlign
+    textAlign = textAlign,
+    fontFamily = fontFamily,
+    textDecoration = textDecoration
 )
 
 @Composable
 fun text16Sp(
     textColor: Color = TextBlack,
     fontWeight: FontWeight = FontWeight.Normal,
-    lineHeight: TextUnit = 16.sp
+    lineHeight: TextUnit = 16.sp,
+    fontFamily: FontFamily? = null
 ) = TextStyle(
     fontSize = 16.sp,
     lineHeight = lineHeight,
     fontWeight = fontWeight,
     color = textColor,
+    fontFamily = fontFamily
+)
+
+@Composable
+fun textLarge(
+    textColor: Color = TextBlack,
+    fontWeight: FontWeight = FontWeight.Normal,
+    lineHeight: TextUnit = 24.sp,
+    textAlign: TextAlign? = null,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    fontSize = 24.sp,
+    lineHeight = lineHeight,
+    fontWeight = fontWeight,
+    color = textColor,
+    textAlign = textAlign,
+    fontFamily = fontFamily
 )
 
 @Composable
@@ -237,10 +260,96 @@ fun text18Sp(
 fun text12Sp(
     textColor: Color = TextBlack,
     fontWeight: FontWeight = FontWeight.Normal,
-    lineHeight: TextUnit = 12.sp
+    lineHeight: TextUnit = 12.sp,
+    fontFamily: FontFamily? = null
 ) = TextStyle(
     fontSize = 12.sp,
     lineHeight = lineHeight,
     fontWeight = fontWeight,
     color = textColor,
+    fontFamily = fontFamily
+)
+
+@Composable
+fun textParagraphP1(
+    textColor: Color = TextBlack,
+    fontWeight: FontWeight = FontWeight.Normal,
+    lineHeight: TextUnit = 24.sp,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    color = textColor,
+    fontWeight = fontWeight,
+    lineHeight = lineHeight,
+    fontFamily = fontFamily,
+    fontSize = 16.sp
+)
+
+@Composable
+fun textParagraphP2(
+    textColor: Color = TextBlack,
+    fontWeight: FontWeight = FontWeight.Normal,
+    lineHeight: TextUnit = 20.sp,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    color = textColor,
+    fontWeight = fontWeight,
+    lineHeight = lineHeight,
+    fontFamily = fontFamily,
+    fontSize = 14.sp
+)
+
+@Composable
+fun textParagraphT1(
+    textColor: Color = TextBlack,
+    fontWeight: FontWeight = FontWeight.Normal,
+    lineHeight: TextUnit = 20.sp,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    color = textColor,
+    fontWeight = fontWeight,
+    lineHeight = lineHeight,
+    fontFamily = fontFamily,
+    fontSize = 14.sp
+)
+
+@Composable
+fun textParagraphT1Highlight(
+    textColor: Color = TextBlack,
+    fontWeight: FontWeight = FontWeight.Medium,
+    lineHeight: TextUnit = 24.sp,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    color = textColor,
+    fontWeight = fontWeight,
+    lineHeight = lineHeight,
+    fontFamily = fontFamily,
+    fontSize = 16.sp
+)
+
+@Composable
+fun textParagraphT2Highlight(
+    textColor: Color = TextBlack,
+    fontWeight: FontWeight = FontWeight.Medium,
+    lineHeight: TextUnit = 20.sp,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    color = textColor,
+    fontWeight = fontWeight,
+    lineHeight = lineHeight,
+    fontFamily = fontFamily,
+    fontSize = 14.sp
+)
+
+@Composable
+fun textHeadingH3(
+    textColor: Color = TextBlack,
+    fontWeight: FontWeight = FontWeight.SemiBold,
+    lineHeight: TextUnit = 32.sp,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    color = textColor,
+    fontWeight = fontWeight,
+    lineHeight = lineHeight,
+    fontFamily = fontFamily,
+    fontSize = 24.sp
 )

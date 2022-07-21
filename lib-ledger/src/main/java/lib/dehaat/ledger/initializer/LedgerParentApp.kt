@@ -7,5 +7,8 @@ import lib.dehaat.ledger.initializer.themes.LedgerColors
 
 sealed class LedgerParentApp(val ledgerColors: LedgerColors) {
     class AIMS(ledgerColors: LedgerColors = AIMSColors()) : LedgerParentApp(ledgerColors)
-    class DBA(ledgerColors: LedgerColors = DBAColors(), val ledgerCallBack: LedgerCallbacks) : LedgerParentApp(ledgerColors)
+    class DBA(
+        val ledgerCallBack: LedgerCallbacks,
+        ledgerColors: LedgerColors = DBAColors()
+    ) : LedgerParentApp(ledgerColors)
 }
