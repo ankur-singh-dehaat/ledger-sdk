@@ -5,6 +5,8 @@ package lib.dehaat.ledger.presentation.ledger.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -39,10 +41,14 @@ import lib.dehaat.ledger.presentation.ledger.credits.ui.CreditsScreen
 import lib.dehaat.ledger.presentation.ledger.outstanding.TotalOutstandingCalculation
 import lib.dehaat.ledger.presentation.ledger.state.BottomSheetType
 import lib.dehaat.ledger.presentation.ledger.transactions.ui.TransactionsListScreen
+import lib.dehaat.ledger.presentation.ledger.transactions.ui.component.DehaatTransactions
 import lib.dehaat.ledger.presentation.ledger.ui.component.DCFinancedHeader
+import lib.dehaat.ledger.presentation.ledger.ui.component.FilterScreen
+import lib.dehaat.ledger.presentation.ledger.ui.component.FilterStrip
 import lib.dehaat.ledger.presentation.ledger.ui.component.Header
 import lib.dehaat.ledger.presentation.ledger.ui.component.Tabs
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionSummary
+import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionTabs
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
 
@@ -85,12 +91,12 @@ fun LedgerDetailScreen2(
         onBackPress = onBackPress,
         scaffoldState = scaffoldState,
         bottomBar = {
-            AnimatedVisibility(
-                visible = bottomBarVisibility.value
-            ) {
-                if (isDCFinanced) {
-                    TotalOutstandingCalculation()
-                } else {
+            if (isDCFinanced) {
+                TotalOutstandingCalculation()
+            } else {
+                AnimatedVisibility(
+                    visible = bottomBarVisibility.value
+                ) {
                     TransactionSummary(viewModel, ledgerColors)
                 }
             }
@@ -121,6 +127,7 @@ fun LedgerDetailScreen2(
                             }
                         }
                     )
+                    is BottomSheetType.Filters -> FilterScreen() // TODO incomplete
                 }
 
             },
@@ -147,6 +154,7 @@ fun LedgerDetailScreen2(
                                 )
                             },
                             onLoanListClick = {},
+                            payNowClick = {},
                             otherPaymentMethodClick = {
 
                             }
@@ -175,10 +183,26 @@ fun LedgerDetailScreen2(
                         }
                     }
                     Column(modifier = Modifier.background(ledgerColors.TransactionAndCreditScreenBGColor)) {
+                        if (isDCFinanced) {
+                            TransactionTabs(pagerState) { currentPage ->
+                                scope.launch {
+                                    pagerState.animateScrollToPage(currentPage)
+                                }
+                            }
 
-                        Tabs(pagerState, ledgerColors) { currentPage ->
-                            scope.launch {
-                                pagerState.animateScrollToPage(page = currentPage)
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            FilterStrip {
+                                viewModel.showFiltering()
+                                scope.launch { sheetState.animateTo(ModalBottomSheetValue.Expanded) }
+                            }
+
+                            Spacer(modifier = Modifier.height(18.dp))
+                        } else {
+                            Tabs(pagerState, ledgerColors) { currentPage ->
+                                scope.launch {
+                                    pagerState.animateScrollToPage(page = currentPage)
+                                }
                             }
                         }
                         HorizontalPager(
@@ -197,18 +221,30 @@ fun LedgerDetailScreen2(
                                     viewModel.showLenderOutstandingModal(it)
                                     scope.launch { sheetState.animateTo(ModalBottomSheetValue.Expanded) }
                                 }
-                                else -> TransactionsListScreen(
-                                    ledgerColors = ledgerColors,
-                                    detailPageNavigationCallback = detailPageNavigationCallback,
-                                    ledgerDetailViewModel = viewModel,
-                                    openDaysFilter = {
-                                        viewModel.showDaysFilterBottomSheet()
-                                        scope.launch { sheetState.animateTo(ModalBottomSheetValue.Expanded) }
-                                    },
-                                    openRangeFilter = {
-                                        viewModel.showDaysRangeFilterDialog(true)
+                                else -> {
+                                    if (isDCFinanced) {
+                                        DehaatTransactions(TransactionCallbacks(
+                                            {}, {}, {}
+                                        ))
+                                    } else {
+                                        TransactionsListScreen(
+                                            ledgerColors = ledgerColors,
+                                            detailPageNavigationCallback = detailPageNavigationCallback,
+                                            ledgerDetailViewModel = viewModel,
+                                            openDaysFilter = {
+                                                viewModel.showDaysFilterBottomSheet()
+                                                scope.launch {
+                                                    sheetState.animateTo(
+                                                        ModalBottomSheetValue.Expanded
+                                                    )
+                                                }
+                                            },
+                                            openRangeFilter = {
+                                                viewModel.showDaysRangeFilterDialog(true)
+                                            }
+                                        )
                                     }
-                                )
+                                }
                             }
                         }
                     }

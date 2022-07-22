@@ -37,9 +37,10 @@ fun DCFinancedHeaderPreviewDBA() {
     DCFinancedHeader(
         showLoanList = true,
         outstandingNotApplicable = true,
-        onOutstandingLimitClick = { },
+        onOutstandingLimitClick = {},
         onCreditSummaryClick = {},
         onLoanListClick = {},
+        payNowClick = {},
         otherPaymentMethodClick = {}
     )
 }
@@ -51,6 +52,7 @@ fun DCFinancedHeader(
     onOutstandingLimitClick: () -> Unit,
     onCreditSummaryClick: () -> Unit,
     onLoanListClick: () -> Unit,
+    payNowClick: () -> Unit,
     otherPaymentMethodClick: () -> Unit
 ) = Column(
     modifier = Modifier
@@ -162,28 +164,7 @@ fun DCFinancedHeader(
 
     Spacer(modifier = Modifier.height(24.dp))
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        Text(
-            text = "ब्लैकसोईल को ऐप द्वारा भुगतान करें",
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    color = Color(0xFF0F8040),
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .clickable {}
-                .padding(vertical = 16.dp),
-            textAlign = TextAlign.Center,
-            style = text16Sp(
-                textColor = TextWhite,
-                fontFamily = notoSans,
-                fontWeight = FontWeight.Bold
-            )
-        )
-    }
+    PaymentButton(payNowClick = payNowClick)
 
     Spacer(modifier = Modifier.height(16.dp))
 

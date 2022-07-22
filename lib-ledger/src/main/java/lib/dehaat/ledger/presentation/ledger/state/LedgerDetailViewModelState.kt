@@ -59,4 +59,6 @@ sealed class BottomSheetType {
         BottomSheetType()
 
     data class DaysFilterTypeSheet(val selectedFilter: DaysToFilter?) : BottomSheetType()
+
+    object Filters: BottomSheetType()
 }
