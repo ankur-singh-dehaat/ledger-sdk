@@ -244,3 +244,33 @@ fun text12Sp(
     fontWeight = fontWeight,
     color = textColor,
 )
+
+@Composable
+fun textParagraphT2(
+    textColor: Color = TextBlack,
+    fontSize: TextUnit = 14.sp,
+    fontWeight: FontWeight = FontWeight.Normal,
+    lineHeight: TextUnit = 20.sp,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    color = textColor,
+    fontSize = fontSize,
+    fontWeight = fontWeight,
+    lineHeight = lineHeight,
+    fontFamily = fontFamily
+)
+
+@Composable
+fun textCaptionC1(
+    textColor: Color = TextBlack,
+    fontSize: TextUnit = 12.sp,
+    fontWeight: FontWeight = FontWeight.Medium,
+    lineHeight: TextUnit = 16.sp,
+    fontFamily: FontFamily? = null
+) = TextStyle(
+    color = textColor,
+    fontSize = fontSize,
+    fontWeight = fontWeight,
+    lineHeight = lineHeight,
+    fontFamily = fontFamily
+)

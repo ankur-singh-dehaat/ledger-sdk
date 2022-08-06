@@ -62,8 +62,8 @@ class AppChooserActivity : AppCompatActivity() {
                         context = this,
                         partnerId = "123456",
                         dcName = "DC DBA",
-                        isDCFinanced = false,
-                        language = "en"
+                        isDCFinanced = true,
+                        language = "hi"
                     )
                 },
                 onClickAIMSButton = {
@@ -90,8 +90,8 @@ class AppChooserActivity : AppCompatActivity() {
                         context = this,
                         partnerId = "123456",
                         dcName = "DC AIMS",
-                        isDCFinanced = false,
-                        language = "hi"
+                        isDCFinanced = true,
+                        language = "en"
                     )
                 }
             )

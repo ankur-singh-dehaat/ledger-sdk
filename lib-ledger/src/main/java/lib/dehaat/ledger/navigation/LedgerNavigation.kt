@@ -14,6 +14,7 @@ import lib.dehaat.ledger.initializer.callbacks.LedgerCallBack
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.LedgerConstants
 import lib.dehaat.ledger.presentation.LedgerDetailViewModel
+import lib.dehaat.ledger.presentation.RevampLedgerViewModel
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.CreditNoteDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.ui.CreditNoteDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.invoice.InvoiceDetailViewModel
@@ -21,6 +22,7 @@ import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScr
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
+import lib.dehaat.ledger.presentation.ledger.ui.RevampLedgerScreen
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
 import lib.dehaat.ledger.util.withArgs
 import lib.dehaat.ledger.util.withArgsPath
@@ -29,6 +31,7 @@ import lib.dehaat.ledger.util.withArgsPath
 fun LedgerNavigation(
     dcName: String,
     partnerId: String,
+    isDCFinanced: Boolean,
     ledgerColors: LedgerColors,
     ledgerCallbacks: LedgerCallBack,
     resultLauncher: ActivityResultLauncher<Intent?>,
@@ -41,9 +44,16 @@ fun LedgerNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = LedgerRoutes.LedgerDetailScreen.screen.withArgsPath(
-            LedgerConstants.KEY_PARTNER_ID
-        )
+        startDestination = if (isDCFinanced) {
+            LedgerRoutes.RevampLedgerScreen.screen.withArgsPath(
+                LedgerConstants.KEY_PARTNER_ID,
+                LedgerConstants.KEY_DC_NAME
+            )
+        } else {
+            LedgerRoutes.LedgerDetailScreen.screen.withArgsPath(
+                LedgerConstants.KEY_PARTNER_ID
+            )
+        }
     ) {
         composable(
             route = LedgerRoutes.LedgerDetailScreen.screen.withArgsPath(
@@ -72,6 +82,33 @@ fun LedgerNavigation(
                         resultLauncher
                     )
                 }
+            )
+        }
+
+        composable(
+            route = LedgerRoutes.RevampLedgerScreen.screen.withArgsPath(
+                LedgerConstants.KEY_PARTNER_ID,
+                LedgerConstants.KEY_DC_NAME
+            ),
+            arguments = listOf(
+                navArgument(LedgerConstants.KEY_PARTNER_ID) {
+                    type = NavType.StringType
+                    defaultValue = partnerId
+                },
+                navArgument(LedgerConstants.KEY_DC_NAME) {
+                    type = NavType.StringType
+                    defaultValue = dcName
+                }
+            )
+        ) {
+            val revampLedgerViewModel = hiltViewModel<RevampLedgerViewModel>()
+            RevampLedgerScreen(
+                viewModel = revampLedgerViewModel,
+                ledgerColors = ledgerColors,
+                onBackPress = finishActivity,
+                detailPageNavigationCallback = provideDetailPageNavCallBacks(navController),
+                onPayNowClick = { /*TODO*/ },
+                onPaymentOptionsClick = { /*TODO*/ }
             )
         }
 

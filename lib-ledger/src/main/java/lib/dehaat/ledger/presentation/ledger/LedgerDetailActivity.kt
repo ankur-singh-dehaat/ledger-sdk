@@ -59,6 +59,7 @@ class LedgerDetailActivity : ComponentActivity() {
                 LedgerNavigation(
                     dcName = args.dcName,
                     partnerId = args.partnerId,
+                    isDCFinanced = args.isDCFinanced,
                     ledgerColors = LedgerSDK.currentApp.ledgerColors,
                     resultLauncher = resultLauncher,
                     finishActivity = { finish() },
@@ -115,7 +116,7 @@ class LedgerDetailActivity : ComponentActivity() {
         fun getArgs(intent: Intent) = Args(
             partnerId = intent.getStringExtra(LedgerConstants.KEY_PARTNER_ID) ?: "",
             dcName = intent.getStringExtra(LedgerConstants.KEY_DC_NAME) ?: "",
-            isDCFinanced = intent.getBooleanExtra(LedgerConstants.KEY_DC_NAME, false),
+            isDCFinanced = intent.getBooleanExtra(LedgerConstants.KEY_DC_FINANCED, false),
             language = intent.getStringExtra(LedgerConstants.KEY_APP_LANGUAGE)
         )
 

@@ -2,4 +2,12 @@
 <resources>
     <string name="total_outstanding">Total Outstanding</string>
     <string name="ledger">Ledger</string>
+    <string name="total_outstanding_calculation_process">Total Outstanding Calculation Process:</string>
+    <string name="total_outstanding_footer">Total\nOutstanding</string>
+    <string name="total_purchase_rs">Total Purchase (₹)</string>
+    <string name="interest_rs">Interest (₹)</string>
+    <string name="payment_rs">Payment (₹)</string>
+
+
+    <string name="accessibility_icon">Accessibility Icon</string>
 </resources>

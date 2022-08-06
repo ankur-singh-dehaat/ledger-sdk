@@ -2,4 +2,12 @@
 <resources>
     <string name="total_outstanding">कुल बकाया</string>
     <string name="ledger">बही खाता</string>
+    <string name="total_outstanding_calculation_process">कुल बकाया कैल्क्युलेशन विधि:</string>
+    <string name="total_outstanding_footer">कुल\nबकाया</string>
+    <string name="total_purchase_rs">कुल ख़रीदी (₹)</string>
+    <string name="interest_rs">ब्याज (₹)</string>
+    <string name="payment_rs">भुगतान (₹)</string>
+
+
+    <string name="accessibility_icon">Accessibility Icon</string>
 </resources>
