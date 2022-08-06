@@ -58,7 +58,13 @@ class AppChooserActivity : AppCompatActivity() {
                         bucket = "fnfsandboxec2odoo",
                         appIcon = R.drawable.ic_payment
                     )
-                    LedgerSDK.openLedger(this, "123456", dcName = "DC DBA")
+                    LedgerSDK.openLedger(
+                        context = this,
+                        partnerId = "123456",
+                        dcName = "DC DBA",
+                        isDCFinanced = false,
+                        language = "en"
+                    )
                 },
                 onClickAIMSButton = {
                     LedgerSDK.init(
@@ -80,7 +86,13 @@ class AppChooserActivity : AppCompatActivity() {
                         bucket = "fnfsandboxec2odoo",
                         appIcon = R.drawable.ic_payment
                     )
-                    LedgerSDK.openLedger(this, "123456", dcName = "DC AIMS")
+                    LedgerSDK.openLedger(
+                        context = this,
+                        partnerId = "123456",
+                        dcName = "DC AIMS",
+                        isDCFinanced = false,
+                        language = "hi"
+                    )
                 }
             )
         }
