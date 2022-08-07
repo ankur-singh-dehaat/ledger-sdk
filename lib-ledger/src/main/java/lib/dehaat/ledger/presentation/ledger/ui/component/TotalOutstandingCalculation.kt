@@ -25,9 +25,9 @@ import lib.dehaat.ledger.R
 import lib.dehaat.ledger.resources.Pumpkin120
 import lib.dehaat.ledger.resources.SeaGreen110
 import lib.dehaat.ledger.resources.TextLightGrey
-import lib.dehaat.ledger.resources.TextNeutral90
+import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.notoSans
-import lib.dehaat.ledger.resources.textCaptionC1
+import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT2
 
 @Preview(
@@ -87,7 +87,7 @@ fun TotalOutstandingCalculation() = Card(
             Text(
                 text = stringResource(id = R.string.total_outstanding_footer),
                 style = textParagraphT2(
-                    textColor = TextNeutral90,
+                    textColor = Neutral90,
                     fontFamily = notoSans
                 ),
                 textAlign = TextAlign.Center
@@ -105,7 +105,7 @@ fun TotalOutstandingCalculation() = Card(
             Column(verticalArrangement = Arrangement.SpaceEvenly) {
                 Text(
                     text = stringResource(id = R.string.total_purchase_rs),
-                    style = textCaptionC1(
+                    style = textCaptionCP1(
                         textColor = Pumpkin120,
                         fontFamily = notoSans
                     )
@@ -127,7 +127,7 @@ fun TotalOutstandingCalculation() = Card(
             Column(verticalArrangement = Arrangement.SpaceEvenly) {
                 Text(
                     text = stringResource(id = R.string.interest_rs),
-                    style = textCaptionC1(
+                    style = textCaptionCP1(
                         textColor = Pumpkin120,
                         fontFamily = notoSans
                     )
@@ -155,7 +155,7 @@ fun TotalOutstandingCalculation() = Card(
             Column(verticalArrangement = Arrangement.SpaceEvenly) {
                 Text(
                     text = stringResource(id = R.string.payment_rs),
-                    style = textCaptionC1(
+                    style = textCaptionCP1(
                         textColor = SeaGreen110,
                         fontFamily = notoSans
                     )

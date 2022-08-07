@@ -7,6 +7,11 @@
     <string name="total_purchase_rs">Total Purchase (₹)</string>
     <string name="interest_rs">Interest (₹)</string>
     <string name="payment_rs">Payment (₹)</string>
+    <string name="view_details">View Details</string>
+    <string name="save_interest">Save Interest</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="know_other_payment_methods">Know other Payment Methods</string>
+    <string name="all_transactions_list">All transactions list</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

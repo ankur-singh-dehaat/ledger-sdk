@@ -7,6 +7,11 @@
     <string name="total_purchase_rs">कुल ख़रीदी (₹)</string>
     <string name="interest_rs">ब्याज (₹)</string>
     <string name="payment_rs">भुगतान (₹)</string>
+    <string name="view_details">विवरण देखे</string>
+    <string name="save_interest">ब्याज बचाएँ</string>
+    <string name="pay_now">भुगतान करें</string>
+    <string name="know_other_payment_methods">भुगतान के अन्य तरीक़े जानिए</string>
+    <string name="all_transactions_list">सभी लेनदेन की सूची</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>
