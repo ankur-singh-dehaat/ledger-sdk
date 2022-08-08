@@ -12,6 +12,9 @@
     <string name="pay_now">भुगतान करें</string>
     <string name="know_other_payment_methods">भुगतान के अन्य तरीक़े जानिए</string>
     <string name="all_transactions_list">सभी लेनदेन की सूची</string>
+    <string name="available_credit_limit_for_order_placement">ऑर्डर करने के लिए उपलब्ध क्रेडिट</string>
+    <string name="filter">फ़िल्टर :</string>
+    <string name="transactions_so_far">अब तक के लेन देन</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

@@ -1,6 +1,7 @@
 package lib.dehaat.ledger.presentation.ledger.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +20,8 @@ import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.RevampLedgerViewModel
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
+import lib.dehaat.ledger.presentation.common.uicomponent.SpaceMedium
+import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.LedgerHeaderScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.TotalOutstandingCalculation
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionListHeader
@@ -44,7 +47,7 @@ fun RevampLedgerScreen(
         onBackPress = onBackPress,
         scaffoldState = scaffoldState,
         backgroundColor = Background,
-        bottomBar = { TotalOutstandingCalculation() }
+        bottomBar = { TotalOutstandingCalculation(true) }
     ) {
         ModalBottomSheetLayout(
             modifier = Modifier.padding(it),
@@ -56,13 +59,21 @@ fun RevampLedgerScreen(
             VerticalNestedScrollView(
                 state = nestedScrollViewState,
                 header = {
-                    LedgerHeaderScreen(
-                        saveInterest = true,
-                        showAdvanceAmount = true,
-                        showPayNowButton = true,
-                        onPayNowClick = onPayNowClick
-                    ) {
+                    Column {
+                        LedgerHeaderScreen(
+                            saveInterest = true,
+                            showAdvanceAmount = true,
+                            showPayNowButton = true,
+                            onPayNowClick = onPayNowClick
+                        ) {
 
+                        }
+
+                        SpaceMedium()
+
+                        AvailableCreditLimitScreen {}
+
+                        SpaceMedium()
                     }
                 },
                 content = {

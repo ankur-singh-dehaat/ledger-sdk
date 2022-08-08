@@ -76,15 +76,7 @@ fun LedgerHeaderScreen(
             )
         )
 
-        Text(
-            modifier = Modifier.clickable(onClick = onViewDetailsClick),
-            text = stringResource(id = R.string.view_details),
-            style = textParagraphT2(
-                textColor = Neutral70,
-                textDecoration = TextDecoration.Underline,
-                fontFamily = notoSans
-            )
-        )
+        ViewDetails(onViewDetailsClick)
     }
 
     if (showAdvanceAmount) {
@@ -111,7 +103,7 @@ fun LedgerHeaderScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
         PaymentButton(payNowClick = onPayNowClick)
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Text(
             modifier = Modifier
