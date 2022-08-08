@@ -17,4 +17,12 @@ interface DetailPageNavigationCallback {
         mode: String?,
         isLMSActivated: Boolean
     )
+
+    fun navigateToRevampInvoiceDetailPage()
+
+    fun navigateToRevampCreditNoteDetailPage()
+
+    fun navigateToRevampPaymentDetailPage()
+
+    fun navigateToRevampInterestDetailPage()
 }

@@ -35,12 +35,9 @@ import lib.dehaat.ledger.resources.textParagraphT1Highlight
     name = "TransactionCard Invoice Preview",
     showBackground = true
 )
-
 @Composable
-fun TransactionCardInvoicePreview() = LedgerTheme {
-    TransactionCard(transactionType = TransactionType.Invoice) {
-
-    }
+private fun TransactionCardInvoicePreview() = LedgerTheme {
+    TransactionCard(transactionType = TransactionType.Invoice) {}
 }
 
 @Preview(
@@ -48,10 +45,8 @@ fun TransactionCardInvoicePreview() = LedgerTheme {
     showBackground = true
 )
 @Composable
-fun TransactionCardCreditNotePreview() = LedgerTheme {
-    TransactionCard(transactionType = TransactionType.CreditNote) {
-
-    }
+private fun TransactionCardCreditNotePreview() = LedgerTheme {
+    TransactionCard(transactionType = TransactionType.CreditNote) {}
 }
 
 @Preview(
@@ -59,10 +54,8 @@ fun TransactionCardCreditNotePreview() = LedgerTheme {
     showBackground = true
 )
 @Composable
-fun TransactionCardPaymentPreview() = LedgerTheme {
-    TransactionCard(transactionType = TransactionType.Payment) {
-
-    }
+private fun TransactionCardPaymentPreview() = LedgerTheme {
+    TransactionCard(transactionType = TransactionType.Payment) {}
 }
 
 @Preview(
@@ -70,10 +63,8 @@ fun TransactionCardPaymentPreview() = LedgerTheme {
     showBackground = true
 )
 @Composable
-fun TransactionCardInterestPreview() = LedgerTheme {
-    TransactionCard(transactionType = TransactionType.Interest) {
-
-    }
+private fun TransactionCardInterestPreview() = LedgerTheme {
+    TransactionCard(transactionType = TransactionType.Interest) {}
 }
 
 @Composable

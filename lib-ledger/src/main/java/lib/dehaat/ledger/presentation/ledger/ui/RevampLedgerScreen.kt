@@ -90,16 +90,16 @@ fun RevampLedgerScreen(
                         items((0..3).map { it }) { type ->
                             when (type) {
                                 0 -> TransactionCard(transactionType = TransactionType.Invoice) {
-
+                                    detailPageNavigationCallback.navigateToRevampInvoiceDetailPage()
                                 }
                                 1 -> TransactionCard(transactionType = TransactionType.CreditNote) {
-
+                                    detailPageNavigationCallback.navigateToRevampCreditNoteDetailPage()
                                 }
                                 2 -> TransactionCard(transactionType = TransactionType.Payment) {
-
+                                    detailPageNavigationCallback.navigateToRevampPaymentDetailPage()
                                 }
                                 3 -> TransactionCard(transactionType = TransactionType.Interest) {
-
+                                    detailPageNavigationCallback.navigateToRevampInterestDetailPage()
                                 }
                             }
                         }

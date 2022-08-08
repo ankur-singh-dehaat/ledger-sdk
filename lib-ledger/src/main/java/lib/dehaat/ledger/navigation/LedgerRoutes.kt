@@ -14,4 +14,16 @@ sealed class LedgerRoutes(val screen: String) {
         LedgerRoutes("ledger_payment_detail_screen")
 
     object RevampLedgerScreen : LedgerRoutes("revamp_ledger_screen")
+
+    object RevampLedgerInvoiceDetailScreen :
+        LedgerRoutes("revamp_ledger_invoice_detail_screen")
+
+    object RevampLedgerCreditNoteDetailScreen :
+        LedgerRoutes("revamp_ledger_credit_note_detail_screen")
+
+    object RevampLedgerPaymentDetailScreen :
+        LedgerRoutes("revamp_ledger_payment_detail_screen")
+
+    object RevampLedgerInterestDetailScreen :
+        LedgerRoutes("revamp_ledger_interest_detail_screen")
 }

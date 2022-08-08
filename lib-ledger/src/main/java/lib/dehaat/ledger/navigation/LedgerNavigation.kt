@@ -3,6 +3,7 @@ package lib.dehaat.ledger.navigation
 import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -10,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.dehaat.androidbase.helper.showToast
 import lib.dehaat.ledger.initializer.callbacks.LedgerCallBack
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.LedgerConstants
@@ -155,6 +157,12 @@ fun LedgerNavigation(
         }
 
         composable(
+            route = LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen
+        ) {
+            LocalContext.current.showToast("RevampLedgerInvoiceDetailScreen")
+        }
+
+        composable(
             route = LedgerRoutes.LedgerCreditNoteDetailScreen.screen.withArgsPath(
                 LedgerConstants.KEY_LEDGER_ID,
                 LedgerConstants.KEY_ERP_ID,
@@ -177,10 +185,19 @@ fun LedgerNavigation(
 
             val creditNoteDetailViewModel = hiltViewModel<CreditNoteDetailViewModel>()
 
-            CreditNoteDetailScreen(viewModel = creditNoteDetailViewModel, ledgerColors = ledgerColors) {
+            CreditNoteDetailScreen(
+                viewModel = creditNoteDetailViewModel,
+                ledgerColors = ledgerColors
+            ) {
                 navController.popBackStack()
             }
 
+        }
+
+        composable(
+            route = LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen
+        ) {
+            LocalContext.current.showToast("RevampLedgerCreditNoteDetailScreen")
         }
 
         composable(
@@ -220,6 +237,18 @@ fun LedgerNavigation(
             ) {
                 navController.popBackStack()
             }
+        }
+
+        composable(
+            route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen
+        ) {
+            LocalContext.current.showToast("RevampLedgerPaymentDetailScreen")
+        }
+
+        composable(
+            route = LedgerRoutes.RevampLedgerInterestDetailScreen.screen
+        ) {
+            LocalContext.current.showToast("RevampLedgerInterestDetailScreen")
         }
     }
 }
@@ -273,6 +302,21 @@ fun provideDetailPageNavCallBacks(navController: NavHostController) =
             )
         }
 
+        override fun navigateToRevampInvoiceDetailPage() {
+            navigateToRevampInvoiceDetailPage(navController)
+        }
+
+        override fun navigateToRevampCreditNoteDetailPage() {
+            navigateToRevampCreditNoteDetailPage(navController)
+        }
+
+        override fun navigateToRevampPaymentDetailPage() {
+            navigateToRevampPaymentDetailPage(navController)
+        }
+
+        override fun navigateToRevampInterestDetailPage() {
+            navigateToRevampInterestDetailPage(navController)
+        }
     }
 
 fun navigateToInvoiceDetailScreen(
@@ -327,3 +371,27 @@ fun navigateToPaymentDetailScreen(
         )
     )
 }
+
+fun navigateToRevampInvoiceDetailPage(
+    navController: NavHostController
+) = navController.navigate(
+    LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen
+)
+
+fun navigateToRevampCreditNoteDetailPage(
+    navController: NavHostController
+) = navController.navigate(
+    LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen
+)
+
+fun navigateToRevampPaymentDetailPage(
+    navController: NavHostController
+) = navController.navigate(
+    LedgerRoutes.RevampLedgerPaymentDetailScreen.screen
+)
+
+fun navigateToRevampInterestDetailPage(
+    navController: NavHostController
+) = navController.navigate(
+    LedgerRoutes.RevampLedgerInterestDetailScreen.screen
+)
