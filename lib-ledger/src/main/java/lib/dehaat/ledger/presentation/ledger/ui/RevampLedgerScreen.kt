@@ -24,7 +24,9 @@ import lib.dehaat.ledger.presentation.common.uicomponent.SpaceMedium
 import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.LedgerHeaderScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.TotalOutstandingCalculation
+import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionCard
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionListHeader
+import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionType
 import lib.dehaat.ledger.resources.Background
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
@@ -85,8 +87,21 @@ fun RevampLedgerScreen(
 
                             }
                         }
-                        items((0..1000).map { it }) {
-                            Text(text = it.toString())
+                        items((0..3).map { it }) { type ->
+                            when (type) {
+                                0 -> TransactionCard(transactionType = TransactionType.Invoice) {
+
+                                }
+                                1 -> TransactionCard(transactionType = TransactionType.CreditNote) {
+
+                                }
+                                2 -> TransactionCard(transactionType = TransactionType.Payment) {
+
+                                }
+                                3 -> TransactionCard(transactionType = TransactionType.Interest) {
+
+                                }
+                            }
                         }
                     }
                 }
