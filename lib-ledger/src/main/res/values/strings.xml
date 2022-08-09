@@ -30,6 +30,22 @@
     <string name="total_payment">Total Payment</string>
     <string name="purchases_till_date">Purchases till Date</string>
     <string name="total_credit_note_amount">Total Credit Note Amount</string>
+    <string name="available_credit_limit">Available Credit Limit</string>
+    <string name="total_credit_limit">Total credit Limit</string>
+    <string name="total_outstanding_plus_products_to_be_deliver">Total Outstanding + Products to be Delivered</string>
+    <string name="total_credit_limit_calculation_method">Total Credit Limit Calculation Method:</string>
+    <string name="permanent_credit_limit">Permanent Credit Limit</string>
+    <string name="buffer_limit">Buffer Limit(Temporary)</string>
+    <string name="how_does_payment_increase_credit_limit">How does payment increase the available credit limit?</string>
+    <string name="when_does_total_payment_amount_adds_up">When does the payment amount add up to 100&#37;</string>
+    <string name="when_does_payment_amount_not_adds_up">When does the payment amount not add up to 100&#37;</string>
+    <string name="when_you_dont_owe_interest">When you don\'t owe interest</string>
+    <string name="when_you_owe_interest">When you owe some interest</string>
+    <string name="payment_amount_used_to_pay_outstanding_interest">Some of the payment amount will be used to pay the outstanding interest</string>
+    <string name="example">Example:</string>
+    <string name="full_payment_example">मान लीजिए आपकी उपलब्ध क्रेडिट लिमिट ₹ 40,000 है और आपने ₹ 10,000 का भुगतान किया।\nक्यूँकि आपका बकाया ब्याज ₹ 0 है, तो आपकी उपलब्ध क्रेडिट लिमिट ₹ 50,000(₹ 40,000 + ₹ 10,000) हो जाएगी</string>
+    <string name="partial_payment_example">मान लीजिए आपकी उपलब्ध क्रेडिट लिमिट ₹ 40,000 और बकाया ब्याज ₹ 5,000 है।\nआपने ₹ 10,000 का भुगतान किया तो ₹ 10,000 से बकाया ब्याज ₹ 5,000 काट लिया जाएगा। तो आपकी उपलब्ध क्रेडिट लिमिट ₹ 45,000(₹ 40,000 + ₹ 5,000) हो जाएगी</string>
+
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

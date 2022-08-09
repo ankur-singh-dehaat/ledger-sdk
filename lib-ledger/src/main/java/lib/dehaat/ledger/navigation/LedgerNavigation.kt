@@ -17,6 +17,8 @@ import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.LedgerConstants
 import lib.dehaat.ledger.presentation.LedgerDetailViewModel
 import lib.dehaat.ledger.presentation.RevampLedgerViewModel
+import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.AvailableCreditLimitViewModel
+import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.ui.AvailableCreditLimitDetailsScreen
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.CreditNoteDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.ui.CreditNoteDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.invoice.InvoiceDetailViewModel
@@ -28,7 +30,6 @@ import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOu
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
 import lib.dehaat.ledger.presentation.ledger.ui.RevampLedgerScreen
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
-import lib.dehaat.ledger.util.withArgs
 import lib.dehaat.ledger.util.withArgsPath
 
 @Composable
@@ -127,6 +128,19 @@ fun LedgerNavigation(
                     navController.popBackStack()
                 }
             )
+        }
+
+        composable(
+            route = LedgerRoutes.TotalAvailableCreditLimitScreen.screen
+        ) {
+            val availableCreditLimitViewModel = hiltViewModel<AvailableCreditLimitViewModel>()
+
+            AvailableCreditLimitDetailsScreen(
+                viewModel = availableCreditLimitViewModel,
+                ledgerColors = ledgerColors
+            ) {
+                navController.popBackStack()
+            }
         }
 
         composable(
@@ -268,125 +282,77 @@ fun LedgerNavigation(
     }
 }
 
-fun provideDetailPageNavCallBacks(navController: NavHostController) =
-    object : DetailPageNavigationCallback {
-        override fun navigateToInvoiceDetailPage(
-            legerId: String,
-            erpId: String?,
-            locusId: String?,
-            source: String,
-            isLMSActivated: Boolean
-        ) {
-            navigateToInvoiceDetailScreen(
-                navController = navController,
-                ledgerId = legerId,
-                erpId = erpId,
-                locusId = locusId,
-                source = source,
-                isLMSActivated = isLMSActivated
-            )
-        }
-
-        override fun navigateToCreditNoteDetailPage(
-            legerId: String,
-            erpId: String?,
-            locusId: String?
-        ) {
-            navigateToCreditNoteDetailScreen(
-                navController = navController,
-                ledgerId = legerId,
-                erpId = erpId,
-                locusId = locusId
-            )
-        }
-
-        override fun navigateToPaymentDetailPage(
-            legerId: String,
-            erpId: String?,
-            locusId: String?,
-            mode: String?,
-            isLMSActivated: Boolean
-        ) {
-            navigateToPaymentDetailScreen(
-                navController = navController,
-                ledgerId = legerId,
-                erpId = erpId,
-                locusId = locusId,
-                mode = mode,
-                isLMSActivated = isLMSActivated
-            )
-        }
-
-        override fun navigateToTotalOutstandingDetailPage() {
-            navigateToTotalOutstandingDetailPage(navController)
-        }
-
-        override fun navigateToRevampInvoiceDetailPage() {
-            navigateToRevampInvoiceDetailPage(navController)
-        }
-
-        override fun navigateToRevampCreditNoteDetailPage() {
-            navigateToRevampCreditNoteDetailPage(navController)
-        }
-
-        override fun navigateToRevampPaymentDetailPage() {
-            navigateToRevampPaymentDetailPage(navController)
-        }
-
-        override fun navigateToRevampInterestDetailPage() {
-            navigateToRevampInterestDetailPage(navController)
-        }
+fun provideDetailPageNavCallBacks(
+    navController: NavHostController
+) = object : DetailPageNavigationCallback {
+    override fun navigateToInvoiceDetailPage(
+        legerId: String,
+        erpId: String?,
+        locusId: String?,
+        source: String,
+        isLMSActivated: Boolean
+    ) {
+        navigateToInvoiceDetailScreen(
+            navController = navController,
+            ledgerId = legerId,
+            erpId = erpId,
+            locusId = locusId,
+            source = source,
+            isLMSActivated = isLMSActivated
+        )
     }
 
-fun navigateToInvoiceDetailScreen(
-    navController: NavHostController,
-    ledgerId: String,
-    erpId: String?,
-    locusId: String?,
-    source: String,
-    isLMSActivated: Boolean
-) {
-    navController.navigate(
-        LedgerRoutes.LedgerInvoiceDetailScreen.screen.withArgs(
-            ledgerId,
-            erpId,
-            locusId,
-            source,
-            isLMSActivated
+    override fun navigateToCreditNoteDetailPage(
+        legerId: String,
+        erpId: String?,
+        locusId: String?
+    ) {
+        navigateToCreditNoteDetailScreen(
+            navController = navController,
+            ledgerId = legerId,
+            erpId = erpId,
+            locusId = locusId
         )
-    )
-}
+    }
 
-fun navigateToCreditNoteDetailScreen(
-    navController: NavHostController,
-    ledgerId: String,
-    erpId: String?,
-    locusId: String?
-) {
-    navController.navigate(
-        LedgerRoutes.LedgerCreditNoteDetailScreen.screen.withArgs(
-            ledgerId,
-            erpId,
-            locusId
+    override fun navigateToPaymentDetailPage(
+        legerId: String,
+        erpId: String?,
+        locusId: String?,
+        mode: String?,
+        isLMSActivated: Boolean
+    ) {
+        navigateToPaymentDetailScreen(
+            navController = navController,
+            ledgerId = legerId,
+            erpId = erpId,
+            locusId = locusId,
+            mode = mode,
+            isLMSActivated = isLMSActivated
         )
-    )
-}
+    }
 
-fun navigateToPaymentDetailScreen(
-    navController: NavHostController,
-    ledgerId: String,
-    erpId: String?,
-    locusId: String?,
-    mode: String?,
-    isLMSActivated: Boolean
-) {
-    navController.navigate(
-        LedgerRoutes.LedgerPaymentDetailScreen.screen.withArgs(
-            ledgerId,
-            erpId,
-            locusId,
-            mode,
-            isLMSActivated
-        )
-    )
+    override fun navigateToOutstandingDetailPage() {
+        navigateToOutstandingDetailPage(navController)
+    }
+
+    override fun navigateToAvailableCreditLimitDetailPage() {
+        navigateToAvailableCreditLimitDetailPage(navController)
+    }
+
+    override fun navigateToRevampInvoiceDetailPage() {
+        navigateToRevampInvoiceDetailPage(navController)
+    }
+
+    override fun navigateToRevampCreditNoteDetailPage() {
+        navigateToRevampCreditNoteDetailPage(navController)
+    }
+
+    override fun navigateToRevampPaymentDetailPage() {
+        navigateToRevampPaymentDetailPage(navController)
+    }
+
+    override fun navigateToRevampInterestDetailPage() {
+        navigateToRevampInterestDetailPage(navController)
+    }
 }

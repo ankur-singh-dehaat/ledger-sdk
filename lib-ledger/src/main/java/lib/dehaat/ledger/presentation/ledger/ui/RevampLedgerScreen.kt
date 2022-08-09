@@ -99,13 +99,15 @@ fun RevampLedgerScreen(
                             showPayNowButton = true,
                             onPayNowClick = onPayNowClick,
                             onTotalOutstandingDetailsClick = {
-                                detailPageNavigationCallback.navigateToTotalOutstandingDetailPage()
+                                detailPageNavigationCallback.navigateToOutstandingDetailPage()
                             }
                         )
 
                         SpaceMedium()
 
-                        AvailableCreditLimitScreen {}
+                        AvailableCreditLimitScreen {
+                            detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage()
+                        }
 
                         SpaceMedium()
                     }
