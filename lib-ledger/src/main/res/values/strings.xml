@@ -52,6 +52,8 @@
     <string name="payment_date">Payment Date</string>
     <string name="payment_method">Payment Method</string>
     <string name="reference_id">Reference I.D.</string>
+    <string name="interest_amount">Interest Amount</string>
+    <string name="daily_interest_details">Daily Interest Details</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

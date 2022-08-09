@@ -52,6 +52,8 @@
     <string name="payment_date">भुगतान तिथि</string>
     <string name="payment_method">भुगतान विधि</string>
     <string name="reference_id">रेफ़्रेन्स आई.डी.</string>
+    <string name="interest_amount">ब्याज राशि</string>
+    <string name="daily_interest_details">दैनिक ब्याज विवरण</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>
