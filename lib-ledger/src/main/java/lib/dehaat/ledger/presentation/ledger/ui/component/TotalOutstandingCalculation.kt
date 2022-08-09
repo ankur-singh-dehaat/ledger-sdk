@@ -85,7 +85,7 @@ fun TotalOutstandingCalculation(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = stringResource(id = R.string.total_outstanding_calculation_process),
+                    text = stringResource(id = R.string.total_outstanding_calculation_method),
                     style = textParagraphT2(
                         textColor = TextLightGrey,
                         fontFamily = notoSans

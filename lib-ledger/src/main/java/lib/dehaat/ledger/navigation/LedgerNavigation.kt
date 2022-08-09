@@ -23,6 +23,8 @@ import lib.dehaat.ledger.presentation.ledger.details.invoice.InvoiceDetailViewMo
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailScreen
+import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
+import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
 import lib.dehaat.ledger.presentation.ledger.ui.RevampLedgerScreen
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
@@ -111,6 +113,19 @@ fun LedgerNavigation(
                 detailPageNavigationCallback = provideDetailPageNavCallBacks(navController),
                 onPayNowClick = { /*TODO*/ },
                 onPaymentOptionsClick = { /*TODO*/ }
+            )
+        }
+
+        composable(
+            route = LedgerRoutes.TotalOutstandingDetailScreen.screen
+        ) {
+            val totalOutstandingViewModel = hiltViewModel<TotalOutstandingViewModel>()
+            TotalOutstandingScreen(
+                viewModel = totalOutstandingViewModel,
+                ledgerColors = ledgerColors,
+                onBackPress = {
+                    navController.popBackStack()
+                }
             )
         }
 
@@ -302,6 +317,10 @@ fun provideDetailPageNavCallBacks(navController: NavHostController) =
             )
         }
 
+        override fun navigateToTotalOutstandingDetailPage() {
+            navigateToTotalOutstandingDetailPage(navController)
+        }
+
         override fun navigateToRevampInvoiceDetailPage() {
             navigateToRevampInvoiceDetailPage(navController)
         }
@@ -371,27 +390,3 @@ fun navigateToPaymentDetailScreen(
         )
     )
 }
-
-fun navigateToRevampInvoiceDetailPage(
-    navController: NavHostController
-) = navController.navigate(
-    LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen
-)
-
-fun navigateToRevampCreditNoteDetailPage(
-    navController: NavHostController
-) = navController.navigate(
-    LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen
-)
-
-fun navigateToRevampPaymentDetailPage(
-    navController: NavHostController
-) = navController.navigate(
-    LedgerRoutes.RevampLedgerPaymentDetailScreen.screen
-)
-
-fun navigateToRevampInterestDetailPage(
-    navController: NavHostController
-) = navController.navigate(
-    LedgerRoutes.RevampLedgerInterestDetailScreen.screen
-)

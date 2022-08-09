@@ -98,7 +98,9 @@ fun RevampLedgerScreen(
                             showAdvanceAmount = true,
                             showPayNowButton = true,
                             onPayNowClick = onPayNowClick,
-                            onViewDetailsClick = {}
+                            onTotalOutstandingDetailsClick = {
+                                detailPageNavigationCallback.navigateToTotalOutstandingDetailPage()
+                            }
                         )
 
                         SpaceMedium()

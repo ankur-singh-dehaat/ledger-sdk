@@ -18,6 +18,8 @@ interface DetailPageNavigationCallback {
         isLMSActivated: Boolean
     )
 
+    fun navigateToTotalOutstandingDetailPage()
+
     fun navigateToRevampInvoiceDetailPage()
 
     fun navigateToRevampCreditNoteDetailPage()

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="total_outstanding">Total Outstanding</string>
+    <string name="total_outstanding_details">Total Outstanding Details</string>
     <string name="ledger">Ledger</string>
-    <string name="total_outstanding_calculation_process">Total Outstanding Calculation Process:</string>
+    <string name="total_outstanding_calculation_method">Total Outstanding Calculation Method:</string>
     <string name="total_outstanding_footer">Total\nOutstanding</string>
     <string name="total_purchase_rs">Total Purchase (₹)</string>
     <string name="interest_rs">Interest (₹)</string>
@@ -24,6 +25,11 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="apply_filter">Apply Filter</string>
+    <string name="total_purchase">Total Purchase</string>
+    <string name="interest_till_date">Interest till Date</string>
+    <string name="total_payment">Total Payment</string>
+    <string name="purchases_till_date">Purchases till Date</string>
+    <string name="total_credit_note_amount">Total Credit Note Amount</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

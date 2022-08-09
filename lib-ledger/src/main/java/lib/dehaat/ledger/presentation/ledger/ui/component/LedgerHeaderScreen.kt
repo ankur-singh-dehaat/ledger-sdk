@@ -39,7 +39,7 @@ private fun LedgerHeaderScreenPreview() {
         showAdvanceAmount = true,
         showPayNowButton = true,
         onPayNowClick = {},
-        onViewDetailsClick = {}
+        onTotalOutstandingDetailsClick = {}
     )
 }
 
@@ -49,7 +49,7 @@ fun LedgerHeaderScreen(
     showAdvanceAmount: Boolean,
     showPayNowButton: Boolean,
     onPayNowClick: () -> Unit,
-    onViewDetailsClick: () -> Unit
+    onTotalOutstandingDetailsClick: () -> Unit
 ) = Column(
     modifier = Modifier
         .background(Color.White)
@@ -76,7 +76,7 @@ fun LedgerHeaderScreen(
             )
         )
 
-        ViewDetails(onViewDetailsClick)
+        ViewDetails(onTotalOutstandingDetailsClick)
     }
 
     if (showAdvanceAmount) {
