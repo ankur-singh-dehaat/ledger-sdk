@@ -1,8 +1,13 @@
 package lib.dehaat.ledger.presentation.ledger.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,18 +15,23 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.RevampLedgerViewModel
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.SpaceMedium
+import lib.dehaat.ledger.presentation.ledger.bottomsheets.FilterScreen
 import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitScreen
+import lib.dehaat.ledger.presentation.ledger.state.BottomSheetType
 import lib.dehaat.ledger.presentation.ledger.ui.component.LedgerHeaderScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.TotalOutstandingCalculation
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionCard
@@ -41,7 +51,9 @@ fun RevampLedgerScreen(
     onPayNowClick: () -> Unit,
     onPaymentOptionsClick: () -> Unit
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 
     CommonContainer(
@@ -49,11 +61,30 @@ fun RevampLedgerScreen(
         onBackPress = onBackPress,
         scaffoldState = scaffoldState,
         backgroundColor = Background,
-        bottomBar = { TotalOutstandingCalculation(true) }
+        bottomBar = {
+            AnimatedVisibility(
+                visible = !sheetState.isVisible,
+                enter = expandVertically(),
+                exit = shrinkVertically()
+            ) {
+                TotalOutstandingCalculation(true)
+            }
+        }
     ) {
         ModalBottomSheetLayout(
             modifier = Modifier.padding(it),
-            sheetContent = { Text(text = "") },
+            sheetContent = {
+                when (uiState.bottomSheetType) {
+                    is BottomSheetType.DaysFilterTypeSheet -> {
+                        FilterScreen { _, _, _ ->
+                            scope.launch {
+                                sheetState.animateTo(ModalBottomSheetValue.Hidden)
+                            }
+                        }
+                    }
+                    else -> Spacer(modifier = Modifier.height(1.dp))
+                }
+            },
             sheetState = sheetState,
             sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
         ) {
@@ -66,10 +97,9 @@ fun RevampLedgerScreen(
                             saveInterest = true,
                             showAdvanceAmount = true,
                             showPayNowButton = true,
-                            onPayNowClick = onPayNowClick
-                        ) {
-
-                        }
+                            onPayNowClick = onPayNowClick,
+                            onViewDetailsClick = {}
+                        )
 
                         SpaceMedium()
 
@@ -79,15 +109,16 @@ fun RevampLedgerScreen(
                     }
                 },
                 content = {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
+                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
                         stickyHeader {
                             TransactionListHeader {
-
+                                scope.launch {
+                                    viewModel.showFilterBottomSheet()
+                                    sheetState.animateTo(ModalBottomSheetValue.Expanded)
+                                }
                             }
                         }
-                        items((0..3).map { it }) { type ->
+                        items(listOf(0, 1, 2, 3)) { type ->
                             when (type) {
                                 0 -> TransactionCard(transactionType = TransactionType.Invoice) {
                                     detailPageNavigationCallback.navigateToRevampInvoiceDetailPage()

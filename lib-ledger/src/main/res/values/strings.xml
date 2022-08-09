@@ -13,8 +13,17 @@
     <string name="know_other_payment_methods">Know other Payment Methods</string>
     <string name="all_transactions_list">All transactions list</string>
     <string name="available_credit_limit_for_order_placement">Available Credit Limit for Order Placement</string>
-    <string name="filter">Filter :</string>
+    <string name="filter_colon">Filter :</string>
+    <string name="filter">Filter</string>
     <string name="transactions_so_far">Transactions so far</string>
+    <string name="filter_all_transactions">All Transactions</string>
+    <string name="filter_last_seven_days">Last 7 Days</string>
+    <string name="filter_last_one_month">Last 1 Month</string>
+    <string name="filter_last_three_months">Last 3 Months</string>
+    <string name="filter_add_custom_date">Add Custom Date</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="apply_filter">Apply Filter</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

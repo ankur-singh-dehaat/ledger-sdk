@@ -13,8 +13,17 @@
     <string name="know_other_payment_methods">भुगतान के अन्य तरीक़े जानिए</string>
     <string name="all_transactions_list">सभी लेनदेन की सूची</string>
     <string name="available_credit_limit_for_order_placement">ऑर्डर करने के लिए उपलब्ध क्रेडिट</string>
-    <string name="filter">फ़िल्टर :</string>
+    <string name="filter_colon">फ़िल्टर :</string>
+    <string name="filter">फ़िल्टर</string>
     <string name="transactions_so_far">अब तक के लेन देन</string>
+    <string name="filter_all_transactions">सभी लेनदेन</string>
+    <string name="filter_last_seven_days">पिछले 7 दिन</string>
+    <string name="filter_last_one_month">पिछले 1 महीने</string>
+    <string name="filter_last_three_months">पिछले 3 महीने</string>
+    <string name="filter_add_custom_date">कस्टम तारीख़ डालें</string>
+    <string name="from">कब से</string>
+    <string name="to">कब तक</string>
+    <string name="apply_filter">लागू करें</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>
