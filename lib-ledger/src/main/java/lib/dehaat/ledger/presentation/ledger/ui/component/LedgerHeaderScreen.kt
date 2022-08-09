@@ -30,7 +30,8 @@ import lib.dehaat.ledger.resources.textParagraphT1
 import lib.dehaat.ledger.resources.textParagraphT2
 
 @Preview(
-    showBackground = true
+    showBackground = true,
+    name = "LedgerHeaderScreen Preview"
 )
 @Composable
 private fun LedgerHeaderScreenPreview() {
@@ -39,7 +40,8 @@ private fun LedgerHeaderScreenPreview() {
         showAdvanceAmount = true,
         showPayNowButton = true,
         onPayNowClick = {},
-        onTotalOutstandingDetailsClick = {}
+        onTotalOutstandingDetailsClick = {},
+        onOtherPaymentModeClick = {}
     )
 }
 
@@ -49,7 +51,8 @@ fun LedgerHeaderScreen(
     showAdvanceAmount: Boolean,
     showPayNowButton: Boolean,
     onPayNowClick: () -> Unit,
-    onTotalOutstandingDetailsClick: () -> Unit
+    onTotalOutstandingDetailsClick: () -> Unit,
+    onOtherPaymentModeClick: () -> Unit
 ) = Column(
     modifier = Modifier
         .background(Color.White)
@@ -108,9 +111,7 @@ fun LedgerHeaderScreen(
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable(
-                    onClick = {}
-                ),
+                .clickable(onClick = onOtherPaymentModeClick),
             text = stringResource(id = R.string.know_other_payment_methods),
             style = textParagraphT2(
                 textColor = Neutral70,

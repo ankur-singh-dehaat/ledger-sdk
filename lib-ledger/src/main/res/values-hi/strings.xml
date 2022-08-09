@@ -45,7 +45,13 @@
     <string name="example">उदाहरण:</string>
     <string name="full_payment_example">मान लीजिए आपकी उपलब्ध क्रेडिट लिमिट ₹ 40,000 है और आपने ₹ 10,000 का भुगतान किया।\nक्यूँकि आपका बकाया ब्याज ₹ 0 है, तो आपकी उपलब्ध क्रेडिट लिमिट ₹ 50,000(₹ 40,000 + ₹ 10,000) हो जाएगी</string>
     <string name="partial_payment_example">मान लीजिए आपकी उपलब्ध क्रेडिट लिमिट ₹ 40,000 और बकाया ब्याज ₹ 5,000 है।\nआपने ₹ 10,000 का भुगतान किया तो ₹ 10,000 से बकाया ब्याज ₹ 5,000 काट लिया जाएगा। तो आपकी उपलब्ध क्रेडिट लिमिट ₹ 45,000(₹ 40,000 + ₹ 5,000) हो जाएगी</string>
-
+    <string name="other_payment_modes">भुगतान के अन्य तरीक़े</string>
+    <string name="other_payment_modes_header">नीचे दिया गया खाता सीधा आपके लेजर से जुड़ा हैं। कृपया इन विवरणों को अन्य देहातियों के साथ साझा न करें।</string>
+    <string name="payment_detail">भुगतान विवरण</string>
+    <string name="payment_amount">भुगतान राशि</string>
+    <string name="payment_date">भुगतान तिथि</string>
+    <string name="payment_method">भुगतान विधि</string>
+    <string name="reference_id">रेफ़्रेन्स आई.डी.</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

@@ -20,13 +20,18 @@ interface DetailPageNavigationCallback {
 
     fun navigateToOutstandingDetailPage()
 
+    fun navigateToOtherPaymentModesScreen()
+
     fun navigateToAvailableCreditLimitDetailPage()
 
     fun navigateToRevampInvoiceDetailPage()
 
     fun navigateToRevampCreditNoteDetailPage()
 
-    fun navigateToRevampPaymentDetailPage()
+    fun navigateToRevampPaymentDetailPage(
+        ledgerId: String,
+        onError: (String) -> Unit
+    )
 
     fun navigateToRevampInterestDetailPage()
 }

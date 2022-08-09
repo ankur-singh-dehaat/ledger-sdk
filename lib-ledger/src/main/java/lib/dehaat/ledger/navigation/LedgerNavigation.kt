@@ -23,8 +23,11 @@ import lib.dehaat.ledger.presentation.ledger.details.creditnote.CreditNoteDetail
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.ui.CreditNoteDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.invoice.InvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScreen
+import lib.dehaat.ledger.presentation.ledger.details.otherpaymentmode.OtherPaymentModesViewModel
+import lib.dehaat.ledger.presentation.ledger.details.otherpaymentmode.ui.OtherPaymentModeScreen
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailScreen
+import lib.dehaat.ledger.presentation.ledger.details.payments.ui.RevampPaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
@@ -137,6 +140,19 @@ fun LedgerNavigation(
 
             AvailableCreditLimitDetailsScreen(
                 viewModel = availableCreditLimitViewModel,
+                ledgerColors = ledgerColors
+            ) {
+                navController.popBackStack()
+            }
+        }
+
+        composable(
+            route = LedgerRoutes.OtherPaymentModesScreen.screen
+        ) {
+            val otherPaymentModesViewModel = hiltViewModel<OtherPaymentModesViewModel>()
+
+            OtherPaymentModeScreen(
+                viewModel = otherPaymentModesViewModel,
                 ledgerColors = ledgerColors
             ) {
                 navController.popBackStack()
@@ -269,9 +285,22 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen
+            route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen.withArgsPath(
+                LedgerConstants.KEY_LEDGER_ID
+            ),
+            arguments = listOf(
+                navArgument(LedgerConstants.KEY_LEDGER_ID) {
+                    type = NavType.StringType
+                }
+            )
         ) {
-            LocalContext.current.showToast("RevampLedgerPaymentDetailScreen")
+            val paymentDetailViewModel = hiltViewModel<PaymentDetailViewModel>()
+            RevampPaymentDetailScreen(
+                viewModel = paymentDetailViewModel,
+                ledgerColors = ledgerColors
+            ) {
+                navController.popBackStack()
+            }
         }
 
         composable(
@@ -336,6 +365,10 @@ fun provideDetailPageNavCallBacks(
         navigateToOutstandingDetailPage(navController)
     }
 
+    override fun navigateToOtherPaymentModesScreen() {
+        navigateToOtherPaymentModesScreen(navController)
+    }
+
     override fun navigateToAvailableCreditLimitDetailPage() {
         navigateToAvailableCreditLimitDetailPage(navController)
     }
@@ -348,8 +381,11 @@ fun provideDetailPageNavCallBacks(
         navigateToRevampCreditNoteDetailPage(navController)
     }
 
-    override fun navigateToRevampPaymentDetailPage() {
-        navigateToRevampPaymentDetailPage(navController)
+    override fun navigateToRevampPaymentDetailPage(
+        ledgerId: String,
+        onError: (String) -> Unit
+    ) {
+        navigateToRevampPaymentDetailPage(navController, ledgerId, onError)
     }
 
     override fun navigateToRevampInterestDetailPage() {

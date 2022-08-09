@@ -17,6 +17,8 @@ sealed class LedgerRoutes(val screen: String) {
 
     object TotalOutstandingDetailScreen : LedgerRoutes("total_outstanding_detail_screen")
 
+    object OtherPaymentModesScreen : LedgerRoutes("other_payment_modes_screen")
+
     object TotalAvailableCreditLimitScreen :
         LedgerRoutes("total_available_credit_limit_detail_screen")
 

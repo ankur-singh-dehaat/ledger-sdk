@@ -22,6 +22,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import lib.dehaat.ledger.initializer.themes.LedgerColors
@@ -38,6 +39,7 @@ import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionCard
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionListHeader
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionType
 import lib.dehaat.ledger.resources.Background
+import lib.dehaat.ledger.showToast
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
 
@@ -55,6 +57,7 @@ fun RevampLedgerScreen(
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val context = LocalContext.current
 
     CommonContainer(
         title = viewModel.dcName,
@@ -100,6 +103,9 @@ fun RevampLedgerScreen(
                             onPayNowClick = onPayNowClick,
                             onTotalOutstandingDetailsClick = {
                                 detailPageNavigationCallback.navigateToOutstandingDetailPage()
+                            },
+                            onOtherPaymentModeClick = {
+                                detailPageNavigationCallback.navigateToOtherPaymentModesScreen()
                             }
                         )
 
@@ -131,7 +137,9 @@ fun RevampLedgerScreen(
                                     detailPageNavigationCallback.navigateToRevampCreditNoteDetailPage()
                                 }
                                 2 -> TransactionCard(transactionType = TransactionType.Payment) {
-                                    detailPageNavigationCallback.navigateToRevampPaymentDetailPage()
+                                    detailPageNavigationCallback.navigateToRevampPaymentDetailPage("Id") {
+                                        context.showToast("Something went wrong, Please try again")
+                                    }
                                 }
                                 3 -> TransactionCard(transactionType = TransactionType.Interest) {
                                     detailPageNavigationCallback.navigateToRevampInterestDetailPage()
