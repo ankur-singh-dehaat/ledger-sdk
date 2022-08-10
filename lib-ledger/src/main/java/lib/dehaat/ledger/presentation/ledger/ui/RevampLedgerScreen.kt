@@ -104,6 +104,9 @@ fun RevampLedgerScreen(
                             onTotalOutstandingDetailsClick = {
                                 detailPageNavigationCallback.navigateToOutstandingDetailPage()
                             },
+                            onShowInvoiceListDetailsClick = {
+                                detailPageNavigationCallback.navigateToInvoiceListPage()
+                            },
                             onOtherPaymentModeClick = {
                                 detailPageNavigationCallback.navigateToOtherPaymentModesScreen()
                             }

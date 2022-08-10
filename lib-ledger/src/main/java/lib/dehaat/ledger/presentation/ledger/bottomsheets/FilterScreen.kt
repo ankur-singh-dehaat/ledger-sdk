@@ -137,7 +137,7 @@ fun FilterScreen(
         isFilterSelected = { selectedFilter = FilterType.CustomFiltering }
     )
 
-    VerticalSpacer(size = 32.dp)
+    VerticalSpacer(height = 32.dp)
 
     Row(
         modifier = Modifier
@@ -191,7 +191,7 @@ private fun CustomFilterOption(
             onDateClick = isFilterSelected
         )
 
-        HorizontalSpacer(height = 20.dp)
+        HorizontalSpacer(width = 20.dp)
 
         FilterDateSelector(
             modifier = Modifier.weight(1F),
@@ -220,7 +220,7 @@ private fun FilterDateSelector(
             fontFamily = notoSans
         )
     )
-    VerticalSpacer(size = 4.dp)
+    VerticalSpacer(height = 4.dp)
 
     Row(
         modifier = Modifier
@@ -245,7 +245,7 @@ private fun FilterDateSelector(
             contentDescription = stringResource(id = R.string.accessibility_icon),
             tint = Neutral50
         )
-        HorizontalSpacer(height = 8.dp)
+        HorizontalSpacer(width = 8.dp)
         Text(
             text = date.ifEmpty { "DD/MM/YYYY" },
             style = textParagraphT2(

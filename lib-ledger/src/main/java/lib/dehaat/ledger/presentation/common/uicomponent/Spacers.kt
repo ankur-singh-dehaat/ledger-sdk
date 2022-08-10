@@ -17,7 +17,7 @@ fun SpaceMedium() {
 fun SpaceSmall12() = Spacer(modifier = Modifier.height(12.dp))
 
 @Composable
-fun HorizontalSpacer(height: Dp) = Spacer(modifier = Modifier.width(height))
+fun HorizontalSpacer(width: Dp) = Spacer(modifier = Modifier.width(width))
 
 @Composable
-fun VerticalSpacer(size: Dp) = Spacer(modifier = Modifier.height(size))
+fun VerticalSpacer(height: Dp) = Spacer(modifier = Modifier.height(height))

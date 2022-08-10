@@ -96,7 +96,7 @@ fun AvailableCreditLimitDetailsScreen(
                     .background(Color.White)
                     .padding(horizontal = 20.dp)
             ) {
-                VerticalSpacer(size = 24.dp)
+                VerticalSpacer(height = 24.dp)
 
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp),
@@ -116,7 +116,7 @@ fun AvailableCreditLimitDetailsScreen(
                     )
                 )
 
-                VerticalSpacer(size = 12.dp)
+                VerticalSpacer(height = 12.dp)
 
                 Row(
                     modifier = Modifier
@@ -150,13 +150,13 @@ fun AvailableCreditLimitDetailsScreen(
                     )
                 }
 
-                VerticalSpacer(size = 16.dp)
+                VerticalSpacer(height = 16.dp)
 
                 Divider()
 
-                VerticalSpacer(size = 32.dp)
+                VerticalSpacer(height = 32.dp)
 
-                VerticalSpacer(size = 8.dp)
+                VerticalSpacer(height = 8.dp)
 
                 CalculationMethodScreen(
                     backgroundColor = BlueGreen10,
@@ -170,10 +170,10 @@ fun AvailableCreditLimitDetailsScreen(
                     total = Pair(stringResource(id = R.string.total_credit_limit), "₹ 5,00,000")
                 )
 
-                VerticalSpacer(size = 16.dp)
+                VerticalSpacer(height = 16.dp)
             }
 
-            VerticalSpacer(size = 16.dp)
+            VerticalSpacer(height = 16.dp)
 
             Column(
                 modifier = Modifier
@@ -193,7 +193,7 @@ fun AvailableCreditLimitDetailsScreen(
                         contentDescription = stringResource(id = R.string.accessibility_icon),
                     )
 
-                    HorizontalSpacer(height = 8.dp)
+                    HorizontalSpacer(width = 8.dp)
 
                     Text(
                         text = stringResource(id = R.string.how_does_payment_increase_credit_limit),
@@ -210,7 +210,7 @@ fun AvailableCreditLimitDetailsScreen(
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)
                 ) {
                     InformationalScreen(true)
-                    VerticalSpacer(size = 12.dp)
+                    VerticalSpacer(height = 12.dp)
                     InformationalScreen(false)
                 }
             }
@@ -310,7 +310,7 @@ private fun InformationalScreen(
                 )
             }
 
-            VerticalSpacer(size = 8.dp)
+            VerticalSpacer(height = 8.dp)
 
             Text(
                 text = stringResource(id = R.string.example),
@@ -320,7 +320,7 @@ private fun InformationalScreen(
                 )
             )
 
-            VerticalSpacer(size = 4.dp)
+            VerticalSpacer(height = 4.dp)
 
             Text(
                 text = stringResource(
@@ -338,5 +338,5 @@ private fun InformationalScreen(
         }
     }
 
-    VerticalSpacer(size = 8.dp)
+    VerticalSpacer(height = 8.dp)
 }

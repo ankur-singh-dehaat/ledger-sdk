@@ -41,6 +41,7 @@ private fun LedgerHeaderScreenPreview() {
         showPayNowButton = true,
         onPayNowClick = {},
         onTotalOutstandingDetailsClick = {},
+        onShowInvoiceListDetailsClick = {},
         onOtherPaymentModeClick = {}
     )
 }
@@ -52,6 +53,7 @@ fun LedgerHeaderScreen(
     showPayNowButton: Boolean,
     onPayNowClick: () -> Unit,
     onTotalOutstandingDetailsClick: () -> Unit,
+    onShowInvoiceListDetailsClick: () -> Unit,
     onOtherPaymentModeClick: () -> Unit
 ) = Column(
     modifier = Modifier
@@ -97,9 +99,10 @@ fun LedgerHeaderScreen(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        SaveInterestScreen(showDetails = true) {
-
-        }
+        SaveInterestScreen(
+            showDetails = true,
+            onViewDetailsClick = onShowInvoiceListDetailsClick
+        )
     }
 
     if (showPayNowButton) {

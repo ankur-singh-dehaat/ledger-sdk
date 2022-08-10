@@ -54,6 +54,10 @@
     <string name="reference_id">रेफ़्रेन्स आई.डी.</string>
     <string name="interest_amount">ब्याज राशि</string>
     <string name="daily_interest_details">दैनिक ब्याज विवरण</string>
+    <string name="invoice_list">इनवॉइस लिस्ट</string>
+    <string name="invoice_on_which_interest_is_charged">इनवॉइस जिन पर ब्याज लग रहा है</string>
+    <string name="invoices_not_attracting_interest">इनवॉइस जिन पर ब्याज नहीं लग रहा है</string>
+    <string name="invoice">इनवॉइस</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

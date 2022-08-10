@@ -74,7 +74,7 @@ fun RevampPaymentDetailScreen(
                         )
                     )
 
-                    VerticalSpacer(size = 4.dp)
+                    VerticalSpacer(height = 4.dp)
 
                     Text(
                         text = "₹ 1,00,000",
@@ -86,7 +86,7 @@ fun RevampPaymentDetailScreen(
                 }
             }
 
-            VerticalSpacer(size = 16.dp)
+            VerticalSpacer(height = 16.dp)
 
             Column(
                 modifier = Modifier

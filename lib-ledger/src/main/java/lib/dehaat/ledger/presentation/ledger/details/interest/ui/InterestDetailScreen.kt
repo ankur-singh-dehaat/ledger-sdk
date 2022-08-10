@@ -84,7 +84,7 @@ fun InterestDetailScreen(
                     )
                 )
 
-                VerticalSpacer(size = 20.dp)
+                VerticalSpacer(height = 20.dp)
 
                 Text(
                     text = stringResource(id = R.string.interest_amount),
@@ -94,7 +94,7 @@ fun InterestDetailScreen(
                     )
                 )
 
-                VerticalSpacer(size = 4.dp)
+                VerticalSpacer(height = 4.dp)
 
                 Text(
                     text = "₹ 6,950",
@@ -105,7 +105,7 @@ fun InterestDetailScreen(
                 )
             }
 
-            VerticalSpacer(size = 16.dp)
+            VerticalSpacer(height = 16.dp)
 
             Column(
                 modifier = Modifier
@@ -121,7 +121,7 @@ fun InterestDetailScreen(
                                 .fillMaxWidth()
                                 .background(Color.White)
                         ) {
-                            VerticalSpacer(size = 20.dp)
+                            VerticalSpacer(height = 20.dp)
 
                             Text(
                                 modifier = Modifier
@@ -133,11 +133,11 @@ fun InterestDetailScreen(
                                 )
                             )
 
-                            VerticalSpacer(size = 12.dp)
+                            VerticalSpacer(height = 12.dp)
 
                             Divider()
 
-                            VerticalSpacer(size = 16.dp)
+                            VerticalSpacer(height = 16.dp)
                         }
                     }
 

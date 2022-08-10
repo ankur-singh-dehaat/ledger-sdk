@@ -89,7 +89,7 @@ fun TotalOutstandingScreen(
                 )
             )
 
-            VerticalSpacer(size = 16.dp)
+            VerticalSpacer(height = 16.dp)
 
             Row(
                 modifier = Modifier
@@ -125,11 +125,11 @@ fun TotalOutstandingScreen(
                 )
             }
 
-            VerticalSpacer(size = 16.dp)
+            VerticalSpacer(height = 16.dp)
 
             Divider()
 
-            VerticalSpacer(size = 24.dp)
+            VerticalSpacer(height = 24.dp)
 
             CalculationMethodScreen(
                 backgroundColor = SeaGreen10,

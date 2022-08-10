@@ -135,7 +135,7 @@ sealed class TransactionType {
 
 @DrawableRes
 fun TransactionType.getIcon() = when (this) {
-    TransactionType.Invoice -> R.drawable.ic_transactions_invoice
+    TransactionType.Invoice -> R.drawable.ic_revamp_invoice
     TransactionType.CreditNote -> R.drawable.ic_transactions_credit_note
     TransactionType.Payment -> R.drawable.ic_transactions_payment
     TransactionType.Interest -> R.drawable.ic_transactions_interest

@@ -60,7 +60,7 @@ fun CalculationMethodScreen(
         )
     )
 
-    VerticalSpacer(size = 8.dp)
+    VerticalSpacer(height = 8.dp)
 
     Column(
         modifier = Modifier
@@ -137,6 +137,6 @@ fun CalculationMethodScreen(
             )
         }
 
-        VerticalSpacer(size = 8.dp)
+        VerticalSpacer(height = 8.dp)
     }
 }

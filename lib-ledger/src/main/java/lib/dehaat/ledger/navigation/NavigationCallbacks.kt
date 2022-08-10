@@ -20,6 +20,8 @@ interface DetailPageNavigationCallback {
 
     fun navigateToOutstandingDetailPage()
 
+    fun navigateToInvoiceListPage()
+
     fun navigateToOtherPaymentModesScreen()
 
     fun navigateToAvailableCreditLimitDetailPage()

@@ -25,6 +25,8 @@ import lib.dehaat.ledger.presentation.ledger.details.interest.InterestDetailsVie
 import lib.dehaat.ledger.presentation.ledger.details.interest.ui.InterestDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.invoice.InvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScreen
+import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
+import lib.dehaat.ledger.presentation.ledger.details.loanlist.ui.InvoiceListScreen
 import lib.dehaat.ledger.presentation.ledger.details.otherpaymentmode.OtherPaymentModesViewModel
 import lib.dehaat.ledger.presentation.ledger.details.otherpaymentmode.ui.OtherPaymentModeScreen
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
@@ -133,6 +135,18 @@ fun LedgerNavigation(
                     navController.popBackStack()
                 }
             )
+        }
+
+        composable(
+            route = LedgerRoutes.InvoiceListScreen.screen
+        ) {
+            val invoiceListViewModel = hiltViewModel<InvoiceListViewModel>()
+            InvoiceListScreen(
+                viewModel = invoiceListViewModel,
+                ledgerColors = ledgerColors
+            ) {
+                navController.popBackStack()
+            }
         }
 
         composable(
@@ -371,6 +385,10 @@ fun provideDetailPageNavCallBacks(
 
     override fun navigateToOutstandingDetailPage() {
         navigateToOutstandingDetailPage(navController)
+    }
+
+    override fun navigateToInvoiceListPage() {
+        navigateToInvoiceListPage(navController)
     }
 
     override fun navigateToOtherPaymentModesScreen() {
