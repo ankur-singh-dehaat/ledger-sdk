@@ -3,6 +3,7 @@ package lib.dehaat.ledger.presentation.ledger.ui.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.resources.LedgerTheme
@@ -17,6 +19,7 @@ import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.SeaGreen10
 import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB2
+import lib.dehaat.ledger.resources.textParagraphT1
 import lib.dehaat.ledger.resources.textParagraphT2
 
 @Preview(
@@ -24,8 +27,8 @@ import lib.dehaat.ledger.resources.textParagraphT2
     name = "RevampKeyValuePair Preview"
 )
 @Composable
-fun RevampKeyValuePairPreview() = LedgerTheme {
-    RevampKeyValuePair(
+private fun RevampKeyValuePairPreview() = LedgerTheme {
+    RevampKeyValueChip(
         modifier = Modifier,
         key = "Key",
         value = "$ 6000",
@@ -33,8 +36,20 @@ fun RevampKeyValuePairPreview() = LedgerTheme {
     )
 }
 
+@Preview(
+    showBackground = true,
+    name = "KeyValuePair Preview"
+)
 @Composable
-fun RevampKeyValuePair(
+private fun KeyValuePairPreview() = LedgerTheme {
+    RevampKeyValuePair(
+        pair = Pair("Key", "Value"),
+        style = Pair(textParagraphT1(), textParagraphT1())
+    )
+}
+
+@Composable
+fun RevampKeyValueChip(
     modifier: Modifier,
     key: String,
     value: String,
@@ -61,5 +76,25 @@ fun RevampKeyValuePair(
             textColor = Neutral80,
             fontFamily = notoSans
         )
+    )
+}
+
+@Composable
+fun RevampKeyValuePair(
+    pair: Pair<String, String>,
+    style: Pair<TextStyle, TextStyle>
+) = Row(
+    modifier = Modifier
+        .fillMaxWidth(),
+    horizontalArrangement = Arrangement.SpaceBetween
+) {
+    Text(
+        text = pair.first,
+        style = style.first
+    )
+
+    Text(
+        text = pair.second,
+        style = style.second
     )
 }

@@ -25,7 +25,7 @@ import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.ui.component.CalculationMethodScreen
-import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValuePair
+import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValueChip
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Mustard10
@@ -97,7 +97,7 @@ fun TotalOutstandingScreen(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                RevampKeyValuePair(
+                RevampKeyValueChip(
                     modifier = Modifier
                         .weight(1F)
                         .fillMaxHeight(),
@@ -106,7 +106,7 @@ fun TotalOutstandingScreen(
                     backgroundColor = SeaGreen10
                 )
 
-                RevampKeyValuePair(
+                RevampKeyValueChip(
                     modifier = Modifier
                         .weight(1F)
                         .fillMaxHeight(),
@@ -115,7 +115,7 @@ fun TotalOutstandingScreen(
                     backgroundColor = Pumpkin10
                 )
 
-                RevampKeyValuePair(
+                RevampKeyValueChip(
                     modifier = Modifier
                         .weight(1F)
                         .fillMaxHeight(),

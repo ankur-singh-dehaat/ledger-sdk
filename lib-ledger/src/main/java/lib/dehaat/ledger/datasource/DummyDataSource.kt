@@ -5,6 +5,9 @@ import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.LedgerParentApp
 import lib.dehaat.ledger.initializer.LedgerSDK
 import lib.dehaat.ledger.initializer.callbacks.LedgerCallBack
+import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.CreditNote
+import lib.dehaat.ledger.presentation.ledger.ui.component.ProductDetails
+import lib.dehaat.ledger.presentation.ledger.ui.component.RevampProduct
 import lib.dehaat.ledger.presentation.model.creditlines.CreditLineViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditSummaryViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditViewData
@@ -76,6 +79,31 @@ object DummyDataSource {
             source = "SAP"
         )
     }
+
+    private val revampProduct = RevampProduct(
+        name = "Triticum - 30 ( 10 Kg)",
+        quantity = "10",
+        price = "₹ 1,500",
+        size = "1 X 10 Kg"
+    )
+
+    val productDetails = ProductDetails(
+        totalCount = "2",
+        products = listOf(revampProduct, revampProduct, revampProduct),
+        purchaseAmount = "₹ 30,000",
+        discount = "₹ 30,000",
+        gst = "₹ 30,000",
+        totalAmount = "₹ 30,000"
+    )
+
+    private val creditNote = CreditNote(
+        title = "क्रेडिट नोट: वॉल्यूम रेट कैशबैक",
+        date = "18-जून-2022",
+        amount = "₹ 5,000"
+    )
+
+    val creditNotes = listOf(creditNote, creditNote, creditNote)
+
     private val dbaApp by lazy {
         LedgerParentApp.DBA(
             ledgerCallBack = LedgerCallBack({}, {}, { _, _ -> }, { context, path -> null }

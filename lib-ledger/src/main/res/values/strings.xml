@@ -58,6 +58,20 @@
     <string name="invoice_on_which_interest_is_charged">Invoices on which Interest is charged</string>
     <string name="invoices_not_attracting_interest">Invoices not attracting Interest</string>
     <string name="invoice">Invoice</string>
+    <string name="invoice_details">Invoice Details</string>
+    <string name="product_details">Product Details</string>
+    <string name="total_items">Total Items: %s</string>
+    <string name="quantity">Qty. %s</string>
+    <string name="purchase_amount">Purchase Amount</string>
+    <string name="discount">Discount</string>
+    <string name="gst">G.S.T</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="invoice_amount">Invoice Amount</string>
+    <string name="invoice_id">Invoice ID</string>
+    <string name="invoice_date">Invoice Date</string>
+    <string name="interest_start_date">Interest Start Date</string>
+    <string name="outstanding_amount">Outstanding Amount</string>
+    <string name="credit_note_received">Credit Note Received</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

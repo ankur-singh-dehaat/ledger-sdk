@@ -24,7 +24,9 @@ import lib.dehaat.ledger.presentation.ledger.details.creditnote.ui.CreditNoteDet
 import lib.dehaat.ledger.presentation.ledger.details.interest.InterestDetailsViewModel
 import lib.dehaat.ledger.presentation.ledger.details.interest.ui.InterestDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.invoice.InvoiceDetailViewModel
+import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScreen
+import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.RevampInvoiceDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.ui.InvoiceListScreen
 import lib.dehaat.ledger.presentation.ledger.details.otherpaymentmode.OtherPaymentModesViewModel
@@ -220,7 +222,15 @@ fun LedgerNavigation(
         composable(
             route = LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen
         ) {
-            LocalContext.current.showToast("RevampLedgerInvoiceDetailScreen")
+            val invoiceDetailViewModel = hiltViewModel<RevampInvoiceDetailViewModel>()
+            RevampInvoiceDetailScreen(
+                viewModel = invoiceDetailViewModel,
+                ledgerId = "",
+                ledgerColors = ledgerColors,
+                onDownloadInvoiceClick = {}
+            ) {
+                navController.popBackStack()
+            }
         }
 
         composable(

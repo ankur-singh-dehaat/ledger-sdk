@@ -58,6 +58,20 @@
     <string name="invoice_on_which_interest_is_charged">इनवॉइस जिन पर ब्याज लग रहा है</string>
     <string name="invoices_not_attracting_interest">इनवॉइस जिन पर ब्याज नहीं लग रहा है</string>
     <string name="invoice">इनवॉइस</string>
+    <string name="invoice_details">इनवॉइस विवरण</string>
+    <string name="product_details">प्रोडक्ट विवरण</string>
+    <string name="total_items">कुल आइटम: %s</string>
+    <string name="quantity">Qty. %s</string>
+    <string name="purchase_amount">ख़रीदी राशि</string>
+    <string name="discount">डिस्काउंट</string>
+    <string name="gst">जी.ऐस.टी</string>
+    <string name="total_amount">कुल राशि</string>
+    <string name="invoice_amount">इनवॉइस राशि</string>
+    <string name="invoice_id">इनवॉइस आई डी</string>
+    <string name="invoice_date">इनवॉइस तिथि</string>
+    <string name="interest_start_date">ब्याज शुरू तिथि</string>
+    <string name="outstanding_amount">बकाया राशि</string>
+    <string name="credit_note_received">क्रेडिट नोट प्राप्त</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

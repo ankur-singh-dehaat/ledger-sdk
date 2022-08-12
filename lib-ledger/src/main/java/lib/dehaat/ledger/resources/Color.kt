@@ -16,6 +16,8 @@ val TextLightGrey = Color(0XFF808080)
 
 val BlueGreen10 = Color(0XFFE5FAFF)
 
+val BorderColor = Color(0XFFE0E0E0)
+
 val Error100 = Color(0XFFBF0010)
 
 val Mustard10 = Color(0XFFFFFBE5)

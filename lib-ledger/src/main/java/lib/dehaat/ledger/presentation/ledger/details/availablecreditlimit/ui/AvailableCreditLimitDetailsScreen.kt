@@ -41,7 +41,7 @@ import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.AvailableCreditLimitViewModel
 import lib.dehaat.ledger.presentation.ledger.ui.component.CalculationMethodScreen
-import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValuePair
+import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValueChip
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.BlueGreen10
 import lib.dehaat.ledger.resources.LedgerTheme
@@ -124,7 +124,7 @@ fun AvailableCreditLimitDetailsScreen(
                         .height(IntrinsicSize.Min),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    RevampKeyValuePair(
+                    RevampKeyValueChip(
                         modifier = Modifier
                             .weight(1.5F)
                             .fillMaxHeight(),
@@ -140,7 +140,7 @@ fun AvailableCreditLimitDetailsScreen(
                         tint = Neutral80
                     )
 
-                    RevampKeyValuePair(
+                    RevampKeyValueChip(
                         modifier = Modifier
                             .weight(2.5F)
                             .fillMaxHeight(),
