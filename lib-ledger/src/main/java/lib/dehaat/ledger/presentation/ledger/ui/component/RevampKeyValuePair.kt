@@ -1,5 +1,6 @@
 package lib.dehaat.ledger.presentation.ledger.ui.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -69,6 +70,7 @@ fun RevampKeyValueChip(
         )
     )
 
+    Log.d("TAG", "RevampKeyValueChip: $value")
     Text(
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
         text = value,

@@ -1,5 +1,7 @@
 package lib.dehaat.ledger.navigation
 
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
+
 interface DetailPageNavigationCallback {
     fun navigateToInvoiceDetailPage(
         legerId: String,
@@ -24,7 +26,9 @@ interface DetailPageNavigationCallback {
 
     fun navigateToOtherPaymentModesScreen()
 
-    fun navigateToAvailableCreditLimitDetailPage()
+    fun navigateToAvailableCreditLimitDetailPage(
+        viewState: AvailableCreditLimitViewState?
+    )
 
     fun navigateToRevampInvoiceDetailPage()
 

@@ -1,6 +1,15 @@
 package lib.dehaat.ledger.navigation
 
+import android.os.Bundle
+import androidx.core.net.toUri
+import androidx.navigation.NavController
+import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
+import lib.dehaat.ledger.presentation.LedgerConstants
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.util.withArgs
 
 fun navigateToInvoiceDetailScreen(
@@ -75,10 +84,16 @@ fun navigateToOtherPaymentModesScreen(
 )
 
 fun navigateToAvailableCreditLimitDetailPage(
-    navController: NavHostController
-) = navController.navigate(
-    LedgerRoutes.TotalAvailableCreditLimitScreen.screen
-)
+    navController: NavHostController,
+    viewState: AvailableCreditLimitViewState?
+) {
+    navController.navigateTo(
+        LedgerRoutes.TotalAvailableCreditLimitScreen.screen,
+        args = Bundle().apply {
+            putParcelable(LedgerConstants.KEY_AVAILABLE_CREDIT, viewState)
+        }
+    )
+}
 
 fun navigateToRevampInvoiceDetailPage(
     navController: NavHostController
@@ -111,3 +126,24 @@ fun navigateToRevampInterestDetailPage(
 ) = navController.navigate(
     LedgerRoutes.RevampLedgerInterestDetailScreen.screen
 )
+
+fun NavController.navigateTo(
+    route: String,
+    args: Bundle,
+    navOptions: NavOptions? = null,
+    navigatorExtras: Navigator.Extras? = null
+) {
+    val routeLink = NavDeepLinkRequest
+        .Builder
+        .fromUri(NavDestination.createRoute(route).toUri())
+        .build()
+
+    val deepLinkMatch = graph.matchDeepLink(routeLink)
+    if (deepLinkMatch != null) {
+        val destination = deepLinkMatch.destination
+        val id = destination.id
+        navigate(id, args, navOptions, navigatorExtras)
+    } else {
+        navigate(route, navOptions, navigatorExtras)
+    }
+}

@@ -47,7 +47,7 @@ object DummyDataSource {
         )
     }
     val summaryViewData = SummaryViewData(
-        bufferLimit = "",
+        bufferLimit = "100000",
         creditNoteAmountTillDate = "",
         externalFinancierSupported = false,
         interestTillDate = "40000",
@@ -59,7 +59,7 @@ object DummyDataSource {
         purchaseAmountTillDate = "",
         totalAvailableCreditLimit = "",
         totalCreditLimit = "",
-        totalOutstandingAmount = "",
+        totalOutstandingAmount = "320000",
         totalPurchaseAmount = "",
         undeliveredInvoiceAmount = ""
     )

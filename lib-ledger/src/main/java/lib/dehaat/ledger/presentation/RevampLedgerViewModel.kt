@@ -15,6 +15,7 @@ import lib.dehaat.ledger.domain.usecases.GetCreditSummaryUseCase
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
 import lib.dehaat.ledger.presentation.common.BaseViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.LedgerViewModelState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.mapper.ViewDataMapper
 import lib.dehaat.ledger.util.processAPIResponseWithFailureSnackBar
 
@@ -38,6 +39,9 @@ class RevampLedgerViewModel @Inject constructor(
             viewModelState.value.toUIState()
         )
 
+    var availableCreditLimitViewState: AvailableCreditLimitViewState? = null
+        private set
+
     init {
         getCreditSummaryFromServer()
     }
@@ -60,6 +64,8 @@ class RevampLedgerViewModel @Inject constructor(
     ) = result.processAPIResponseWithFailureSnackBar(::sendFailureEvent) {
         it?.let { creditSummaryEntity ->
             val creditSummaryViewData = mapper.toCreditSummaryViewData(creditSummaryEntity)
+            availableCreditLimitViewState =
+                mapper.toAvailableCreditLimitViewState(creditSummaryEntity)
             viewModelState.update { state ->
                 state.copy(
                     summaryViewData = creditSummaryViewData,

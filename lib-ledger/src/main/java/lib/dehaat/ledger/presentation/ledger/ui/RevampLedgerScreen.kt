@@ -43,6 +43,7 @@ import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionListHeader
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionType
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.showToast
+import lib.dehaat.ledger.util.getAmountInRupees
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
 
@@ -129,10 +130,10 @@ fun RevampLedgerScreen(
 
                                 SpaceMedium()
 
-                                AvailableCreditLimitScreen(
-                                    summaryViewData = uiState.summaryViewData
-                                ) {
-                                    detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage()
+                                uiState.summaryViewData?.totalAvailableCreditLimit?.let { amount ->
+                                    AvailableCreditLimitScreen(amount.getAmountInRupees()) {
+                                        detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage(viewModel.availableCreditLimitViewState)
+                                    }
                                 }
 
                                 SpaceMedium()

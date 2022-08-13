@@ -36,6 +36,7 @@ import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailSc
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.RevampPaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
 import lib.dehaat.ledger.presentation.ledger.ui.RevampLedgerScreen
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
@@ -152,7 +153,13 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.TotalAvailableCreditLimitScreen.screen
+            route = LedgerRoutes.TotalAvailableCreditLimitScreen.screen,
+            arguments = listOf(
+                navArgument(LedgerConstants.KEY_AVAILABLE_CREDIT) {
+                    type = NavType.ParcelableType(AvailableCreditLimitViewState::class.java)
+                    nullable = true
+                }
+            )
         ) {
             val availableCreditLimitViewModel = hiltViewModel<AvailableCreditLimitViewModel>()
 
@@ -405,8 +412,10 @@ fun provideDetailPageNavCallBacks(
         navigateToOtherPaymentModesScreen(navController)
     }
 
-    override fun navigateToAvailableCreditLimitDetailPage() {
-        navigateToAvailableCreditLimitDetailPage(navController)
+    override fun navigateToAvailableCreditLimitDetailPage(
+        viewState: AvailableCreditLimitViewState?
+    ) {
+        navigateToAvailableCreditLimitDetailPage(navController, viewState)
     }
 
     override fun navigateToRevampInvoiceDetailPage() {

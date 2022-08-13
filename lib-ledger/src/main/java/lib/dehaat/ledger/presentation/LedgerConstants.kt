@@ -11,4 +11,5 @@ object LedgerConstants {
     const val KEY_LMS_ACTIVATED = "KEY_LMS_ACTIVATED"
     const val KEY_APP_LANGUAGE = "KEY_APP_LANGUAGE"
     const val KEY_DC_FINANCED = "KEY_DC_FINANCED"
+    const val KEY_AVAILABLE_CREDIT = "KEY_AVAILABLE_CREDIT"
 }
