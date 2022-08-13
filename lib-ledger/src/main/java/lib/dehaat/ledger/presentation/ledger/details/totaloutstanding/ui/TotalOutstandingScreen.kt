@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +24,7 @@ import lib.dehaat.ledger.initializer.themes.DBAColors
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
+import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.ui.component.CalculationMethodScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValueChip
@@ -37,6 +39,7 @@ import lib.dehaat.ledger.resources.SeaGreen20
 import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
+import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
     showBackground = true,
@@ -57,88 +60,102 @@ fun TotalOutstandingScreen(
     ledgerColors: LedgerColors,
     onBackPress: () -> Unit
 ) {
+    val uiState = viewModel.viewState
+    val scaffoldState = rememberScaffoldState()
     CommonContainer(
         title = stringResource(id = R.string.total_outstanding_details),
         onBackPress = onBackPress,
+        scaffoldState = scaffoldState,
         backgroundColor = Background
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White)
-                .padding(
-                    horizontal = 20.dp,
-                    vertical = 24.dp
-                )
-        ) {
-            Text(
-                modifier = Modifier.padding(horizontal = 8.dp),
-                text = stringResource(id = R.string.total_outstanding),
-                style = textParagraphT1Highlight(
-                    textColor = Neutral90,
-                    fontFamily = notoSans
-                )
-            )
-
-            Text(
-                modifier = Modifier.padding(horizontal = 8.dp),
-                text = "₹ 3,20,000",
-                style = textHeadingH3(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
-            )
-
-            VerticalSpacer(height = 16.dp)
-
-            Row(
+        uiState?.let {
+            Column(
                 modifier = Modifier
-                    .height(IntrinsicSize.Min)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    .fillMaxWidth()
+                    .background(Color.White)
+                    .padding(
+                        horizontal = 20.dp,
+                        vertical = 24.dp
+                    )
             ) {
-                RevampKeyValueChip(
-                    modifier = Modifier
-                        .weight(1F)
-                        .fillMaxHeight(),
-                    key = stringResource(id = R.string.total_purchase),
-                    value = "+ ₹ 4,00,000",
-                    backgroundColor = SeaGreen10
+                Text(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    text = stringResource(id = R.string.total_outstanding),
+                    style = textParagraphT1Highlight(
+                        textColor = Neutral90,
+                        fontFamily = notoSans
+                    )
                 )
 
-                RevampKeyValueChip(
-                    modifier = Modifier
-                        .weight(1F)
-                        .fillMaxHeight(),
-                    key = stringResource(id = R.string.interest_till_date),
-                    value = "+ ₹ 20,000",
-                    backgroundColor = Pumpkin10
+                Text(
+                    modifier = Modifier.padding(horizontal = 8.dp),
+                    text = it.totalOutstandingAmount.getAmountInRupees(),
+                    style = textHeadingH3(
+                        textColor = Neutral80,
+                        fontFamily = notoSans
+                    )
                 )
 
-                RevampKeyValueChip(
+                VerticalSpacer(height = 16.dp)
+
+                Row(
                     modifier = Modifier
-                        .weight(1F)
-                        .fillMaxHeight(),
-                    key = stringResource(id = R.string.total_payment),
-                    value = "+ ₹ 20,000",
-                    backgroundColor = Mustard10
+                        .height(IntrinsicSize.Min)
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    RevampKeyValueChip(
+                        modifier = Modifier
+                            .weight(1F)
+                            .fillMaxHeight(),
+                        key = stringResource(id = R.string.total_purchase),
+                        value = it.totalPurchaseAmount.getAmountInRupees(),
+                        backgroundColor = SeaGreen10
+                    )
+
+                    RevampKeyValueChip(
+                        modifier = Modifier
+                            .weight(1F)
+                            .fillMaxHeight(),
+                        key = stringResource(id = R.string.interest_till_date),
+                        value = it.interestTillDate.getAmountInRupees(),
+                        backgroundColor = Pumpkin10
+                    )
+
+                    RevampKeyValueChip(
+                        modifier = Modifier
+                            .weight(1F)
+                            .fillMaxHeight(),
+                        key = stringResource(id = R.string.total_payment),
+                        value = it.paymentAmountTillDate.getAmountInRupees(),
+                        backgroundColor = Mustard10
+                    )
+                }
+
+                VerticalSpacer(height = 16.dp)
+
+                Divider()
+
+                VerticalSpacer(height = 24.dp)
+
+                CalculationMethodScreen(
+                    backgroundColor = SeaGreen10,
+                    dividerColor = SeaGreen20,
+                    title = stringResource(id = R.string.total_outstanding_calculation_method),
+                    first = Pair(
+                        stringResource(id = R.string.purchases_till_date),
+                        it.purchaseAmountTillDate.getAmountInRupees()
+                    ),
+                    second = Pair(
+                        stringResource(id = R.string.total_credit_note_amount),
+                        it.creditNoteAmountTillDate.getAmountInRupees()
+                    ),
+                    total = Pair(
+                        stringResource(id = R.string.total_purchase),
+                        it.totalPurchaseAmount.getAmountInRupees()
+                    )
                 )
             }
-
-            VerticalSpacer(height = 16.dp)
-
-            Divider()
-
-            VerticalSpacer(height = 24.dp)
-
-            CalculationMethodScreen(
-                backgroundColor = SeaGreen10,
-                dividerColor = SeaGreen20,
-                title = stringResource(id = R.string.total_outstanding_calculation_method),
-                first = Pair(stringResource(id = R.string.purchases_till_date), "₹ 4,20,000"),
-                second = Pair(stringResource(id = R.string.total_credit_note_amount), "- ₹ 20,000"),
-                total = Pair(stringResource(id = R.string.total_purchase), "₹ 4,00,000")
-            )
-        }
+        } ?: NoDataFound()
     }
 }

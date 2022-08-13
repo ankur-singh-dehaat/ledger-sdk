@@ -37,6 +37,7 @@ import lib.dehaat.ledger.presentation.ledger.details.payments.ui.RevampPaymentDe
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
 import lib.dehaat.ledger.presentation.ledger.ui.RevampLedgerScreen
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
@@ -128,7 +129,13 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.TotalOutstandingDetailScreen.screen
+            route = LedgerRoutes.TotalOutstandingDetailScreen.screen,
+            arguments = listOf(
+                navArgument(LedgerConstants.KEY_OUTSTANDING_CREDIT) {
+                    type = NavType.ParcelableType(OutstandingCreditLimitViewState::class.java)
+                    nullable = true
+                }
+            )
         ) {
             val totalOutstandingViewModel = hiltViewModel<TotalOutstandingViewModel>()
             TotalOutstandingScreen(
@@ -400,8 +407,10 @@ fun provideDetailPageNavCallBacks(
         )
     }
 
-    override fun navigateToOutstandingDetailPage() {
-        navigateToOutstandingDetailPage(navController)
+    override fun navigateToOutstandingDetailPage(
+        viewState: OutstandingCreditLimitViewState?
+    ) {
+        navigateToOutstandingDetailPage(navController, viewState)
     }
 
     override fun navigateToInvoiceListPage() {

@@ -118,7 +118,7 @@ fun RevampLedgerScreen(
                                     showPayNowButton = LedgerSDK.isDBA,
                                     onPayNowClick = onPayNowClick,
                                     onTotalOutstandingDetailsClick = {
-                                        detailPageNavigationCallback.navigateToOutstandingDetailPage()
+                                        detailPageNavigationCallback.navigateToOutstandingDetailPage(viewModel.outstandingCreditLimitViewState)
                                     },
                                     onShowInvoiceListDetailsClick = {
                                         detailPageNavigationCallback.navigateToInvoiceListPage()

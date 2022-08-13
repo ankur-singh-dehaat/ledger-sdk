@@ -12,4 +12,5 @@ object LedgerConstants {
     const val KEY_APP_LANGUAGE = "KEY_APP_LANGUAGE"
     const val KEY_DC_FINANCED = "KEY_DC_FINANCED"
     const val KEY_AVAILABLE_CREDIT = "KEY_AVAILABLE_CREDIT"
+    const val KEY_OUTSTANDING_CREDIT = "KEY_OUTSTANDING_CREDIT"
 }

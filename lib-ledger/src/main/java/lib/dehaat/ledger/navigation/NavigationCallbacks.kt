@@ -1,6 +1,7 @@
 package lib.dehaat.ledger.navigation
 
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 
 interface DetailPageNavigationCallback {
     fun navigateToInvoiceDetailPage(
@@ -20,7 +21,9 @@ interface DetailPageNavigationCallback {
         isLMSActivated: Boolean
     )
 
-    fun navigateToOutstandingDetailPage()
+    fun navigateToOutstandingDetailPage(
+        viewState: OutstandingCreditLimitViewState?
+    )
 
     fun navigateToInvoiceListPage()
 

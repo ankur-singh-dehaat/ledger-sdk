@@ -10,6 +10,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import lib.dehaat.ledger.presentation.LedgerConstants
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.util.withArgs
 
 fun navigateToInvoiceDetailScreen(
@@ -66,9 +67,13 @@ fun navigateToPaymentDetailScreen(
 }
 
 fun navigateToOutstandingDetailPage(
-    navController: NavHostController
-) = navController.navigate(
-    LedgerRoutes.TotalOutstandingDetailScreen.screen
+    navController: NavHostController,
+    viewState: OutstandingCreditLimitViewState?
+) = navController.navigateTo(
+    LedgerRoutes.TotalOutstandingDetailScreen.screen,
+    args = Bundle().apply {
+        putParcelable(LedgerConstants.KEY_OUTSTANDING_CREDIT, viewState)
+    }
 )
 
 fun navigateToInvoiceListPage(
@@ -86,14 +91,12 @@ fun navigateToOtherPaymentModesScreen(
 fun navigateToAvailableCreditLimitDetailPage(
     navController: NavHostController,
     viewState: AvailableCreditLimitViewState?
-) {
-    navController.navigateTo(
-        LedgerRoutes.TotalAvailableCreditLimitScreen.screen,
-        args = Bundle().apply {
-            putParcelable(LedgerConstants.KEY_AVAILABLE_CREDIT, viewState)
-        }
-    )
-}
+) = navController.navigateTo(
+    LedgerRoutes.TotalAvailableCreditLimitScreen.screen,
+    args = Bundle().apply {
+        putParcelable(LedgerConstants.KEY_AVAILABLE_CREDIT, viewState)
+    }
+)
 
 fun navigateToRevampInvoiceDetailPage(
     navController: NavHostController
