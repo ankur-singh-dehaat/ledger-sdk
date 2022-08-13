@@ -1,5 +1,6 @@
-package lib.dehaat.ledger.presentation.ledger.revamp.state
+package lib.dehaat.ledger.presentation.ledger.revamp.state.credits
 
+import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 
 data class LedgerViewModelState(
@@ -27,9 +28,3 @@ data class LedgerUIState(
     val showFilterSheet: Boolean = false,
     val state: UIState
 )
-
-sealed class UIState {
-    object LOADING : UIState()
-    data class ERROR(val message: String) : UIState()
-    object SUCCESS : UIState()
-}

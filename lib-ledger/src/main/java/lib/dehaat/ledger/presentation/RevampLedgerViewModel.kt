@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import lib.dehaat.ledger.domain.usecases.GetCreditSummaryUseCase
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
 import lib.dehaat.ledger.presentation.common.BaseViewModel
-import lib.dehaat.ledger.presentation.ledger.revamp.state.LedgerViewModelState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.LedgerViewModelState
 import lib.dehaat.ledger.presentation.mapper.ViewDataMapper
 import lib.dehaat.ledger.util.processAPIResponseWithFailureSnackBar
 
