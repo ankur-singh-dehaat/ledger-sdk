@@ -1,14 +1,18 @@
 package lib.dehaat.ledger.data
 
+import javax.inject.Inject
 import lib.dehaat.ledger.data.source.ILedgerDataSource
 import lib.dehaat.ledger.domain.ILedgerRepository
-import javax.inject.Inject
 
 class LedgerRepository @Inject constructor(private val networkSource: ILedgerDataSource) :
     ILedgerRepository {
 
     override suspend fun getCreditSummary(partnerId: String) =
         networkSource.getCreditSummary(partnerId)
+
+    override suspend fun getCreditSummaryV2(
+        partnerId: String
+    ) = networkSource.getCreditSummaryV2(partnerId)
 
     override suspend fun getTransactionSummary(
         partnerId: String

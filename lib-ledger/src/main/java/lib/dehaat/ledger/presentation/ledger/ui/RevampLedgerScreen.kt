@@ -25,14 +25,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import lib.dehaat.ledger.initializer.LedgerSDK
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.RevampLedgerViewModel
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.SpaceMedium
 import lib.dehaat.ledger.presentation.ledger.bottomsheets.FilterScreen
+import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
+import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
 import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitScreen
-import lib.dehaat.ledger.presentation.ledger.state.BottomSheetType
+import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.ledger.ui.component.LedgerHeaderScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.TotalOutstandingCalculation
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionCard
@@ -58,6 +61,7 @@ fun RevampLedgerScreen(
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val context = LocalContext.current
+    val nestedScrollViewState = rememberNestedScrollViewState()
 
     CommonContainer(
         title = viewModel.dcName,
@@ -66,92 +70,117 @@ fun RevampLedgerScreen(
         backgroundColor = Background,
         bottomBar = {
             AnimatedVisibility(
-                visible = !sheetState.isVisible,
+                visible = !sheetState.isVisible && uiState.state == UIState.SUCCESS,
                 enter = expandVertically(),
                 exit = shrinkVertically()
             ) {
-                TotalOutstandingCalculation(true)
+                TotalOutstandingCalculation(
+                    uiState.summaryViewData,
+                    true
+                )
             }
         }
     ) {
-        ModalBottomSheetLayout(
-            modifier = Modifier.padding(it),
-            sheetContent = {
-                when (uiState.bottomSheetType) {
-                    is BottomSheetType.DaysFilterTypeSheet -> {
-                        FilterScreen { _, _, _ ->
-                            scope.launch {
-                                sheetState.animateTo(ModalBottomSheetValue.Hidden)
-                            }
-                        }
-                    }
-                    else -> Spacer(modifier = Modifier.height(1.dp))
-                }
-            },
-            sheetState = sheetState,
-            sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
-        ) {
-            val nestedScrollViewState = rememberNestedScrollViewState()
-            VerticalNestedScrollView(
-                state = nestedScrollViewState,
-                header = {
-                    Column {
-                        LedgerHeaderScreen(
-                            saveInterest = true,
-                            showAdvanceAmount = true,
-                            showPayNowButton = true,
-                            onPayNowClick = onPayNowClick,
-                            onTotalOutstandingDetailsClick = {
-                                detailPageNavigationCallback.navigateToOutstandingDetailPage()
-                            },
-                            onShowInvoiceListDetailsClick = {
-                                detailPageNavigationCallback.navigateToInvoiceListPage()
-                            },
-                            onOtherPaymentModeClick = {
-                                detailPageNavigationCallback.navigateToOtherPaymentModesScreen()
-                            }
-                        )
-
-                        SpaceMedium()
-
-                        AvailableCreditLimitScreen {
-                            detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage()
-                        }
-
-                        SpaceMedium()
-                    }
-                },
-                content = {
-                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                        stickyHeader {
-                            TransactionListHeader {
-                                scope.launch {
-                                    viewModel.showFilterBottomSheet()
-                                    sheetState.animateTo(ModalBottomSheetValue.Expanded)
-                                }
-                            }
-                        }
-                        items(listOf(0, 1, 2, 3)) { type ->
-                            when (type) {
-                                0 -> TransactionCard(transactionType = TransactionType.Invoice) {
-                                    detailPageNavigationCallback.navigateToRevampInvoiceDetailPage()
-                                }
-                                1 -> TransactionCard(transactionType = TransactionType.CreditNote) {
-                                    detailPageNavigationCallback.navigateToRevampCreditNoteDetailPage()
-                                }
-                                2 -> TransactionCard(transactionType = TransactionType.Payment) {
-                                    detailPageNavigationCallback.navigateToRevampPaymentDetailPage("Id") {
-                                        context.showToast("Something went wrong, Please try again")
+        when (uiState.state) {
+            is UIState.SUCCESS -> {
+                ModalBottomSheetLayout(
+                    modifier = Modifier.padding(it),
+                    sheetContent = {
+                        if (uiState.showFilterSheet) {
+                            FilterScreen(
+                                onFilterApply = { _, _, _ ->
+                                    scope.launch {
+                                        sheetState.animateTo(ModalBottomSheetValue.Hidden)
+                                    }
+                                },
+                                onFilterClose = {
+                                    scope.launch {
+                                        sheetState.animateTo(ModalBottomSheetValue.Hidden)
                                     }
                                 }
-                                3 -> TransactionCard(transactionType = TransactionType.Interest) {
-                                    detailPageNavigationCallback.navigateToRevampInterestDetailPage()
+                            )
+                        } else {
+                            Spacer(modifier = Modifier.height(1.dp))
+                        }
+                    },
+                    sheetState = sheetState,
+                    sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)
+                ) {
+                    VerticalNestedScrollView(
+                        state = nestedScrollViewState,
+                        header = {
+                            Column {
+                                LedgerHeaderScreen(
+                                    summaryViewData = uiState.summaryViewData,
+                                    saveInterest = true,
+                                    showAdvanceAmount = true,
+                                    showPayNowButton = LedgerSDK.isDBA,
+                                    onPayNowClick = onPayNowClick,
+                                    onTotalOutstandingDetailsClick = {
+                                        detailPageNavigationCallback.navigateToOutstandingDetailPage()
+                                    },
+                                    onShowInvoiceListDetailsClick = {
+                                        detailPageNavigationCallback.navigateToInvoiceListPage()
+                                    },
+                                    onOtherPaymentModeClick = {
+                                        detailPageNavigationCallback.navigateToOtherPaymentModesScreen()
+                                    }
+                                )
+
+                                SpaceMedium()
+
+                                AvailableCreditLimitScreen(
+                                    summaryViewData = uiState.summaryViewData
+                                ) {
+                                    detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage()
+                                }
+
+                                SpaceMedium()
+                            }
+                        },
+                        content = {
+                            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                                stickyHeader {
+                                    TransactionListHeader {
+                                        scope.launch {
+                                            viewModel.showFilterBottomSheet()
+                                            sheetState.animateTo(ModalBottomSheetValue.Expanded)
+                                        }
+                                    }
+                                }
+                                items(listOf(0, 1, 2, 3)) { type ->
+                                    when (type) {
+                                        0 -> TransactionCard(transactionType = TransactionType.Invoice) {
+                                            detailPageNavigationCallback.navigateToRevampInvoiceDetailPage()
+                                        }
+                                        1 -> TransactionCard(transactionType = TransactionType.CreditNote) {
+                                            detailPageNavigationCallback.navigateToRevampCreditNoteDetailPage()
+                                        }
+                                        2 -> TransactionCard(transactionType = TransactionType.Payment) {
+                                            detailPageNavigationCallback.navigateToRevampPaymentDetailPage(
+                                                "Id"
+                                            ) {
+                                                context.showToast("Something went wrong, Please try again")
+                                            }
+                                        }
+                                        3 -> TransactionCard(transactionType = TransactionType.Interest) {
+                                            detailPageNavigationCallback.navigateToRevampInterestDetailPage()
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
+                    )
                 }
-            )
+            }
+            is UIState.LOADING -> {
+                ShowProgressDialog(ledgerColors) {
+                    viewModel.updateProgressDialog(false)
+                }
+            }
+            is UIState.ERROR -> {
+                NoDataFound((uiState.state as? UIState.ERROR)?.message)
+            }
         }
     }
 }

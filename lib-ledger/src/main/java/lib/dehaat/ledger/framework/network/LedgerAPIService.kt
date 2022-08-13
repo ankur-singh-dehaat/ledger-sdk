@@ -6,6 +6,7 @@ import lib.dehaat.ledger.framework.model.detail.creditnote.ResponseCreditNoteDet
 import lib.dehaat.ledger.framework.model.detail.invoice.ResponseInvoiceDetail
 import lib.dehaat.ledger.framework.model.detail.invoice.invoicedownload.ResponseDownloadInvoice
 import lib.dehaat.ledger.framework.model.detail.payment.ResponsePaymentDetail
+import lib.dehaat.ledger.framework.model.revamp.creditsummary.ResponseCreditSummaryV2
 import lib.dehaat.ledger.framework.model.transactions.ResponseTransactions
 import lib.dehaat.ledger.framework.model.transactionsummary.ResponseTransactionSummary
 import retrofit2.Response
@@ -18,6 +19,11 @@ interface LedgerAPIService {
     suspend fun getCreditSummary(
         @Query("partner_id") partnerId: String
     ): Response<ResponseCreditSummary>
+
+    @GET("/finance/accounting/credit-summary/v2")
+    suspend fun getV2CreditSummary(
+        @Query("partner_id") partnerId: String
+    ): Response<ResponseCreditSummaryV2>
 
     @GET("/finance/accounting/transactions-summary")
     suspend fun getTransactionSummary(

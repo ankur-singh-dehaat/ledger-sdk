@@ -20,6 +20,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
+import lib.dehaat.ledger.datasource.DummyDataSource
+import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
@@ -28,6 +30,7 @@ import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1
 import lib.dehaat.ledger.resources.textParagraphT2
+import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
     showBackground = true,
@@ -36,6 +39,7 @@ import lib.dehaat.ledger.resources.textParagraphT2
 @Composable
 private fun LedgerHeaderScreenPreview() {
     LedgerHeaderScreen(
+        summaryViewData = DummyDataSource.summaryViewData,
         saveInterest = true,
         showAdvanceAmount = true,
         showPayNowButton = true,
@@ -48,6 +52,7 @@ private fun LedgerHeaderScreenPreview() {
 
 @Composable
 fun LedgerHeaderScreen(
+    summaryViewData: SummaryViewData?,
     saveInterest: Boolean,
     showAdvanceAmount: Boolean,
     showPayNowButton: Boolean,
@@ -75,7 +80,7 @@ fun LedgerHeaderScreen(
         verticalAlignment = Alignment.Bottom
     ) {
         Text(
-            text = "₹ 3,20,000",
+            text = summaryViewData?.totalOutstandingAmount.getAmountInRupees(),
             style = textHeadingH3(
                 textColor = Neutral80
             )
@@ -87,7 +92,7 @@ fun LedgerHeaderScreen(
     if (showAdvanceAmount) {
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = "₹ 20,000 आपका एडवांस राशि है",
+            text = stringResource(id = R.string.your_advance_amount, "check this with back-end"),
             style = textCaptionCP1(
                 textColor = Neutral80,
                 fontFamily = notoSans
@@ -100,6 +105,7 @@ fun LedgerHeaderScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         SaveInterestScreen(
+            summaryViewData = summaryViewData,
             showDetails = true,
             onViewDetailsClick = onShowInvoiceListDetailsClick
         )

@@ -72,6 +72,8 @@
     <string name="interest_start_date">Interest Start Date</string>
     <string name="outstanding_amount">Outstanding Amount</string>
     <string name="credit_note_received">Credit Note Received</string>
+    <string name="pay_till_date">%s Pay till Date</string>
+    <string name="your_advance_amount">%s is your advance amount</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

@@ -21,6 +21,15 @@ class LedgerDataSource @Inject constructor(
         it?.data?.let { data -> mapper.toCreditSummaryDataEntity(data) }
     }
 
+    override suspend fun getCreditSummaryV2(
+        partnerId: String
+    ) = callAPI(
+        dispatcher,
+        { apiService.getV2CreditSummary(partnerId) }
+    ) {
+        it?.data?.credit?.let { data -> mapper.toCreditSummaryEntity(data) }
+    }
+
     override suspend fun getTransactionSummary(
         partnerId: String
     ): APIResultEntity<TransactionSummaryEntity?> = callAPI(

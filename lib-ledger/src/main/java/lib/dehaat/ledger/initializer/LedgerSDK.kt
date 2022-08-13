@@ -8,6 +8,7 @@ import lib.dehaat.ledger.presentation.ledger.LedgerDetailActivity
 object LedgerSDK {
     lateinit var currentApp: LedgerParentApp
     lateinit var bucket: String
+    var locale: String = "en"
     var appIcon: Int = 0
         private set
 
@@ -37,6 +38,7 @@ object LedgerSDK {
         isDCFinanced = isDCFinanced,
         language = language
     ).also {
+        language?.let { lang -> locale = lang }
         context.startActivity(it.build(context))
     }
 

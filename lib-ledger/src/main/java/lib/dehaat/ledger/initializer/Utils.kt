@@ -24,7 +24,7 @@ fun Long?.toDateMonthYear(): String {
 
 fun format(dateFormat: String, timeInSec: Long?) = try {
     timeInSec?.let {
-        val sdf = SimpleDateFormat(dateFormat, Locale("en", "in"))
+        val sdf = SimpleDateFormat(dateFormat, Locale(LedgerSDK.locale, "in"))
         sdf.format(it * 1000)
     } ?: ""
 } catch (ex: Exception) {
@@ -33,7 +33,7 @@ fun format(dateFormat: String, timeInSec: Long?) = try {
 }
 
 fun formatDecimal(value: Double?, fractionDigitCount: Int = 2): String {
-    val formatter = NumberFormat.getNumberInstance(Locale("en", "in"))
+    val formatter = NumberFormat.getNumberInstance(Locale(LedgerSDK.locale, "in"))
     formatter.minimumFractionDigits = fractionDigitCount
     formatter.maximumFractionDigits = fractionDigitCount
     return formatter.format(value ?: 0.0)

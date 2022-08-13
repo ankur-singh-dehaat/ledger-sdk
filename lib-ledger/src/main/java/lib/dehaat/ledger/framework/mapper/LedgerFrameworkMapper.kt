@@ -15,6 +15,7 @@ import lib.dehaat.ledger.entities.detail.invoice.LoanEntity
 import lib.dehaat.ledger.entities.detail.invoice.OverdueInfoEntity
 import lib.dehaat.ledger.entities.detail.invoice.invoicedownload.InvoiceDownloadDataEntity
 import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
+import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
 import lib.dehaat.ledger.framework.model.creditlines.CreditLine
@@ -32,6 +33,7 @@ import lib.dehaat.ledger.framework.model.detail.invoice.Loan
 import lib.dehaat.ledger.framework.model.detail.invoice.OverdueInfo
 import lib.dehaat.ledger.framework.model.detail.invoice.invoicedownload.DownloadInvoiceData
 import lib.dehaat.ledger.framework.model.detail.payment.PaymentDetailData
+import lib.dehaat.ledger.framework.model.revamp.creditsummary.CreditV2
 import lib.dehaat.ledger.framework.model.transactions.Transaction
 import lib.dehaat.ledger.framework.model.transactions.TransactionsData
 import lib.dehaat.ledger.framework.model.transactionsummary.TransactionDetailData
@@ -52,6 +54,26 @@ class LedgerFrameworkMapper @Inject constructor() {
             credit = toCreditSummaryCreditEntity(credit),
             overdue = toCreditSummaryOverDueEntity(overdue),
             info = toCreditSummaryInfoEntity(info),
+        )
+    }
+
+    fun toCreditSummaryEntity(credit: CreditV2) = with(credit) {
+        CreditSummaryEntityV2(
+            bufferLimit,
+            creditNoteAmountTillDate,
+            externalFinancierSupported,
+            interestTillDate,
+            minInterestAmountDue,
+            minInterestOutstandingDate,
+            minOutstandingAmountDue,
+            paymentAmountTillDate,
+            permanentCreditLimit,
+            purchaseAmountTillDate,
+            totalAvailableCreditLimit,
+            totalCreditLimit,
+            totalOutstandingAmount,
+            totalPurchaseAmount,
+            undeliveredInvoiceAmount
         )
     }
 

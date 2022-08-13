@@ -52,25 +52,30 @@ import lib.dehaat.ledger.resources.textParagraphT2
 )
 @Composable
 private fun FilterScreenPreview() = LedgerTheme {
-    FilterScreen { _, _, _ -> }
+    FilterScreen(
+        onFilterApply = { _, _, _ -> },
+        onFilterClose = {}
+    )
 }
 
 @Composable
 fun FilterScreen(
-    onFilterApply: (FilterType, String, String) -> Unit
+    onFilterApply: (FilterType, String, String) -> Unit,
+    onFilterClose: () -> Unit
 ) = Column(
     modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 20.dp)
         .padding(top = 20.dp, bottom = 16.dp)
 ) {
-    val context = LocalContext.current
     var selectedFilter: FilterType by remember { mutableStateOf(FilterType.AllTransactions) }
     var startDate by remember { mutableStateOf("") }
     var endDate by remember { mutableStateOf("") }
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onFilterClose),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

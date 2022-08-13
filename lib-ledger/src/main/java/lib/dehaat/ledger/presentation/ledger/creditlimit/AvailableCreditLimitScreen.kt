@@ -17,24 +17,30 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
+import lib.dehaat.ledger.datasource.DummyDataSource
 import lib.dehaat.ledger.presentation.ledger.ui.component.ViewDetails
+import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
+import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
     showBackground = true
 )
 @Composable
 fun AvailableCreditLimitScreenPreview() = LedgerTheme {
-    AvailableCreditLimitScreen {}
+    AvailableCreditLimitScreen(
+        summaryViewData = DummyDataSource.summaryViewData
+    ) {}
 }
 
 @Composable
 fun AvailableCreditLimitScreen(
+    summaryViewData: SummaryViewData?,
     onViewDetailsClick: () -> Unit
 ) = Column(
     modifier = Modifier
@@ -59,7 +65,7 @@ fun AvailableCreditLimitScreen(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "₹ 1,60,000",
+            text = summaryViewData?.totalAvailableCreditLimit.getAmountInRupees(),
             style = textHeadingH3(
                 textColor = Neutral80,
                 fontFamily = notoSans

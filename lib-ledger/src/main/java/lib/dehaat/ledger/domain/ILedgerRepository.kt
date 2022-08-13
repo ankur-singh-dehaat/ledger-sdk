@@ -7,12 +7,15 @@ import lib.dehaat.ledger.entities.detail.creditnote.CreditNoteDetailEntity
 import lib.dehaat.ledger.entities.detail.invoice.InvoiceDetailDataEntity
 import lib.dehaat.ledger.entities.detail.invoice.invoicedownload.InvoiceDownloadDataEntity
 import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
+import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
 
 interface ILedgerRepository {
 
     suspend fun getCreditSummary(partnerId: String): APIResultEntity<CreditSummaryEntity?>
+
+    suspend fun getCreditSummaryV2(partnerId: String): APIResultEntity<CreditSummaryEntityV2?>
 
     suspend fun getTransactionSummary(
         partnerId: String

@@ -19,6 +19,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
+import lib.dehaat.ledger.datasource.DummyDataSource
+import lib.dehaat.ledger.initializer.toDateMonthName
+import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.Pumpkin120
@@ -27,17 +30,23 @@ import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textParagraphT1
 import lib.dehaat.ledger.resources.textParagraphT2
 import lib.dehaat.ledger.resources.textSubHeadingS3
+import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
     showBackground = true
 )
 @Composable
-fun SaveInterestScreenPreview() {
-    SaveInterestScreen(showDetails = true, onViewDetailsClick = {})
+private fun SaveInterestScreenPreview() {
+    SaveInterestScreen(
+        summaryViewData = DummyDataSource.summaryViewData,
+        showDetails = true,
+        onViewDetailsClick = {}
+    )
 }
 
 @Composable
 fun SaveInterestScreen(
+    summaryViewData: SummaryViewData?,
     showDetails: Boolean,
     onViewDetailsClick: () -> Unit
 ) = Column(
@@ -62,7 +71,10 @@ fun SaveInterestScreen(
     ) {
         Text(
             modifier = Modifier.padding(),
-            text = "24 जुलाई तक भुगतान करें",
+            text = stringResource(
+                id = R.string.pay_till_date,
+                summaryViewData?.minInterestOutstandingDate?.toDateMonthName() ?: ""
+            ),
             style = textParagraphT1(
                 textColor = Neutral90,
                 fontFamily = notoSans
@@ -70,7 +82,7 @@ fun SaveInterestScreen(
         )
 
         Text(
-            text = "₹ 2,17,750",
+            text = summaryViewData?.minOutstandingAmountDue.getAmountInRupees(),
             style = textSubHeadingS3(
                 textColor = Neutral90,
                 fontFamily = notoSans

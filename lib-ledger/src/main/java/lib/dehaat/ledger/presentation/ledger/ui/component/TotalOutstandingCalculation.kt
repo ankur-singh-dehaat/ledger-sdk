@@ -23,6 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
+import lib.dehaat.ledger.datasource.DummyDataSource
+import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.Pumpkin120
@@ -31,6 +33,7 @@ import lib.dehaat.ledger.resources.TextLightGrey
 import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT2
+import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
     name = "TotalOutstandingCalculation Preview",
@@ -38,7 +41,10 @@ import lib.dehaat.ledger.resources.textParagraphT2
 )
 @Composable
 private fun TotalOutstandingCalculationPreview() = LedgerTheme {
-    TotalOutstandingCalculation(true)
+    TotalOutstandingCalculation(
+        DummyDataSource.summaryViewData,
+        true
+    )
 }
 
 @Preview(
@@ -47,11 +53,15 @@ private fun TotalOutstandingCalculationPreview() = LedgerTheme {
 )
 @Composable
 private fun TotalOutstandingCalculationWithoutHeaderPreview() = LedgerTheme {
-    TotalOutstandingCalculation(false)
+    TotalOutstandingCalculation(
+        DummyDataSource.summaryViewData,
+        false
+    )
 }
 
 @Composable
 fun TotalOutstandingCalculation(
+    summaryViewData: SummaryViewData?,
     showTopHeader: Boolean
 ) = Card(
     modifier = Modifier
@@ -128,7 +138,7 @@ fun TotalOutstandingCalculation(
                     )
                 )
                 Text(
-                    text = "3,45,000",
+                    text = summaryViewData?.totalPurchaseAmount.getAmountInRupees(),
                     style = textParagraphT2(
                         textColor = Pumpkin120,
                         fontFamily = notoSans
@@ -150,7 +160,7 @@ fun TotalOutstandingCalculation(
                     )
                 )
                 Text(
-                    text = "15,000",
+                    text = summaryViewData?.interestTillDate.getAmountInRupees(),
                     style = textParagraphT2(
                         textColor = Pumpkin120,
                         fontFamily = notoSans
@@ -178,7 +188,7 @@ fun TotalOutstandingCalculation(
                     )
                 )
                 Text(
-                    text = "40,000",
+                    text = summaryViewData?.paymentAmountTillDate.getAmountInRupees(),
                     style = textParagraphT2(
                         textColor = SeaGreen110,
                         fontFamily = notoSans

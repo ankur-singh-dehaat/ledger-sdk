@@ -13,6 +13,7 @@ import lib.dehaat.ledger.presentation.model.creditsummary.CreditSummaryViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.InfoViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.OverdueViewData
+import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.presentation.model.transactions.TransactionViewData
 
 object DummyDataSource {
@@ -45,6 +46,23 @@ object DummyDataSource {
             minPaymentDueDate = 78
         )
     }
+    val summaryViewData = SummaryViewData(
+        bufferLimit = "",
+        creditNoteAmountTillDate = "",
+        externalFinancierSupported = false,
+        interestTillDate = "40000",
+        minInterestAmountDue = "",
+        minInterestOutstandingDate = 7,
+        minOutstandingAmountDue = "",
+        paymentAmountTillDate = "",
+        permanentCreditLimit = "",
+        purchaseAmountTillDate = "",
+        totalAvailableCreditLimit = "",
+        totalCreditLimit = "",
+        totalOutstandingAmount = "",
+        totalPurchaseAmount = "",
+        undeliveredInvoiceAmount = ""
+    )
     val creditSummaryViewData by lazy {
         CreditSummaryViewData(
             creditViewData,
