@@ -61,6 +61,27 @@ class LedgerDataSource @Inject constructor(
         it?.transactionsData?.let { data -> mapper.toTransactionsDataEntity(data) } ?: emptyList()
     }
 
+    override suspend fun getTransactionsV2(
+        partnerId: String,
+        limit: Int,
+        offset: Int,
+        fromDate: Long?,
+        toDate: Long?
+    ) = callAPI(
+        dispatcher,
+        {
+            apiService.getTransactionsV2(
+                partnerId = partnerId,
+                fromDate = fromDate,
+                toDate = toDate,
+                limit = limit,
+                offset = offset
+            )
+        }
+    ) {
+        it?.data?.let { data -> mapper.toTransactionsEntity(data) } ?: emptyList()
+    }
+
     override suspend fun getCreditLines(
         partnerId: String
     ) = callAPI(

@@ -7,6 +7,7 @@ import lib.dehaat.ledger.framework.model.detail.invoice.ResponseInvoiceDetail
 import lib.dehaat.ledger.framework.model.detail.invoice.invoicedownload.ResponseDownloadInvoice
 import lib.dehaat.ledger.framework.model.detail.payment.ResponsePaymentDetail
 import lib.dehaat.ledger.framework.model.revamp.creditsummary.ResponseCreditSummaryV2
+import lib.dehaat.ledger.framework.model.revamp.transactions.ResponseTransaction
 import lib.dehaat.ledger.framework.model.transactions.ResponseTransactions
 import lib.dehaat.ledger.framework.model.transactionsummary.ResponseTransactionSummary
 import retrofit2.Response
@@ -39,6 +40,15 @@ interface LedgerAPIService {
         @Query("from_date") fromDate: Long?,
         @Query("to_date") toDate: Long?,
     ): Response<ResponseTransactions>
+
+    @GET("/finance/accounting/transactions/v2")
+    suspend fun getTransactionsV2(
+        @Query("partner_id") partnerId: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
+        @Query("from_date") fromDate: Long?,
+        @Query("to_date") toDate: Long?,
+    ): Response<ResponseTransaction>
 
     @GET("/finance/accounting/credit-lines")
     suspend fun getCreditLines(

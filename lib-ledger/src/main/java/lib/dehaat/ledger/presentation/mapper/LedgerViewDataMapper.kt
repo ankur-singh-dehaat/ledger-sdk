@@ -13,6 +13,7 @@ import lib.dehaat.ledger.entities.detail.creditnote.SummaryEntity
 import lib.dehaat.ledger.entities.detail.invoice.InvoiceDetailDataEntity
 import lib.dehaat.ledger.entities.detail.invoice.LoanEntity
 import lib.dehaat.ledger.entities.detail.invoice.OverdueInfoEntity
+import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
 import lib.dehaat.ledger.presentation.model.creditlines.CreditLineViewData
@@ -27,6 +28,7 @@ import lib.dehaat.ledger.presentation.model.detail.creditnote.SummaryViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.InvoiceDetailDataViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.LoanViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.OverdueInfoViewData
+import lib.dehaat.ledger.presentation.model.revamp.transactions.TransactionViewDataV2
 import lib.dehaat.ledger.presentation.model.transactions.TransactionViewData
 import lib.dehaat.ledger.presentation.model.transactionsummary.TransactionSummaryViewData
 
@@ -64,6 +66,24 @@ class LedgerViewDataMapper @Inject constructor() {
 
     fun toTransactionsDataEntity(data: List<TransactionEntity>) = data.map {
         toTransactionViewData(it)
+    }
+
+    fun toTransactionEntity(data: List<TransactionEntityV2>) = data.map {
+        TransactionViewDataV2(
+            amount = it.amount,
+            creditNoteReason = it.creditNoteReason,
+            date = it.date,
+            erpId = it.erpId,
+            interestEndDate = it.interestEndDate,
+            interestStartDate = it.interestStartDate,
+            ledgerId = it.ledgerId,
+            locusId = it.locusId,
+            partnerId = it.partnerId,
+            paymentMode = it.paymentMode,
+            source = it.source,
+            sourceNo = it.sourceNo,
+            type = it.type
+        )
     }
 
     fun toCreditNoteDetailDataEntity(data: CreditNoteDetailEntity) = with(data) {

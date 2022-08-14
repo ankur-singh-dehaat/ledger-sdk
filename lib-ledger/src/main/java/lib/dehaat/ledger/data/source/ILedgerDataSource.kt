@@ -8,6 +8,7 @@ import lib.dehaat.ledger.entities.detail.invoice.InvoiceDetailDataEntity
 import lib.dehaat.ledger.entities.detail.invoice.invoicedownload.InvoiceDownloadDataEntity
 import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
+import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
 
@@ -29,6 +30,14 @@ interface ILedgerDataSource {
         fromDate: Long?,
         toDate: Long?,
     ): APIResultEntity<List<TransactionEntity>>
+
+    suspend fun getTransactionsV2(
+        partnerId: String,
+        limit: Int,
+        offset: Int,
+        fromDate: Long?,
+        toDate: Long?,
+    ): APIResultEntity<List<TransactionEntityV2>>
 
     suspend fun getCreditLines(
         partnerId: String

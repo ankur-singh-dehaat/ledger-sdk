@@ -99,33 +99,31 @@ fun navigateToAvailableCreditLimitDetailPage(
 )
 
 fun navigateToRevampInvoiceDetailPage(
-    navController: NavHostController
+    navController: NavHostController,
+    ledgerId: String
 ) = navController.navigate(
     LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen
 )
 
 fun navigateToRevampCreditNoteDetailPage(
-    navController: NavHostController
+    navController: NavHostController,
+    ledgerId: String
 ) = navController.navigate(
     LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen
 )
 
 fun navigateToRevampPaymentDetailPage(
     navController: NavHostController,
-    ledgerId: String,
-    onError: (String) -> Unit
-) = try {
-    navController.navigate(
-        LedgerRoutes.RevampLedgerPaymentDetailScreen.screen.withArgs(
-            ledgerId
-        )
+    ledgerId: String
+) = navController.navigate(
+    LedgerRoutes.RevampLedgerPaymentDetailScreen.screen.withArgs(
+        ledgerId
     )
-} catch (e: Exception) {
-    e.localizedMessage?.let(onError)
-}
+)
 
 fun navigateToRevampInterestDetailPage(
-    navController: NavHostController
+    navController: NavHostController,
+    ledgerId: String
 ) = navController.navigate(
     LedgerRoutes.RevampLedgerInterestDetailScreen.screen
 )

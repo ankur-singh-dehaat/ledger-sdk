@@ -14,6 +14,7 @@ import lib.dehaat.ledger.presentation.model.creditsummary.CreditViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.InfoViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.OverdueViewData
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
+import lib.dehaat.ledger.presentation.model.revamp.transactions.TransactionViewDataV2
 import lib.dehaat.ledger.presentation.model.transactions.TransactionViewData
 
 object DummyDataSource {
@@ -97,6 +98,22 @@ object DummyDataSource {
             source = "SAP"
         )
     }
+
+    val invoiceTransaction = TransactionViewDataV2(
+        amount = "100",
+        creditNoteReason = null,
+        date = 1658214762,
+        erpId = "2022$$0090000169",
+        interestEndDate = 1658214762,
+        interestStartDate = 1658214762,
+        ledgerId = "95",
+        locusId = 4,
+        partnerId = "0010000654",
+        paymentMode = "CASH",
+        source = "SAP",
+        sourceNo = "",
+        type = "INVOICE"
+    )
 
     private val revampProduct = RevampProduct(
         name = "Triticum - 30 ( 10 Kg)",

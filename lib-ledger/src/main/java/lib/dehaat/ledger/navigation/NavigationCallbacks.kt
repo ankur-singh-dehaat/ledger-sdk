@@ -33,14 +33,11 @@ interface DetailPageNavigationCallback {
         viewState: AvailableCreditLimitViewState?
     )
 
-    fun navigateToRevampInvoiceDetailPage()
+    fun navigateToRevampInvoiceDetailPage(ledgerId: String)
 
-    fun navigateToRevampCreditNoteDetailPage()
+    fun navigateToRevampCreditNoteDetailPage(ledgerId: String)
 
-    fun navigateToRevampPaymentDetailPage(
-        ledgerId: String,
-        onError: (String) -> Unit
-    )
+    fun navigateToRevampPaymentDetailPage(ledgerId: String)
 
-    fun navigateToRevampInterestDetailPage()
+    fun navigateToRevampInterestDetailPage(ledgerId: String)
 }

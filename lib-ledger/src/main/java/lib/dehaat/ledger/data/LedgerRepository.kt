@@ -1,8 +1,10 @@
 package lib.dehaat.ledger.data
 
+import com.cleanarch.base.entity.result.api.APIResultEntity
 import javax.inject.Inject
 import lib.dehaat.ledger.data.source.ILedgerDataSource
 import lib.dehaat.ledger.domain.ILedgerRepository
+import lib.dehaat.ledger.entities.transactions.TransactionEntity
 
 class LedgerRepository @Inject constructor(private val networkSource: ILedgerDataSource) :
     ILedgerRepository {
@@ -30,6 +32,20 @@ class LedgerRepository @Inject constructor(private val networkSource: ILedgerDat
         limit,
         offset,
         onlyPenaltyInvoices,
+        fromDate,
+        toDate
+    )
+
+    override suspend fun getTransactionsV2(
+        partnerId: String,
+        limit: Int,
+        offset: Int,
+        fromDate: Long?,
+        toDate: Long?
+    ) = networkSource.getTransactionsV2(
+        partnerId,
+        limit,
+        offset,
         fromDate,
         toDate
     )

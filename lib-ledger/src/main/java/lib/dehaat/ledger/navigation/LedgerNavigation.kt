@@ -427,22 +427,21 @@ fun provideDetailPageNavCallBacks(
         navigateToAvailableCreditLimitDetailPage(navController, viewState)
     }
 
-    override fun navigateToRevampInvoiceDetailPage() {
-        navigateToRevampInvoiceDetailPage(navController)
+    override fun navigateToRevampInvoiceDetailPage(ledgerId: String) {
+        navigateToRevampInvoiceDetailPage(navController, ledgerId)
     }
 
-    override fun navigateToRevampCreditNoteDetailPage() {
-        navigateToRevampCreditNoteDetailPage(navController)
+    override fun navigateToRevampCreditNoteDetailPage(ledgerId: String) {
+        navigateToRevampCreditNoteDetailPage(navController, ledgerId)
     }
 
     override fun navigateToRevampPaymentDetailPage(
-        ledgerId: String,
-        onError: (String) -> Unit
+        ledgerId: String
     ) {
-        navigateToRevampPaymentDetailPage(navController, ledgerId, onError)
+        navigateToRevampPaymentDetailPage(navController, ledgerId)
     }
 
-    override fun navigateToRevampInterestDetailPage() {
-        navigateToRevampInterestDetailPage(navController)
+    override fun navigateToRevampInterestDetailPage(ledgerId: String) {
+        navigateToRevampInterestDetailPage(navController, ledgerId)
     }
 }

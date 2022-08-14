@@ -6,11 +6,8 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
@@ -36,13 +33,10 @@ import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
 import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitScreen
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.transactions.ui.TransactionsScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.LedgerHeaderScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.TotalOutstandingCalculation
-import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionCard
-import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionListHeader
-import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionType
 import lib.dehaat.ledger.resources.Background
-import lib.dehaat.ledger.showToast
 import lib.dehaat.ledger.util.getAmountInRupees
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
@@ -118,7 +112,9 @@ fun RevampLedgerScreen(
                                     showPayNowButton = LedgerSDK.isDBA,
                                     onPayNowClick = onPayNowClick,
                                     onTotalOutstandingDetailsClick = {
-                                        detailPageNavigationCallback.navigateToOutstandingDetailPage(viewModel.outstandingCreditLimitViewState)
+                                        detailPageNavigationCallback.navigateToOutstandingDetailPage(
+                                            viewModel.outstandingCreditLimitViewState
+                                        )
                                     },
                                     onShowInvoiceListDetailsClick = {
                                         detailPageNavigationCallback.navigateToInvoiceListPage()
@@ -132,7 +128,9 @@ fun RevampLedgerScreen(
 
                                 uiState.summaryViewData?.totalAvailableCreditLimit?.let { amount ->
                                     AvailableCreditLimitScreen(amount.getAmountInRupees()) {
-                                        detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage(viewModel.availableCreditLimitViewState)
+                                        detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage(
+                                            viewModel.availableCreditLimitViewState
+                                        )
                                     }
                                 }
 
@@ -140,34 +138,10 @@ fun RevampLedgerScreen(
                             }
                         },
                         content = {
-                            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                                stickyHeader {
-                                    TransactionListHeader {
-                                        scope.launch {
-                                            viewModel.showFilterBottomSheet()
-                                            sheetState.animateTo(ModalBottomSheetValue.Expanded)
-                                        }
-                                    }
-                                }
-                                items(listOf(0, 1, 2, 3)) { type ->
-                                    when (type) {
-                                        0 -> TransactionCard(transactionType = TransactionType.Invoice) {
-                                            detailPageNavigationCallback.navigateToRevampInvoiceDetailPage()
-                                        }
-                                        1 -> TransactionCard(transactionType = TransactionType.CreditNote) {
-                                            detailPageNavigationCallback.navigateToRevampCreditNoteDetailPage()
-                                        }
-                                        2 -> TransactionCard(transactionType = TransactionType.Payment) {
-                                            detailPageNavigationCallback.navigateToRevampPaymentDetailPage(
-                                                "Id"
-                                            ) {
-                                                context.showToast("Something went wrong, Please try again")
-                                            }
-                                        }
-                                        3 -> TransactionCard(transactionType = TransactionType.Interest) {
-                                            detailPageNavigationCallback.navigateToRevampInterestDetailPage()
-                                        }
-                                    }
+                            TransactionsScreen(detailPageNavigationCallback) {
+                                scope.launch {
+                                    viewModel.showFilterBottomSheet()
+                                    sheetState.animateTo(ModalBottomSheetValue.Expanded)
                                 }
                             }
                         }

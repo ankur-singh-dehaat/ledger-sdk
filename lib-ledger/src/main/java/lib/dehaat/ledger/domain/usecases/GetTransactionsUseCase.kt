@@ -19,4 +19,18 @@ class GetTransactionsUseCase @Inject constructor(val repo: ILedgerRepository) {
         fromDate = fromDate,
         toDate = toDate
     )
+
+    suspend fun getTransactions(
+        partnerId: String,
+        limit: Int,
+        offset: Int,
+        toDate: Long?,
+        fromDate: Long?,
+    ) = repo.getTransactionsV2(
+        partnerId = partnerId,
+        limit = limit,
+        offset = offset,
+        fromDate = fromDate,
+        toDate = toDate
+    )
 }

@@ -16,6 +16,7 @@ import lib.dehaat.ledger.entities.detail.invoice.OverdueInfoEntity
 import lib.dehaat.ledger.entities.detail.invoice.invoicedownload.InvoiceDownloadDataEntity
 import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
+import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
 import lib.dehaat.ledger.framework.model.creditlines.CreditLine
@@ -34,6 +35,7 @@ import lib.dehaat.ledger.framework.model.detail.invoice.OverdueInfo
 import lib.dehaat.ledger.framework.model.detail.invoice.invoicedownload.DownloadInvoiceData
 import lib.dehaat.ledger.framework.model.detail.payment.PaymentDetailData
 import lib.dehaat.ledger.framework.model.revamp.creditsummary.CreditV2
+import lib.dehaat.ledger.framework.model.revamp.transactions.TransactionData
 import lib.dehaat.ledger.framework.model.transactions.Transaction
 import lib.dehaat.ledger.framework.model.transactions.TransactionsData
 import lib.dehaat.ledger.framework.model.transactionsummary.TransactionDetailData
@@ -92,6 +94,24 @@ class LedgerFrameworkMapper @Inject constructor() {
 
     fun toTransactionsDataEntity(data: TransactionsData) = data.transactions.map {
         toTransactionEntity(it)
+    }
+
+    fun toTransactionsEntity(data: TransactionData) = data.transactions.map {
+        TransactionEntityV2(
+            it.amount,
+            it.creditNoteReason,
+            it.date,
+            it.erpId,
+            it.interestEndDate,
+            it.interestStartDate,
+            it.ledgerId,
+            it.locusId,
+            it.partnerId,
+            it.paymentMode,
+            it.source,
+            it.sourceNo,
+            it.type
+        )
     }
 
     fun toCreditNoteDetailDataEntity(data: CreditNoteDetailData) = with(data) {
