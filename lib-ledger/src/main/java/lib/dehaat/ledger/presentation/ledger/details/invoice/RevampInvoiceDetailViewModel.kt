@@ -31,6 +31,7 @@ class RevampInvoiceDetailViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val ledgerId by lazy { savedStateHandle.get<String>(LedgerConstants.KEY_LEDGER_ID) ?: "" }
+    val source by lazy { savedStateHandle.get<String>(LedgerConstants.KEY_SOURCE) ?: "" }
 
     private val viewModelState = MutableStateFlow(InvoiceDetailsViewModelState())
     val uiState = viewModelState
@@ -87,12 +88,17 @@ class RevampInvoiceDetailViewModel @Inject constructor(
     }
 
     companion object {
-        fun getBundle(ledgerId: String) = Bundle().apply {
+        fun getBundle(ledgerId: String, source: String) = Bundle().apply {
             putString(LedgerConstants.KEY_LEDGER_ID, ledgerId)
+            putString(LedgerConstants.KEY_SOURCE, source)
         }
 
         fun getArgs() = listOf(
             navArgument(LedgerConstants.KEY_LEDGER_ID) {
+                type = NavType.StringType
+                nullable = true
+            },
+            navArgument(LedgerConstants.KEY_SOURCE) {
                 type = NavType.StringType
                 nullable = true
             }

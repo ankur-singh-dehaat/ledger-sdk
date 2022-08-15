@@ -251,6 +251,7 @@ private fun InformationalScreen(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
+            modifier = Modifier.weight(1f),
             text = stringResource(
                 id = if (isFullPaymentInfo) {
                     R.string.when_does_total_payment_amount_adds_up

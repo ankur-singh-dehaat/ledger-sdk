@@ -84,6 +84,7 @@
     <string name="credit_note_details">Credit Note Details</string>
     <string name="credit_note_amount">Credit Note Amount</string>
     <string name="received_date">Received Date</string>
+    <string name="download_invoice">Download Invoice"</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

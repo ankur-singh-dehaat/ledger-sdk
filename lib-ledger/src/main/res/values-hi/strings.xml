@@ -87,4 +87,5 @@
     <string name="accessibility_icon">Accessibility Icon</string>
     <string name="credit_note_amount">क्रेडिट नोट राशि</string>
     <string name="received_date">प्राप्ति तिथि</string>
+    <string name="download_invoice">"डाउनलोड इनवॉइस "</string>
 </resources>

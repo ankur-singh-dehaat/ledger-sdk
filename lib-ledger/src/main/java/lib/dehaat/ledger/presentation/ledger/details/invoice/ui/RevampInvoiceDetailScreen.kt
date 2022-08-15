@@ -3,6 +3,8 @@ package lib.dehaat.ledger.presentation.ledger.details.invoice.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,12 +14,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -27,6 +32,7 @@ import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.initializer.toDateMonthYear
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
+import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
@@ -34,7 +40,6 @@ import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetail
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.ledger.ui.component.ProductDetailsScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValuePair
-import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
 import lib.dehaat.ledger.presentation.model.revamp.invoice.CreditNoteViewData
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.Error10
@@ -42,8 +47,10 @@ import lib.dehaat.ledger.resources.Error100
 import lib.dehaat.ledger.resources.Neutral60
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
+import lib.dehaat.ledger.resources.Primary80
 import lib.dehaat.ledger.resources.Pumpkin10
 import lib.dehaat.ledger.resources.Pumpkin120
+import lib.dehaat.ledger.resources.SeaGreen100
 import lib.dehaat.ledger.resources.Success10
 import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB2
@@ -56,7 +63,7 @@ import lib.dehaat.ledger.util.getAmountInRupees
 fun RevampInvoiceDetailScreen(
     viewModel: RevampInvoiceDetailViewModel,
     ledgerColors: LedgerColors,
-    onDownloadInvoiceClick: (InvoiceDownloadData) -> Unit,
+    onDownloadInvoiceClick: (String, String) -> Unit,
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -205,6 +212,13 @@ fun RevampInvoiceDetailScreen(
                     VerticalSpacer(height = 16.dp)
 
                     ProductDetailsScreen(uiState.invoiceDetailsViewData?.productsInfo)
+
+                    DownloadInvoiceButton {
+                        val invoiceId = uiState.invoiceDetailsViewData?.summary?.invoiceId
+                        if (invoiceId != null) {
+                            onDownloadInvoiceClick(invoiceId, viewModel.source)
+                        }
+                    }
                 }
             }
             UIState.LOADING -> {
@@ -291,8 +305,41 @@ private fun CreditNoteCard(
     Divider()
 }
 
-data class CreditNote(
-    val title: String,
-    val date: String,
-    val amount: String
-)
+@Composable
+fun DownloadInvoiceButton(
+    onClick: () -> Unit
+) = Column(
+    modifier = Modifier
+        .fillMaxWidth()
+        .background(Color.White),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Row(
+        modifier = Modifier
+            .clickable(onClick = onClick)
+            .padding(top = 16.dp)
+            .background(shape = RoundedCornerShape(48.dp), color = Color.White)
+            .border(
+                width = 1.dp,
+                color = Primary80,
+                shape = RoundedCornerShape(48.dp)
+            )
+            .padding(vertical = 16.dp, horizontal = 40.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_download),
+            contentDescription = stringResource(id = R.string.accessibility_icon),
+            tint = SeaGreen100
+        )
+        HorizontalSpacer(width = 6.dp)
+        Text(
+            text = stringResource(id = R.string.download_invoice),
+            color = SeaGreen100
+        )
+    }
+
+    VerticalSpacer(height = 16.dp)
+}

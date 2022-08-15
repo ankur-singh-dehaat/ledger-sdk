@@ -5,7 +5,6 @@ import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.LedgerParentApp
 import lib.dehaat.ledger.initializer.LedgerSDK
 import lib.dehaat.ledger.initializer.callbacks.LedgerCallBack
-import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.CreditNote
 import lib.dehaat.ledger.presentation.model.creditlines.CreditLineViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditSummaryViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditViewData
@@ -13,7 +12,6 @@ import lib.dehaat.ledger.presentation.model.creditsummary.InfoViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.OverdueViewData
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductViewDataV2
-import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductsInfoViewDataV2
 import lib.dehaat.ledger.presentation.model.revamp.transactions.TransactionViewDataV2
 import lib.dehaat.ledger.presentation.model.transactions.TransactionViewData
 
@@ -122,23 +120,6 @@ object DummyDataSource {
         priceTotal = "10000",
         priceTotalDiscexcl = 10.0
     )
-
-    val productDetails = ProductsInfoViewDataV2(
-        count = 2,
-        productList = listOf(revampProduct, revampProduct, revampProduct),
-        purchaseAmount = "₹ 30,000",
-        discount = "₹ 30,000",
-        gst = "₹ 30,000",
-        totalAmount = "₹ 30,000"
-    )
-
-    private val creditNote = CreditNote(
-        title = "क्रेडिट नोट: वॉल्यूम रेट कैशबैक",
-        date = "18-जून-2022",
-        amount = "₹ 5,000"
-    )
-
-    val creditNotes = listOf(creditNote, creditNote, creditNote)
 
     private val dbaApp by lazy {
         LedgerParentApp.DBA(

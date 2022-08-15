@@ -242,7 +242,7 @@ fun LedgerNavigation(
             RevampInvoiceDetailScreen(
                 viewModel = invoiceDetailViewModel,
                 ledgerColors = ledgerColors,
-                onDownloadInvoiceClick = {}
+                onDownloadInvoiceClick = { invoiceId, source -> }
             ) {
                 navController.popBackStack()
             }
