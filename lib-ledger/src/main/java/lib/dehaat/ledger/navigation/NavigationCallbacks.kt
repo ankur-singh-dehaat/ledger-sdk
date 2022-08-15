@@ -38,7 +38,5 @@ interface DetailPageNavigationCallback {
 
     fun navigateToRevampCreditNoteDetailPage(bundle: Bundle)
 
-    fun navigateToRevampPaymentDetailPage(ledgerId: String)
-
-    fun navigateToRevampInterestDetailPage(ledgerId: String)
+    fun navigateToRevampPaymentDetailPage(bundle: Bundle)
 }

@@ -1,7 +1,10 @@
 package lib.dehaat.ledger.presentation.ledger.details.payments
 
+import android.os.Bundle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.cleanarch.base.entity.result.api.APIResultEntity
 import com.dehaat.androidbase.helper.callInViewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -101,5 +104,18 @@ class PaymentDetailViewModel @Inject constructor(
 
     fun updateProgressDialog(show: Boolean) = viewModelState.update {
         it.copy(isLoading = show)
+    }
+
+    companion object {
+        fun getBundle(ledgerId: String) = Bundle().apply {
+            putString(KEY_LEDGER_ID, ledgerId)
+        }
+
+        fun getArgs() = listOf(
+            navArgument(KEY_LEDGER_ID) {
+                type = NavType.StringType
+                nullable = true
+            }
+        )
     }
 }

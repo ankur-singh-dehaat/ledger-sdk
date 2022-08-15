@@ -10,6 +10,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
+import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.CreditNoteDetailsViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.transactions.TransactionViewModel
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionCard
@@ -55,17 +56,13 @@ fun TransactionsScreen(
                         transaction = transaction
                     ) {
                         detailPageNavigationCallback.navigateToRevampPaymentDetailPage(
-                            transaction.ledgerId
+                            PaymentDetailViewModel.getBundle(transaction.ledgerId)
                         )
                     }
                     TransactionType.Interest().interestType -> TransactionCard(
                         transactionType = TransactionType.Interest(),
                         transaction = transaction
-                    ) {
-                        detailPageNavigationCallback.navigateToRevampInterestDetailPage(
-                            transaction.ledgerId
-                        )
-                    }
+                    ) {}
                 }
             }
         }

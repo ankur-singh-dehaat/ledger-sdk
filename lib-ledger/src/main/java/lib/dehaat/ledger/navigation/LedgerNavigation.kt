@@ -330,30 +330,12 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen.withArgsPath(
-                LedgerConstants.KEY_LEDGER_ID
-            ),
-            arguments = listOf(
-                navArgument(LedgerConstants.KEY_LEDGER_ID) {
-                    type = NavType.StringType
-                }
-            )
+            route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen,
+            arguments = PaymentDetailViewModel.getArgs()
         ) {
             val paymentDetailViewModel = hiltViewModel<PaymentDetailViewModel>()
             RevampPaymentDetailScreen(
                 viewModel = paymentDetailViewModel,
-                ledgerColors = ledgerColors
-            ) {
-                navController.popBackStack()
-            }
-        }
-
-        composable(
-            route = LedgerRoutes.RevampLedgerInterestDetailScreen.screen
-        ) {
-            val interestDetailsViewModel = hiltViewModel<InterestDetailsViewModel>()
-            InterestDetailScreen(
-                viewModel = interestDetailsViewModel,
                 ledgerColors = ledgerColors
             ) {
                 navController.popBackStack()
@@ -441,12 +423,8 @@ fun provideDetailPageNavCallBacks(
     }
 
     override fun navigateToRevampPaymentDetailPage(
-        ledgerId: String
+        bundle: Bundle
     ) {
-        navigateToRevampPaymentDetailPage(navController, ledgerId)
-    }
-
-    override fun navigateToRevampInterestDetailPage(ledgerId: String) {
-        navigateToRevampInterestDetailPage(navController, ledgerId)
+        navigateToRevampPaymentDetailPage(navController, bundle)
     }
 }
