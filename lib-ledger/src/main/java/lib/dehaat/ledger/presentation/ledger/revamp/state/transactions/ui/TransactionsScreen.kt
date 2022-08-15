@@ -6,9 +6,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
+import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
+import lib.dehaat.ledger.presentation.ledger.components.ShowProgress
 import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.CreditNoteDetailsViewModel
@@ -20,6 +24,7 @@ import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionType
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TransactionsScreen(
+    ledgerColors: LedgerColors,
     detailPageNavigationCallback: DetailPageNavigationCallback,
     showFilterSheet: () -> Unit
 ) {
@@ -63,6 +68,16 @@ fun TransactionsScreen(
                         transactionType = TransactionType.Interest(),
                         transaction = transaction
                     ) {}
+                }
+            }
+        }
+        transactions.apply {
+            when {
+                loadState.refresh is LoadState.Loading || loadState.append is LoadState.Loading -> {
+                    item { ShowProgress(ledgerColors) }
+                }
+                loadState.append is LoadState.NotLoading && loadState.append.endOfPaginationReached && itemCount == 0 -> {
+                    item { NoDataFound() }
                 }
             }
         }

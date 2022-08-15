@@ -20,8 +20,6 @@ import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.Availa
 import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.ui.AvailableCreditLimitDetailsScreen
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.CreditNoteDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.ui.CreditNoteDetailScreen
-import lib.dehaat.ledger.presentation.ledger.details.interest.InterestDetailsViewModel
-import lib.dehaat.ledger.presentation.ledger.details.interest.ui.InterestDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.invoice.InvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScreen

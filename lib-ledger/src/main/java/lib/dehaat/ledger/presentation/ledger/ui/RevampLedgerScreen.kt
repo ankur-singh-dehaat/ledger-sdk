@@ -135,7 +135,7 @@ fun RevampLedgerScreen(
                             }
                         },
                         content = {
-                            TransactionsScreen(detailPageNavigationCallback) {
+                            TransactionsScreen(ledgerColors, detailPageNavigationCallback) {
                                 scope.launch {
                                     viewModel.showFilterBottomSheet()
                                     sheetState.animateTo(ModalBottomSheetValue.Expanded)
