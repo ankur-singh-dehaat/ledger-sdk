@@ -80,13 +80,20 @@ class PaymentDetailViewModel @Inject constructor(
             it?.let { entity ->
                 val paymentDetailViewData = mapper.toPaymentDetailSummaryViewData(entity.summary)
                 viewModelState.update {
-                    it.copy(isLoading = false, paymentDetailSummaryViewData = paymentDetailViewData)
+                    it.copy(
+                        isLoading = false,
+                        isSuccess = true,
+                        paymentDetailSummaryViewData = paymentDetailViewData
+                    )
                 }
             }
         }
     }
 
     private fun sendShowSnackBarEvent(message: String) {
+        viewModelState.update {
+            it.copy(isError = true, errorMessage = message)
+        }
         viewModelScope.launch {
             _uiEvent.emit(UiEvent.ShowSnackbar(message))
         }
