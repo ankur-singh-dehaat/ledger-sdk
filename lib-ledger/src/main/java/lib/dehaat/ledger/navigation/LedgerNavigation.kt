@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -12,7 +11,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.dehaat.androidbase.helper.showToast
 import lib.dehaat.ledger.initializer.callbacks.LedgerCallBack
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.LedgerConstants
@@ -37,6 +35,8 @@ import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailSc
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.RevampPaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
+import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.CreditNoteDetailsViewModel
+import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.ui.RevampCreditNoteDetailsScreen
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
@@ -281,9 +281,16 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen
+            route = LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen,
+            arguments = CreditNoteDetailsViewModel.getArgs()
         ) {
-            LocalContext.current.showToast("RevampLedgerCreditNoteDetailScreen")
+            val creditNoteDetailsViewModel = hiltViewModel<CreditNoteDetailsViewModel>()
+            RevampCreditNoteDetailsScreen(
+                viewModel = creditNoteDetailsViewModel,
+                ledgerColors = ledgerColors
+            ) {
+                navController.popBackStack()
+            }
         }
 
         composable(
@@ -432,8 +439,8 @@ fun provideDetailPageNavCallBacks(
         navigateToRevampInvoiceDetailPage(navController, bundle)
     }
 
-    override fun navigateToRevampCreditNoteDetailPage(ledgerId: String) {
-        navigateToRevampCreditNoteDetailPage(navController, ledgerId)
+    override fun navigateToRevampCreditNoteDetailPage(bundle: Bundle) {
+        navigateToRevampCreditNoteDetailPage(navController, bundle)
     }
 
     override fun navigateToRevampPaymentDetailPage(

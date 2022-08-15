@@ -13,7 +13,11 @@ import lib.dehaat.ledger.entities.detail.creditnote.SummaryEntity
 import lib.dehaat.ledger.entities.detail.invoice.InvoiceDetailDataEntity
 import lib.dehaat.ledger.entities.detail.invoice.LoanEntity
 import lib.dehaat.ledger.entities.detail.invoice.OverdueInfoEntity
+import lib.dehaat.ledger.entities.revamp.creditnote.CreditNoteDetailsEntity
+import lib.dehaat.ledger.entities.revamp.creditnote.SummaryEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
+import lib.dehaat.ledger.entities.revamp.invoice.ProductEntityV2
+import lib.dehaat.ledger.entities.revamp.invoice.ProductsInfoEntityV2
 import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
@@ -29,6 +33,8 @@ import lib.dehaat.ledger.presentation.model.detail.creditnote.SummaryViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.InvoiceDetailDataViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.LoanViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.OverdueInfoViewData
+import lib.dehaat.ledger.presentation.model.revamp.creditnote.CreditNoteDetailsViewData
+import lib.dehaat.ledger.presentation.model.revamp.creditnote.CreditNoteSummaryViewData
 import lib.dehaat.ledger.presentation.model.revamp.invoice.CreditNoteViewData
 import lib.dehaat.ledger.presentation.model.revamp.invoice.InvoiceDetailsViewData
 import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductViewDataV2
@@ -99,6 +105,46 @@ class LedgerViewDataMapper @Inject constructor() {
         )
     }
 
+    fun toCreditNoteDetailsDataEntity(data: CreditNoteDetailsEntity) = with(data) {
+        CreditNoteDetailsViewData(
+            summary = getCreditNoteDetailsSummaryViewData(summary),
+            productsInfo = getProductInfoViewData(productsInfo),
+        )
+    }
+
+    private fun getCreditNoteDetailsSummaryViewData(summary: SummaryEntityV2) = with(summary) {
+        CreditNoteSummaryViewData(
+            amount = amount,
+            invoiceDate = invoiceDate,
+            invoiceNumber = invoiceNumber,
+            reason = reason,
+            timestamp = timestamp
+        )
+    }
+
+    private fun getProductInfoViewData(data: ProductsInfoEntityV2) = with(data) {
+        ProductsInfoViewDataV2(
+            count = count,
+            discount = discount,
+            gst = gst,
+            productList = getProductList(productList),
+            purchaseAmount = purchaseAmount,
+            totalAmount = totalAmount
+        )
+    }
+
+    private fun getProductList(
+        productList: List<ProductEntityV2>
+    ) = productList.map {
+        ProductViewDataV2(
+            fname = it.fname,
+            name = it.name,
+            priceTotal = it.priceTotal,
+            priceTotalDiscexcl = it.priceTotalDiscexcl,
+            quantity = it.quantity
+        )
+    }
+
     fun toPaymentDetailSummaryViewData(data: EntityPaymentDetailSummary) = with(data) {
         ViewDataPaymentDetailSummary(
             referenceId = referenceId,
@@ -134,24 +180,7 @@ class LedgerViewDataMapper @Inject constructor() {
                     it.ledgerId
                 )
             },
-            productsInfo = with(productsInfo) {
-                ProductsInfoViewDataV2(
-                    count = count,
-                    discount = discount,
-                    gst = gst,
-                    productList = productList.map {
-                        ProductViewDataV2(
-                            it.fname,
-                            it.name,
-                            it.priceTotal,
-                            it.priceTotalDiscexcl,
-                            it.quantity
-                        )
-                    },
-                    purchaseAmount = purchaseAmount,
-                    totalAmount = totalAmount
-                )
-            },
+            productsInfo = getProductInfoViewData(productsInfo),
             summary = SummaryViewDataV2(
                 summary.interestBeingCharged,
                 summary.interestDays,

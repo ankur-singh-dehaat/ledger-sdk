@@ -21,6 +21,8 @@ val BorderColor = Color(0XFFE0E0E0)
 val Error100 = Color(0XFFBF0010)
 val Error10 = Color(0xFFFFEEEF)
 
+val FrenchBlue120 = Color(0XFF1F5C99)
+
 val Mustard10 = Color(0XFFFFFBE5)
 
 val Neutral10 = Color(0XFFF2F2F2)

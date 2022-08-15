@@ -81,6 +81,9 @@
     <string name="interest_running">Interest accumulating from %s days</string>
     <string name="interest_starting">Interest going to be started in %s days</string>
     <string name="full_payment_complete">Full payment complete</string>
+    <string name="credit_note_details">Credit Note Details</string>
+    <string name="credit_note_amount">Credit Note Amount</string>
+    <string name="received_date">Received Date</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

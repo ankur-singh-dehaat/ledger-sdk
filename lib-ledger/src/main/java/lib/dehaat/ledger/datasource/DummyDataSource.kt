@@ -6,14 +6,14 @@ import lib.dehaat.ledger.initializer.LedgerParentApp
 import lib.dehaat.ledger.initializer.LedgerSDK
 import lib.dehaat.ledger.initializer.callbacks.LedgerCallBack
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.CreditNote
-import lib.dehaat.ledger.presentation.ledger.ui.component.ProductDetails
-import lib.dehaat.ledger.presentation.ledger.ui.component.RevampProduct
 import lib.dehaat.ledger.presentation.model.creditlines.CreditLineViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditSummaryViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.InfoViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.OverdueViewData
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
+import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductViewDataV2
+import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductsInfoViewDataV2
 import lib.dehaat.ledger.presentation.model.revamp.transactions.TransactionViewDataV2
 import lib.dehaat.ledger.presentation.model.transactions.TransactionViewData
 
@@ -115,16 +115,17 @@ object DummyDataSource {
         type = "INVOICE"
     )
 
-    private val revampProduct = RevampProduct(
+    private val revampProduct = ProductViewDataV2(
         name = "Triticum - 30 ( 10 Kg)",
-        quantity = "10",
-        price = "₹ 1,500",
-        size = "1 X 10 Kg"
+        quantity = 10.0,
+        fname = "fname",
+        priceTotal = "10000",
+        priceTotalDiscexcl = 10.0
     )
 
-    val productDetails = ProductDetails(
-        totalCount = "2",
-        products = listOf(revampProduct, revampProduct, revampProduct),
+    val productDetails = ProductsInfoViewDataV2(
+        count = 2,
+        productList = listOf(revampProduct, revampProduct, revampProduct),
         purchaseAmount = "₹ 30,000",
         discount = "₹ 30,000",
         gst = "₹ 30,000",

@@ -136,6 +136,15 @@ class LedgerDataSource @Inject constructor(
         it?.creditNoteDetailData?.let { data -> mapper.toCreditNoteDetailDataEntity(data) }
     }
 
+    override suspend fun getCreditNoteDetailV2(
+        ledgerId: String
+    ) = callAPI(
+        dispatcher,
+        { apiService.getCreditNoteDetailV2(ledgerId) }
+    ) {
+        it?.data?.let { data -> mapper.toCreditNoteDetailsEntity(data) }
+    }
+
     private suspend fun <D, C> callAPI(
         dispatchers: IDispatchers,
         apiCall: suspend () -> Response<D>,

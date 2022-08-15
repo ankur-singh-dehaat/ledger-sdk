@@ -241,7 +241,7 @@ private fun CreditNoteDetails(
 }
 
 @Composable
-fun CreditNoteCard(
+private fun CreditNoteCard(
     creditNote: CreditNoteViewData
 ) = Column(
     modifier = Modifier

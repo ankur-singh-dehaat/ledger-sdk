@@ -15,6 +15,7 @@ import lib.dehaat.ledger.entities.detail.invoice.LoanEntity
 import lib.dehaat.ledger.entities.detail.invoice.OverdueInfoEntity
 import lib.dehaat.ledger.entities.detail.invoice.invoicedownload.InvoiceDownloadDataEntity
 import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
+import lib.dehaat.ledger.entities.revamp.creditnote.CreditNoteDetailsEntity
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.CreditNoteEntity
 import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
@@ -39,6 +40,7 @@ import lib.dehaat.ledger.framework.model.detail.invoice.Loan
 import lib.dehaat.ledger.framework.model.detail.invoice.OverdueInfo
 import lib.dehaat.ledger.framework.model.detail.invoice.invoicedownload.DownloadInvoiceData
 import lib.dehaat.ledger.framework.model.detail.payment.PaymentDetailData
+import lib.dehaat.ledger.framework.model.revamp.creditnote.CreditNoteDetailsData
 import lib.dehaat.ledger.framework.model.revamp.creditsummary.CreditV2
 import lib.dehaat.ledger.framework.model.revamp.invoicedetails.InvoiceDataV2
 import lib.dehaat.ledger.framework.model.revamp.transactions.TransactionData
@@ -54,6 +56,7 @@ typealias NetworkInvoiceDetailProductsInfo = lib.dehaat.ledger.framework.model.d
 typealias EntityInvoiceDetailProductsInfo = lib.dehaat.ledger.entities.detail.invoice.ProductsInfoEntity
 typealias NetworkInvoiceDetailProduct = lib.dehaat.ledger.framework.model.detail.invoice.Product
 typealias EntityInvoiceDetailProduct = lib.dehaat.ledger.entities.detail.invoice.ProductEntity
+typealias ProductsInfoV2 = lib.dehaat.ledger.framework.model.revamp.invoicedetails.ProductsInfo
 
 class LedgerFrameworkMapper @Inject constructor() {
 
@@ -127,6 +130,21 @@ class LedgerFrameworkMapper @Inject constructor() {
         )
     }
 
+    fun toCreditNoteDetailsEntity(data: CreditNoteDetailsData) = with(data) {
+        CreditNoteDetailsEntity(
+            productsInfo = getProductInfoEntityV2(productsInfo),
+            summary = with(summary) {
+                lib.dehaat.ledger.entities.revamp.creditnote.SummaryEntityV2(
+                    amount = amount,
+                    invoiceDate = invoiceDate,
+                    invoiceNumber = invoiceNumber,
+                    reason = reason,
+                    timestamp = timestamp
+                )
+            }
+        )
+    }
+
     fun toPaymentDetailDataEntity(data: PaymentDetailData) = with(data) {
         PaymentDetailEntity(
             summary = getPaymentDetailSummaryEntity(summary),
@@ -152,22 +170,7 @@ class LedgerFrameworkMapper @Inject constructor() {
                     it.ledgerId
                 )
             },
-            productsInfo = ProductsInfoEntityV2(
-                count = productsInfo.count,
-                discount = productsInfo.discount,
-                gst = productsInfo.gst,
-                productList = productsInfo.productList.map {
-                    ProductEntityV2(
-                        fname = it.fname,
-                        name = it.name,
-                        priceTotal = it.priceTotal,
-                        priceTotalDiscexcl = it.priceTotalDiscexcl,
-                        quantity = it.quantity
-                    )
-                },
-                purchaseAmount = productsInfo.purchaseAmount,
-                totalAmount = productsInfo.totalAmount
-            ),
+            productsInfo = getProductInfoEntityV2(productsInfo),
             summary = with(summary) {
                 SummaryEntityV2(
                     interestBeingCharged,
@@ -180,6 +183,29 @@ class LedgerFrameworkMapper @Inject constructor() {
                     totalOutstandingAmount
                 )
             }
+        )
+    }
+
+    private fun getProductInfoEntityV2(data: ProductsInfoV2) = with(data) {
+        ProductsInfoEntityV2(
+            count = count,
+            discount = discount,
+            gst = gst,
+            productList = getProductListV2(productList),
+            purchaseAmount = purchaseAmount,
+            totalAmount = totalAmount
+        )
+    }
+
+    private fun getProductListV2(
+        productList: List<lib.dehaat.ledger.framework.model.revamp.invoicedetails.Product>
+    ) = productList.map {
+        ProductEntityV2(
+            fname = it.name,
+            name = it.name,
+            priceTotal = it.priceTotal,
+            priceTotalDiscexcl = it.priceTotalDiscexcl,
+            quantity = it.quantity
         )
     }
 

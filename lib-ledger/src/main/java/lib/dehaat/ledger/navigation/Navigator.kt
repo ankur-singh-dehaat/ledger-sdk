@@ -108,9 +108,10 @@ fun navigateToRevampInvoiceDetailPage(
 
 fun navigateToRevampCreditNoteDetailPage(
     navController: NavHostController,
-    ledgerId: String
-) = navController.navigate(
-    LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen
+    bundle: Bundle
+) = navController.navigateTo(
+    route = LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen,
+    args = bundle
 )
 
 fun navigateToRevampPaymentDetailPage(

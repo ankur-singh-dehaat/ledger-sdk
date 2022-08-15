@@ -119,8 +119,13 @@ fun TransactionCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                val name = if (transactionType is TransactionType.CreditNote) {
+                    stringResource(id = transactionType.name, transaction.creditNoteReason ?: "")
+                } else {
+                    stringResource(id = transactionType.name)
+                }
                 Text(
-                    text = stringResource(id = transactionType.name),
+                    text = name,
                     style = textParagraphT1Highlight(
                         textColor = Neutral80,
                         fontFamily = notoSans

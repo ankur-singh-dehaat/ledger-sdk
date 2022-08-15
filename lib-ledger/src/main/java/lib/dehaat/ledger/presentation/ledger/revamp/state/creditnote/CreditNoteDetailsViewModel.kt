@@ -1,7 +1,7 @@
-package lib.dehaat.ledger.presentation.ledger.details.invoice
+package lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote
 
 import android.os.Bundle
-import android.util.Log
+import android.provider.Settings.Global.putString
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavType
@@ -15,24 +15,24 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import lib.dehaat.ledger.domain.usecases.GetInvoiceDetailUseCase
-import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
+import lib.dehaat.ledger.domain.usecases.GetCreditNoteDetailUseCase
+import lib.dehaat.ledger.entities.revamp.creditnote.CreditNoteDetailsEntity
 import lib.dehaat.ledger.presentation.LedgerConstants
 import lib.dehaat.ledger.presentation.common.BaseViewModel
-import lib.dehaat.ledger.presentation.ledger.revamp.state.invoice.InvoiceDetailsViewModelState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.state.CreditNoteDetailsViewModelState
 import lib.dehaat.ledger.presentation.mapper.LedgerViewDataMapper
 import lib.dehaat.ledger.util.processAPIResponseWithFailureSnackBar
 
 @HiltViewModel
-class RevampInvoiceDetailViewModel @Inject constructor(
+class CreditNoteDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getInvoiceDetailUseCase: GetInvoiceDetailUseCase,
+    private val getCreditNoteDetailUseCase: GetCreditNoteDetailUseCase,
     private val mapper: LedgerViewDataMapper
 ) : BaseViewModel() {
 
     val ledgerId by lazy { savedStateHandle.get<String>(LedgerConstants.KEY_LEDGER_ID) ?: "" }
 
-    private val viewModelState = MutableStateFlow(InvoiceDetailsViewModelState())
+    private val viewModelState = MutableStateFlow(CreditNoteDetailsViewModelState())
     val uiState = viewModelState
         .map { it.toUIState() }
         .stateIn(
@@ -42,27 +42,27 @@ class RevampInvoiceDetailViewModel @Inject constructor(
         )
 
     init {
-        getInvoiceDetailFromServer()
-        Log.d("TAG", "navCheck: $ledgerId")
+        getCreditNoteDetailFromServer()
     }
 
-    private fun getInvoiceDetailFromServer() {
+    private fun getCreditNoteDetailFromServer() {
         callInViewModelScope {
             callingAPI()
-            val response = getInvoiceDetailUseCase.getInvoiceDetails(ledgerId)
+            val response = getCreditNoteDetailUseCase.getCreditNoteDetails(ledgerId)
             calledAPI()
-            processInvoiceDetailResponse(response)
+            processCreditNoteDetailResponse(response)
         }
     }
 
-    private fun processInvoiceDetailResponse(result: APIResultEntity<InvoiceDataEntity?>) {
+    private fun processCreditNoteDetailResponse(result: APIResultEntity<CreditNoteDetailsEntity?>) {
         result.processAPIResponseWithFailureSnackBar(::sendFailureEvent) { entity ->
-            entity?.let { invoiceDataEntity ->
-                val invoiceDetailsViewData = mapper.toInvoiceDetailsViewData(invoiceDataEntity)
-                viewModelState.update {
+            entity?.let { creditSummaryEntity ->
+                val viewData = mapper.toCreditNoteDetailsDataEntity(creditSummaryEntity)
+                viewModelState.update { it ->
                     it.copy(
+                        isLoading = false,
                         isSuccess = true,
-                        invoiceDetailsViewData = invoiceDetailsViewData
+                        viewData = viewData
                     )
                 }
             }
