@@ -94,10 +94,7 @@ fun LedgerNavigation(
                     ledgerCallbacks.onClickPayNow(viewModel.uiState.value.creditSummaryViewData)
                 },
                 onPaymentOptionsClick = {
-                    ledgerCallbacks.onPaymentOptionsClick(
-                        viewModel.uiState.value.creditSummaryViewData,
-                        resultLauncher
-                    )
+                    ledgerCallbacks.onPaymentOptionsClick(resultLauncher)
                 }
             )
         }
@@ -125,7 +122,7 @@ fun LedgerNavigation(
                 onBackPress = finishActivity,
                 detailPageNavigationCallback = provideDetailPageNavCallBacks(navController),
                 onPayNowClick = { /*TODO*/ },
-                onPaymentOptionsClick = { /*TODO*/ }
+                onOtherPaymentModeClick = { ledgerCallbacks.onPaymentOptionsClick(resultLauncher) }
             )
         }
 

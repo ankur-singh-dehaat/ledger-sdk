@@ -12,7 +12,6 @@ typealias DownloadInvoiceIntent = (Context, String) -> PendingIntent?
 typealias DownloadInvoiceSuccess = (invoiceDownloadData: InvoiceDownloadData) -> Unit
 
 typealias PaymentOptionsClick = (
-    creditSummaryViewData: CreditSummaryViewData?,
     resultLauncher: ActivityResultLauncher<Intent?>
 ) -> Unit
 

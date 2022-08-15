@@ -19,7 +19,7 @@ sealed class LedgerParentApp(
         LedgerCallBack(
             onClickPayNow = {},
             onDownloadInvoiceSuccess = downloadInvoiceClick,
-            onPaymentOptionsClick = { _, _ -> },
+            onPaymentOptionsClick = {},
             downloadInvoiceIntent = downloadInvoiceIntent
         ),
         ledgerColors

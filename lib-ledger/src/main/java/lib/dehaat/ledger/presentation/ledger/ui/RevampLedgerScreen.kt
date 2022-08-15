@@ -48,7 +48,7 @@ fun RevampLedgerScreen(
     onBackPress: () -> Unit,
     detailPageNavigationCallback: DetailPageNavigationCallback,
     onPayNowClick: () -> Unit,
-    onPaymentOptionsClick: () -> Unit
+    onOtherPaymentModeClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scaffoldState = rememberScaffoldState()
@@ -118,9 +118,7 @@ fun RevampLedgerScreen(
                                     onShowInvoiceListDetailsClick = {
                                         detailPageNavigationCallback.navigateToInvoiceListPage()
                                     },
-                                    onOtherPaymentModeClick = {
-                                        detailPageNavigationCallback.navigateToOtherPaymentModesScreen()
-                                    }
+                                    onOtherPaymentModeClick = onOtherPaymentModeClick
                                 )
 
                                 SpaceMedium()

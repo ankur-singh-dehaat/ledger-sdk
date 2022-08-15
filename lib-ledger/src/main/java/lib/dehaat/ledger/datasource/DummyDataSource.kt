@@ -123,8 +123,7 @@ object DummyDataSource {
 
     private val dbaApp by lazy {
         LedgerParentApp.DBA(
-            ledgerCallBack = LedgerCallBack({}, {}, { _, _ -> }, { context, path -> null }
-            )
+            ledgerCallBack = LedgerCallBack({}, {}, {}, { context, path -> null })
         )
     }
     private val aimsApp by lazy {

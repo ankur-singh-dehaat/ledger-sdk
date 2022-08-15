@@ -85,7 +85,7 @@ fun navigateToInvoiceListPage(
 fun navigateToOtherPaymentModesScreen(
     navController: NavHostController
 ) = navController.navigate(
-    LedgerRoutes.OtherPaymentModesScreen.screen
+    LedgerRoutes.LedgerPaymentDetailScreen.screen
 )
 
 fun navigateToAvailableCreditLimitDetailPage(

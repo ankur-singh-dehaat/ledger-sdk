@@ -60,50 +60,51 @@ fun InvoiceListScreen(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Warning10)
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 24.dp, bottom = 16.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.save_interest),
-                    style = textSubHeadingS3(
-                        textColor = Pumpkin120,
-                        fontFamily = notoSans
-                    )
-                )
-
-                VerticalSpacer(height = 4.dp)
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "24 जुलाई तक भुगतान करें ",
-                        style = textParagraphT1Highlight(
-                            textColor = Neutral90,
-                            fontFamily = notoSans
-                        )
-                    )
-                    Text(
-                        text = "24 जुलाई तक भुगतान करें ",
-                        style = textSubHeadingS3(
-                            textColor = Neutral90,
-                            fontFamily = notoSans
-                        )
-                    )
-                }
-            }
-
-            VerticalSpacer(height = 16.dp)
-
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
+                stickyHeader {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(Warning10)
+                            .padding(horizontal = 20.dp)
+                            .padding(top = 24.dp, bottom = 16.dp)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.save_interest),
+                            style = textSubHeadingS3(
+                                textColor = Pumpkin120,
+                                fontFamily = notoSans
+                            )
+                        )
+
+                        VerticalSpacer(height = 4.dp)
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "24 जुलाई तक भुगतान करें ",
+                                style = textParagraphT1Highlight(
+                                    textColor = Neutral90,
+                                    fontFamily = notoSans
+                                )
+                            )
+                            Text(
+                                text = "24 जुलाई तक भुगतान करें ",
+                                style = textSubHeadingS3(
+                                    textColor = Neutral90,
+                                    fontFamily = notoSans
+                                )
+                            )
+                        }
+                    }
+
+                    VerticalSpacer(height = 16.dp)
+                }
                 stickyHeader {
                     Column(
                         modifier = Modifier
@@ -141,7 +142,6 @@ fun InvoiceListScreen(
                             .background(Color.White)
                     ) {}
                 }
-
                 items(listOf(1, 2, 3, 4, 5, 6, 7, 8)) {
                     InvoiceWithAccumulatedInterest {}
                 }
@@ -172,7 +172,6 @@ fun InvoiceListScreen(
                         VerticalSpacer(height = 16.dp)
                     }
                 }
-
                 item {
                     Column(
                         modifier = Modifier
@@ -181,7 +180,6 @@ fun InvoiceListScreen(
                             .background(Color.White)
                     ) {}
                 }
-
                 items(listOf(1, 2, 3, 4, 5, 6, 7, 8)) {
                     InvoiceWithUpcomingInterest {}
                 }
