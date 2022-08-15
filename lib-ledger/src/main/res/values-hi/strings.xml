@@ -75,9 +75,12 @@
     <string name="credit_note_received">क्रेडिट नोट प्राप्त</string>
     <string name="pay_till_date">%s तक भुगतान करें</string>
     <string name="your_advance_amount">%s आपका एडवांस राशि है</string>
-    <string name="credit_note">क्रेडिट नोट: </string>
+    <string name="credit_note">क्रेडिट नोट: %s</string>
     <string name="payment">भुगतान</string>
     <string name="till_today">%s से आज तक</string>
+    <string name="interest_running">%s दिन से ब्याज चल रहा है</string>
+    <string name="interest_starting">%s दिन में ब्याज शुरू होगा</string>
+    <string name="full_payment_complete">पूर्ण भुगतान हो चुका है</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

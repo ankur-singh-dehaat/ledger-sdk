@@ -20,9 +20,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.skydoves.landscapist.fresco.FrescoImage
 import lib.dehaat.ledger.R
-import lib.dehaat.ledger.datasource.DummyDataSource
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
+import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductViewDataV2
+import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductsInfoViewDataV2
 import lib.dehaat.ledger.resources.BorderColor
 import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
@@ -31,10 +32,11 @@ import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
 import lib.dehaat.ledger.resources.textSubHeadingS3
+import lib.dehaat.ledger.util.getAmountInRupees
 
 @Composable
 fun ProductDetailsScreen(
-    productDetails: ProductDetails = DummyDataSource.productDetails
+    productDetails: ProductsInfoViewDataV2?
 ) = Column(
     modifier = Modifier
         .fillMaxWidth()
@@ -55,7 +57,7 @@ fun ProductDetailsScreen(
     Text(
         modifier = Modifier
             .padding(horizontal = 20.dp),
-        text = stringResource(id = R.string.total_items, productDetails.totalCount),
+        text = stringResource(id = R.string.total_items, productDetails?.count.toString()),
         style = textCaptionCP1(
             textColor = Neutral70,
             fontFamily = notoSans
@@ -69,7 +71,7 @@ fun ProductDetailsScreen(
     Column(modifier = Modifier.padding(20.dp)) {
         VerticalSpacer(height = 12.dp)
 
-        productDetails.products.forEach {
+        productDetails?.productList?.forEach {
             RevampProductView(it)
             VerticalSpacer(height = 12.dp)
         }
@@ -83,21 +85,27 @@ fun ProductDetailsScreen(
         )
 
         RevampKeyValuePair(
-            pair = Pair(stringResource(id = R.string.purchase_amount), productDetails.purchaseAmount),
+            pair = Pair(
+                stringResource(id = R.string.purchase_amount),
+                productDetails?.purchaseAmount.getAmountInRupees()
+            ),
             style = Pair(commonStyle, commonStyle)
         )
 
         VerticalSpacer(height = 12.dp)
 
         RevampKeyValuePair(
-            pair = Pair(stringResource(id = R.string.discount), productDetails.discount),
+            pair = Pair(
+                stringResource(id = R.string.discount),
+                productDetails?.discount.getAmountInRupees()
+            ),
             style = Pair(commonStyle, commonStyle)
         )
 
         VerticalSpacer(height = 12.dp)
 
         RevampKeyValuePair(
-            pair = Pair(stringResource(id = R.string.gst), productDetails.gst),
+            pair = Pair(stringResource(id = R.string.gst), productDetails?.gst.getAmountInRupees()),
             style = Pair(commonStyle, commonStyle)
         )
 
@@ -110,7 +118,10 @@ fun ProductDetailsScreen(
             fontFamily = notoSans
         )
         RevampKeyValuePair(
-            pair = Pair(stringResource(id = R.string.total_amount), productDetails.totalAmount),
+            pair = Pair(
+                stringResource(id = R.string.total_amount),
+                productDetails?.totalAmount.getAmountInRupees()
+            ),
             style = Pair(totalAmountStyle, totalAmountStyle)
         )
     }
@@ -118,13 +129,13 @@ fun ProductDetailsScreen(
 
 @Composable
 private fun RevampProductView(
-    product: RevampProduct
+    product: ProductViewDataV2
 ) = Row(
     modifier = Modifier
         .fillMaxWidth()
 ) {
     FrescoImage(
-        imageUrl = product.iconUrl,
+        imageUrl = product.fname,
         placeHolder = painterResource(R.drawable.default_product),
         contentDescription = stringResource(id = R.string.accessibility_icon),
         modifier = Modifier
@@ -172,7 +183,7 @@ private fun RevampProductView(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = product.size,
+                text = product.priceTotalDiscexcl.toString(),
                 style = textParagraphT2Highlight(
                     textColor = Neutral80,
                     fontFamily = notoSans
@@ -180,7 +191,7 @@ private fun RevampProductView(
             )
 
             Text(
-                text = product.price,
+                text = product.priceTotal.getAmountInRupees(),
                 style = textParagraphT2Highlight(
                     textColor = Neutral80,
                     fontFamily = notoSans

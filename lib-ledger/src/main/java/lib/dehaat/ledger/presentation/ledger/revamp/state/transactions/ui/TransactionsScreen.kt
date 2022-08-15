@@ -9,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
+import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.transactions.TransactionViewModel
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionCard
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionListHeader
@@ -34,7 +35,7 @@ fun TransactionsScreen(
                         transaction = transaction
                     ) {
                         detailPageNavigationCallback.navigateToRevampInvoiceDetailPage(
-                            transaction.ledgerId
+                            RevampInvoiceDetailViewModel.getBundle(transaction.ledgerId)
                         )
                     }
                     TransactionType.CreditNote().creditNoteType -> TransactionCard(

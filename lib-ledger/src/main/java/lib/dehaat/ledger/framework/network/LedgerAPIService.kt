@@ -7,6 +7,7 @@ import lib.dehaat.ledger.framework.model.detail.invoice.ResponseInvoiceDetail
 import lib.dehaat.ledger.framework.model.detail.invoice.invoicedownload.ResponseDownloadInvoice
 import lib.dehaat.ledger.framework.model.detail.payment.ResponsePaymentDetail
 import lib.dehaat.ledger.framework.model.revamp.creditsummary.ResponseCreditSummaryV2
+import lib.dehaat.ledger.framework.model.revamp.invoicedetails.ResponseInvoiceDetails
 import lib.dehaat.ledger.framework.model.revamp.transactions.ResponseTransaction
 import lib.dehaat.ledger.framework.model.transactions.ResponseTransactions
 import lib.dehaat.ledger.framework.model.transactionsummary.ResponseTransactionSummary
@@ -59,6 +60,11 @@ interface LedgerAPIService {
     suspend fun getInvoiceDetail(
         @Query("ledger_id") ledgerId: String
     ): Response<ResponseInvoiceDetail>
+
+    @GET("/finance/invoice/v2")
+    suspend fun getInvoiceDetails(
+        @Query("ledger_id") ledgerId: String
+    ): Response<ResponseInvoiceDetails>
 
     @GET("/finance/payment")
     suspend fun getPaymentDetail(

@@ -4,6 +4,7 @@ import com.cleanarch.base.entity.result.api.APIResultEntity
 import javax.inject.Inject
 import lib.dehaat.ledger.data.source.ILedgerDataSource
 import lib.dehaat.ledger.domain.ILedgerRepository
+import lib.dehaat.ledger.entities.detail.invoice.InvoiceDetailDataEntity
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 
 class LedgerRepository @Inject constructor(private val networkSource: ILedgerDataSource) :
@@ -59,6 +60,12 @@ class LedgerRepository @Inject constructor(private val networkSource: ILedgerDat
     override suspend fun getInvoiceDetail(
         ledgerId: String
     ) = networkSource.getInvoiceDetail(
+        ledgerId
+    )
+
+    override suspend fun getInvoiceDetails(
+        ledgerId: String
+    ) = networkSource.getInvoiceDetails(
         ledgerId
     )
 

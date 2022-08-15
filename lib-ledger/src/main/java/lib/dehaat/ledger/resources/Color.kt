@@ -19,6 +19,7 @@ val BlueGreen10 = Color(0XFFE5FAFF)
 val BorderColor = Color(0XFFE0E0E0)
 
 val Error100 = Color(0XFFBF0010)
+val Error10 = Color(0xFFFFEEEF)
 
 val Mustard10 = Color(0XFFFFFBE5)
 
@@ -36,6 +37,8 @@ val SeaGreen10 = Color(0XFFEAFBF1)
 val SeaGreen20 = Color(0XFFCCEFDB)
 val SeaGreen100 = Color(0xFF0F8040)
 val SeaGreen110 = Color(0XFF00662C)
+
+val Success10 = Color(0XFFE6FFCC)
 
 val Warning10 = Color(0XFFFFF4E5)
 val Background = Color(0XFFE9E6E6)

@@ -1,6 +1,7 @@
 package lib.dehaat.ledger.navigation
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -234,12 +235,12 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen
+            route = LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen,
+            arguments = RevampInvoiceDetailViewModel.getArgs()
         ) {
             val invoiceDetailViewModel = hiltViewModel<RevampInvoiceDetailViewModel>()
             RevampInvoiceDetailScreen(
                 viewModel = invoiceDetailViewModel,
-                ledgerId = "",
                 ledgerColors = ledgerColors,
                 onDownloadInvoiceClick = {}
             ) {
@@ -427,8 +428,8 @@ fun provideDetailPageNavCallBacks(
         navigateToAvailableCreditLimitDetailPage(navController, viewState)
     }
 
-    override fun navigateToRevampInvoiceDetailPage(ledgerId: String) {
-        navigateToRevampInvoiceDetailPage(navController, ledgerId)
+    override fun navigateToRevampInvoiceDetailPage(bundle: Bundle) {
+        navigateToRevampInvoiceDetailPage(navController, bundle)
     }
 
     override fun navigateToRevampCreditNoteDetailPage(ledgerId: String) {

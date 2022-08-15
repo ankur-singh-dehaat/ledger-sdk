@@ -16,6 +16,11 @@ import lib.dehaat.ledger.entities.detail.invoice.OverdueInfoEntity
 import lib.dehaat.ledger.entities.detail.invoice.invoicedownload.InvoiceDownloadDataEntity
 import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
+import lib.dehaat.ledger.entities.revamp.invoice.CreditNoteEntity
+import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
+import lib.dehaat.ledger.entities.revamp.invoice.ProductEntityV2
+import lib.dehaat.ledger.entities.revamp.invoice.ProductsInfoEntityV2
+import lib.dehaat.ledger.entities.revamp.invoice.SummaryEntityV2
 import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
@@ -35,6 +40,7 @@ import lib.dehaat.ledger.framework.model.detail.invoice.OverdueInfo
 import lib.dehaat.ledger.framework.model.detail.invoice.invoicedownload.DownloadInvoiceData
 import lib.dehaat.ledger.framework.model.detail.payment.PaymentDetailData
 import lib.dehaat.ledger.framework.model.revamp.creditsummary.CreditV2
+import lib.dehaat.ledger.framework.model.revamp.invoicedetails.InvoiceDataV2
 import lib.dehaat.ledger.framework.model.revamp.transactions.TransactionData
 import lib.dehaat.ledger.framework.model.transactions.Transaction
 import lib.dehaat.ledger.framework.model.transactions.TransactionsData
@@ -133,6 +139,47 @@ class LedgerFrameworkMapper @Inject constructor() {
             loans = loans.map { getInvoiceDetailLoanEntity(it) },
             overdueInfo = getInvoiceDetailOverdueInfoEntity(overdueInfo),
             productsInfo = getInvoiceDetailProductInfoEntity(productsInfo),
+        )
+    }
+
+    fun toInvoiceDetailEntity(data: InvoiceDataV2) = with(data) {
+        InvoiceDataEntity(
+            creditNotes = creditNotes.map {
+                CreditNoteEntity(
+                    it.creditNoteAmount,
+                    it.creditNoteDate,
+                    it.creditNoteType,
+                    it.ledgerId
+                )
+            },
+            productsInfo = ProductsInfoEntityV2(
+                count = productsInfo.count,
+                discount = productsInfo.discount,
+                gst = productsInfo.gst,
+                productList = productsInfo.productList.map {
+                    ProductEntityV2(
+                        fname = it.fname,
+                        name = it.name,
+                        priceTotal = it.priceTotal,
+                        priceTotalDiscexcl = it.priceTotalDiscexcl,
+                        quantity = it.quantity
+                    )
+                },
+                purchaseAmount = productsInfo.purchaseAmount,
+                totalAmount = productsInfo.totalAmount
+            ),
+            summary = with(summary) {
+                SummaryEntityV2(
+                    interestBeingCharged,
+                    interestDays,
+                    interestStartDate,
+                    invoiceAmount,
+                    invoiceDate,
+                    invoiceId,
+                    processingFee,
+                    totalOutstandingAmount
+                )
+            }
         )
     }
 

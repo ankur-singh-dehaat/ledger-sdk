@@ -99,6 +99,15 @@ class LedgerDataSource @Inject constructor(
         it?.invoiceDetailData?.let { data -> mapper.toInvoiceDetailDataEntity(data) }
     }
 
+    override suspend fun getInvoiceDetails(
+        ledgerId: String
+    ) = callAPI(
+        dispatcher,
+        { apiService.getInvoiceDetails(ledgerId) }
+    ) {
+        it?.data?.let { data -> mapper.toInvoiceDetailEntity(data) }
+    }
+
     override suspend fun getInvoiceDownload(
         identityId: String,
         source: String

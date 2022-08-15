@@ -8,6 +8,7 @@ import lib.dehaat.ledger.entities.detail.invoice.InvoiceDetailDataEntity
 import lib.dehaat.ledger.entities.detail.invoice.invoicedownload.InvoiceDownloadDataEntity
 import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
+import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
 import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
@@ -46,6 +47,10 @@ interface ILedgerRepository {
     suspend fun getInvoiceDetail(
         ledgerId: String
     ): APIResultEntity<InvoiceDetailDataEntity?>
+
+    suspend fun getInvoiceDetails(
+        ledgerId: String
+    ): APIResultEntity<InvoiceDataEntity?>
 
     suspend fun getInvoiceDownload(
         identityId: String,
