@@ -8,20 +8,18 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.cleanarch.base.entity.result.api.APIResultEntity
+import com.dehaat.androidbase.helper.callInViewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import lib.dehaat.ledger.domain.usecases.GetTransactionsUseCase
 import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.framework.network.BasePagingSourceWithResponse
 import lib.dehaat.ledger.presentation.LedgerConstants
 import lib.dehaat.ledger.presentation.common.BaseViewModel
-import lib.dehaat.ledger.presentation.ledger.transactions.state.TransactionsViewModelState
+import lib.dehaat.ledger.presentation.common.UiEvent
 import lib.dehaat.ledger.presentation.mapper.LedgerViewDataMapper
 import lib.dehaat.ledger.presentation.model.revamp.transactions.TransactionViewDataV2
 import lib.dehaat.ledger.presentation.model.transactions.DaysToFilter
@@ -38,15 +36,10 @@ class TransactionViewModel @Inject constructor(
         savedStateHandle.get<String>(LedgerConstants.KEY_PARTNER_ID) ?: ""
     }
 
-    private val viewModelState = MutableStateFlow(TransactionsViewModelState())
+    private val _uiEvent = MutableSharedFlow<UiEvent>()
+    val uiEvent: SharedFlow<UiEvent> get() = _uiEvent
 
-    val uiState = viewModelState
-        .map { it.toUiState() }
-        .stateIn(
-            viewModelScope,
-            SharingStarted.Eagerly,
-            viewModelState.value.toUiState()
-        )
+    private var daysToFilter: DaysToFilter = DaysToFilter.All
 
     var transactionsList: Flow<PagingData<TransactionViewDataV2>> private set
 
@@ -98,19 +91,16 @@ class TransactionViewModel @Inject constructor(
     }
 
     private fun sendFailureEvent(message: String) {
-        viewModelState.update {
-            Log.d("ERRORS", "sendFailureEvent: $message")
-            it.copy()
-        }
+        Log.d("ERRORS", "sendFailureEvent: $message")
     }
 
     private fun getFromAndToDate(): Pair<Long?, Long?> {
-        return when (val daysToFilter = viewModelState.value.daysToFilter) {
+        return when (daysToFilter) {
             DaysToFilter.All -> Pair(null, null)
             DaysToFilter.SevenDays -> calculateTimeInMillisecond(7)
             DaysToFilter.OneMonth -> calculateTimeInMillisecond(31)
             DaysToFilter.ThreeMonth -> calculateTimeInMillisecond(31 * 3)
-            is DaysToFilter.CustomDays -> calculateCustomDaysMillisecond(daysToFilter)
+            is DaysToFilter.CustomDays -> calculateCustomDaysMillisecond(daysToFilter as DaysToFilter.CustomDays)
         }
     }
 
@@ -125,5 +115,15 @@ class TransactionViewModel @Inject constructor(
         val currentDaySec = System.currentTimeMillis() / 1000
         val pastDaySec = currentDaySec.minus(daysSec)
         return Pair(pastDaySec, currentDaySec)
+    }
+
+    fun updateSelectedFilter(daysToFilter: DaysToFilter) {
+        this.daysToFilter = daysToFilter
+        getTransactionPaging()
+        refresh()
+    }
+
+    private fun refresh() {
+        callInViewModelScope { _uiEvent.emit(UiEvent.RefreshList) }
     }
 }

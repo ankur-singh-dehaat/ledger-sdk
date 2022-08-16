@@ -6,7 +6,9 @@ import com.cleanarch.base.entity.result.api.APIResultEntity
 import com.dehaat.androidbase.helper.callInViewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -18,6 +20,7 @@ import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.LedgerViewMode
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.mapper.ViewDataMapper
+import lib.dehaat.ledger.presentation.model.transactions.DaysToFilter
 import lib.dehaat.ledger.util.processAPIResponseWithFailureSnackBar
 
 @HiltViewModel
@@ -29,6 +32,9 @@ class RevampLedgerViewModel @Inject constructor(
 
     val partnerId by lazy { savedStateHandle.get<String>(LedgerConstants.KEY_PARTNER_ID) ?: "" }
     val dcName by lazy { savedStateHandle.get<String>(LedgerConstants.KEY_DC_NAME) ?: "" }
+
+    private val _selectedDaysToFilterEvent = MutableSharedFlow<DaysToFilter>()
+    val selectedDaysToFilterEvent: SharedFlow<DaysToFilter> get() = _selectedDaysToFilterEvent
 
     private val viewModelState = MutableStateFlow(LedgerViewModelState())
 
@@ -98,4 +104,7 @@ class RevampLedgerViewModel @Inject constructor(
         it.copy(isLoading = show)
     }
 
+    fun updateFilter(daysToFilter: DaysToFilter) = callInViewModelScope {
+        _selectedDaysToFilterEvent.emit(daysToFilter)
+    }
 }

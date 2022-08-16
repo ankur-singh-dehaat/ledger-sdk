@@ -4,13 +4,19 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
+import lib.dehaat.ledger.presentation.RevampLedgerViewModel
+import lib.dehaat.ledger.presentation.common.UiEvent
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.components.ShowProgress
 import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
@@ -24,12 +30,14 @@ import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionType
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TransactionsScreen(
+    ledgerViewModel: RevampLedgerViewModel,
     ledgerColors: LedgerColors,
     detailPageNavigationCallback: DetailPageNavigationCallback,
     showFilterSheet: () -> Unit
 ) {
     val viewModel = hiltViewModel<TransactionViewModel>()
     val transactions = viewModel.transactionsList.collectAsLazyPagingItems()
+    val lifecycleOwner = LocalLifecycleOwner.current
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         stickyHeader {
             TransactionListHeader(showFilterSheet)
@@ -80,6 +88,25 @@ fun TransactionsScreen(
                     item { NoDataFound() }
                 }
             }
+        }
+    }
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.flowWithLifecycle(
+            lifecycleOwner.lifecycle,
+            Lifecycle.State.STARTED
+        ).collect { event ->
+            if (event is UiEvent.RefreshList) {
+                transactions.refresh()
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        ledgerViewModel.selectedDaysToFilterEvent.flowWithLifecycle(
+            lifecycleOwner.lifecycle,
+            Lifecycle.State.STARTED
+        ).collect { event ->
+            viewModel.updateSelectedFilter(event)
         }
     }
 }

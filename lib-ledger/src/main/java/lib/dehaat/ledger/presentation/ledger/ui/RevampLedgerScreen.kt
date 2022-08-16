@@ -82,7 +82,8 @@ fun RevampLedgerScreen(
                     sheetContent = {
                         if (uiState.showFilterSheet) {
                             FilterScreen(
-                                onFilterApply = { _, _, _ ->
+                                onFilterApply = { daysToFilter ->
+                                    viewModel.updateFilter(daysToFilter)
                                     scope.launch {
                                         sheetState.animateTo(ModalBottomSheetValue.Hidden)
                                     }
@@ -135,7 +136,11 @@ fun RevampLedgerScreen(
                             }
                         },
                         content = {
-                            TransactionsScreen(ledgerColors, detailPageNavigationCallback) {
+                            TransactionsScreen(
+                                viewModel,
+                                ledgerColors,
+                                detailPageNavigationCallback
+                            ) {
                                 scope.launch {
                                     viewModel.showFilterBottomSheet()
                                     sheetState.animateTo(ModalBottomSheetValue.Expanded)

@@ -69,4 +69,32 @@ object Utils {
         datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         datePickerDialog.show()
     }
+
+    fun openDatePicker(
+        context: Context,
+        dateFormat: SimpleDateFormat = sdf,
+        selectedDate: (String, Long) -> Unit
+    ) {
+        val cal = Calendar.getInstance()
+        val currentDate = dateFormat.format(cal.time)
+        if (!TextUtilities.isNullCase(currentDate)) {
+            var date: Date? = null
+            try {
+                date = dateFormat.parse(currentDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            if (date != null) cal.time = date
+        }
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _: DatePicker?, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+                val calendar = Calendar.getInstance()
+                calendar[year, monthOfYear] = dayOfMonth
+                selectedDate(dateFormat.format(calendar.time), calendar.time.time)
+            }, cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DAY_OF_MONTH]
+        )
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        datePickerDialog.show()
+    }
 }

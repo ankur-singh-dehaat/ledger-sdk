@@ -34,6 +34,7 @@ import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.Utils
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
+import lib.dehaat.ledger.presentation.model.transactions.DaysToFilter
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral10
 import lib.dehaat.ledger.resources.Neutral50
@@ -53,14 +54,14 @@ import lib.dehaat.ledger.resources.textParagraphT2
 @Composable
 private fun FilterScreenPreview() = LedgerTheme {
     FilterScreen(
-        onFilterApply = { _, _, _ -> },
+        onFilterApply = {},
         onFilterClose = {}
     )
 }
 
 @Composable
 fun FilterScreen(
-    onFilterApply: (FilterType, String, String) -> Unit,
+    onFilterApply: (DaysToFilter) -> Unit,
     onFilterClose: () -> Unit
 ) = Column(
     modifier = Modifier
@@ -68,9 +69,7 @@ fun FilterScreen(
         .padding(horizontal = 20.dp)
         .padding(top = 20.dp, bottom = 16.dp)
 ) {
-    var selectedFilter: FilterType by remember { mutableStateOf(FilterType.AllTransactions) }
-    var startDate by remember { mutableStateOf("") }
-    var endDate by remember { mutableStateOf("") }
+    var selectedFilter: DaysToFilter by remember { mutableStateOf(DaysToFilter.All) }
 
     Row(
         modifier = Modifier
@@ -97,32 +96,32 @@ fun FilterScreen(
 
     FilterOptions(
         filterName = stringResource(id = R.string.filter_all_transactions),
-        defaultSelection = selectedFilter is FilterType.AllTransactions,
-        isFilterSelected = { selectedFilter = FilterType.AllTransactions }
+        defaultSelection = selectedFilter is DaysToFilter.All,
+        isFilterSelected = { selectedFilter = DaysToFilter.All }
     )
 
     Spacer(modifier = Modifier.height(32.dp))
 
     FilterOptions(
         filterName = stringResource(id = R.string.filter_last_seven_days),
-        defaultSelection = selectedFilter is FilterType.LastSevenDays,
-        isFilterSelected = { selectedFilter = FilterType.LastSevenDays }
+        defaultSelection = selectedFilter is DaysToFilter.SevenDays,
+        isFilterSelected = { selectedFilter = DaysToFilter.SevenDays }
     )
 
     Spacer(modifier = Modifier.height(32.dp))
 
     FilterOptions(
         filterName = stringResource(id = R.string.filter_last_one_month),
-        defaultSelection = selectedFilter is FilterType.LastOneMonth,
-        isFilterSelected = { selectedFilter = FilterType.LastOneMonth }
+        defaultSelection = selectedFilter is DaysToFilter.OneMonth,
+        isFilterSelected = { selectedFilter = DaysToFilter.OneMonth }
     )
 
     Spacer(modifier = Modifier.height(32.dp))
 
     FilterOptions(
         filterName = stringResource(id = R.string.filter_last_three_months),
-        defaultSelection = selectedFilter is FilterType.LastThreeMonths,
-        isFilterSelected = { selectedFilter = FilterType.LastThreeMonths }
+        defaultSelection = selectedFilter is DaysToFilter.ThreeMonth,
+        isFilterSelected = { selectedFilter = DaysToFilter.ThreeMonth }
     )
 
     Spacer(modifier = Modifier.height(16.dp))
@@ -133,13 +132,16 @@ fun FilterScreen(
 
     CustomFilterOption(
         filterName = stringResource(id = R.string.filter_add_custom_date),
-        defaultSelection = selectedFilter is FilterType.CustomFiltering,
-        startDate = {
-            startDate = it
-        }, endDate = {
-            endDate = it
-        },
-        isFilterSelected = { selectedFilter = FilterType.CustomFiltering }
+        defaultSelection = selectedFilter is DaysToFilter.CustomDays,
+        isFilterSelected = { startDate, endDate ->
+            val nonNullStartDate =
+                startDate ?: (selectedFilter as? DaysToFilter.CustomDays)?.fromDateMilliSec
+                ?: System.currentTimeMillis()
+            val nonNullEndDate =
+                endDate ?: (selectedFilter as? DaysToFilter.CustomDays)?.toDateMilliSec
+                ?: System.currentTimeMillis()
+            selectedFilter = DaysToFilter.CustomDays(nonNullStartDate, nonNullEndDate)
+        }
     )
 
     VerticalSpacer(height = 32.dp)
@@ -147,7 +149,7 @@ fun FilterScreen(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onFilterApply(selectedFilter, startDate, endDate) }
+            .clickable { onFilterApply(selectedFilter) }
     ) {
         Text(
             text = stringResource(id = R.string.apply_filter),
@@ -171,39 +173,45 @@ fun FilterScreen(
 private fun CustomFilterOption(
     filterName: String,
     defaultSelection: Boolean,
-    startDate: (String) -> Unit,
-    endDate: (String) -> Unit,
-    isFilterSelected: () -> Unit
-) = Column(
-    modifier = Modifier
-        .fillMaxWidth()
-        .clickable(onClick = isFilterSelected)
+    isFilterSelected: (start: Long?, end: Long?) -> Unit
 ) {
-    FilterOptions(
-        filterName = filterName,
-        defaultSelection = defaultSelection,
-        isFilterSelected = isFilterSelected
-    )
-
-    VerticalSpacer(12.dp)
-
-    Row(modifier = Modifier.fillMaxWidth()) {
-
-        FilterDateSelector(
-            modifier = Modifier.weight(1F),
-            title = stringResource(id = R.string.from),
-            onDateChange = startDate,
-            onDateClick = isFilterSelected
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { isFilterSelected(null, null) })
+    ) {
+        FilterOptions(
+            filterName = filterName,
+            defaultSelection = defaultSelection,
+            isFilterSelected = {
+                isFilterSelected(null, null)
+            }
         )
 
-        HorizontalSpacer(width = 20.dp)
+        VerticalSpacer(12.dp)
 
-        FilterDateSelector(
-            modifier = Modifier.weight(1F),
-            title = stringResource(id = R.string.to),
-            onDateChange = endDate,
-            onDateClick = isFilterSelected
-        )
+        Row(modifier = Modifier.fillMaxWidth()) {
+
+            FilterDateSelector(
+                modifier = Modifier.weight(1F),
+                title = stringResource(id = R.string.from),
+                onDateChange = {
+                    isFilterSelected(it, null)
+                },
+                onDateClick = { isFilterSelected(null, null) }
+            )
+
+            HorizontalSpacer(width = 20.dp)
+
+            FilterDateSelector(
+                modifier = Modifier.weight(1F),
+                title = stringResource(id = R.string.to),
+                onDateChange = {
+                    isFilterSelected(null, it)
+                },
+                onDateClick = { isFilterSelected(null, null) }
+            )
+        }
     }
 }
 
@@ -211,7 +219,7 @@ private fun CustomFilterOption(
 private fun FilterDateSelector(
     modifier: Modifier,
     title: String,
-    onDateChange: (String) -> Unit,
+    onDateChange: (Long) -> Unit,
     onDateClick: () -> Unit
 ) = Column(
     modifier = modifier
@@ -237,9 +245,9 @@ private fun FilterDateSelector(
             )
             .clickable {
                 onDateClick()
-                Utils.openDatePickerDialog(context) {
-                    onDateChange(it)
-                    date = it
+                Utils.openDatePicker(context) { time, epochTime ->
+                    onDateChange(epochTime)
+                    date = time
                 }
             }
             .padding(10.dp),
@@ -292,12 +300,4 @@ private fun FilterOptions(
             )
         )
     }
-}
-
-sealed class FilterType {
-    object AllTransactions : FilterType()
-    object LastSevenDays : FilterType()
-    object LastOneMonth : FilterType()
-    object LastThreeMonths : FilterType()
-    object CustomFiltering : FilterType()
 }
