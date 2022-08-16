@@ -2,10 +2,12 @@ package lib.dehaat.ledger.presentation.ledger.revamp.state.credits
 
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
+import lib.dehaat.ledger.presentation.model.transactions.DaysToFilter
 
 data class LedgerViewModelState(
     val summaryViewData: SummaryViewData? = null,
     val showFilterSheet: Boolean = false,
+    val selectedFilter: DaysToFilter = DaysToFilter.All,
     val isError: Boolean = false,
     val errorMessage: String = "",
     val isLoading: Boolean = false,
@@ -14,6 +16,7 @@ data class LedgerViewModelState(
     fun toUIState() = LedgerUIState(
         summaryViewData = summaryViewData,
         showFilterSheet = showFilterSheet,
+        selectedFilter = selectedFilter,
         state = when {
             isSuccess -> UIState.SUCCESS
             isError -> UIState.ERROR(errorMessage)
@@ -24,7 +27,8 @@ data class LedgerViewModelState(
 }
 
 data class LedgerUIState(
-    val summaryViewData: SummaryViewData? = null,
-    val showFilterSheet: Boolean = false,
+    val summaryViewData: SummaryViewData?,
+    val showFilterSheet: Boolean,
+    val selectedFilter: DaysToFilter,
     val state: UIState
 )

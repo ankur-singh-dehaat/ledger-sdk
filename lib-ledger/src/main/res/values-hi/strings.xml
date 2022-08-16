@@ -82,10 +82,11 @@
     <string name="interest_starting">%s दिन में ब्याज शुरू होगा</string>
     <string name="full_payment_complete">पूर्ण भुगतान हो चुका है</string>
     <string name="credit_note_details">क्रेडिट नोट विवरण</string>
-
-
-    <string name="accessibility_icon">Accessibility Icon</string>
     <string name="credit_note_amount">क्रेडिट नोट राशि</string>
     <string name="received_date">प्राप्ति तिथि</string>
     <string name="download_invoice">"डाउनलोड इनवॉइस "</string>
+    <string name="from_to">%1s से %2s</string>
+
+
+    <string name="accessibility_icon">Accessibility Icon</string>
 </resources>

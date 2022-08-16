@@ -16,9 +16,9 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import lib.dehaat.ledger.initializer.LedgerSDK
@@ -54,7 +54,6 @@ fun RevampLedgerScreen(
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val context = LocalContext.current
     val nestedScrollViewState = rememberNestedScrollViewState()
 
     CommonContainer(
@@ -82,18 +81,21 @@ fun RevampLedgerScreen(
                     sheetContent = {
                         if (uiState.showFilterSheet) {
                             FilterScreen(
+                                defaultSelection = { viewModel.uiState.value.selectedFilter },
                                 onFilterApply = { daysToFilter ->
                                     viewModel.updateFilter(daysToFilter)
                                     scope.launch {
                                         sheetState.animateTo(ModalBottomSheetValue.Hidden)
                                     }
                                 },
-                                onFilterClose = {
-                                    scope.launch {
-                                        sheetState.animateTo(ModalBottomSheetValue.Hidden)
-                                    }
+                                getStartEndDate = { daysToFilter ->
+                                    viewModel.getSelectedDates(daysToFilter)
                                 }
-                            )
+                            ) {
+                                scope.launch {
+                                    sheetState.animateTo(ModalBottomSheetValue.Hidden)
+                                }
+                            }
                         } else {
                             Spacer(modifier = Modifier.height(1.dp))
                         }

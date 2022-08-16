@@ -32,17 +32,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.Utils
+import lib.dehaat.ledger.initializer.toDateMonthName
+import lib.dehaat.ledger.initializer.toDateMonthYear
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.model.transactions.DaysToFilter
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral10
 import lib.dehaat.ledger.resources.Neutral50
+import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.SeaGreen100
 import lib.dehaat.ledger.resources.TextWhite
 import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB1
+import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textHeadingH5
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2
@@ -54,14 +58,17 @@ import lib.dehaat.ledger.resources.textParagraphT2
 @Composable
 private fun FilterScreenPreview() = LedgerTheme {
     FilterScreen(
+        defaultSelection = { DaysToFilter.All },
         onFilterApply = {},
-        onFilterClose = {}
-    )
+        getStartEndDate = { Pair(0, 0) }
+    ) {}
 }
 
 @Composable
 fun FilterScreen(
+    defaultSelection: () -> DaysToFilter,
     onFilterApply: (DaysToFilter) -> Unit,
+    getStartEndDate: (DaysToFilter) -> Pair<Long, Long>?,
     onFilterClose: () -> Unit
 ) = Column(
     modifier = Modifier
@@ -69,7 +76,7 @@ fun FilterScreen(
         .padding(horizontal = 20.dp)
         .padding(top = 20.dp, bottom = 16.dp)
 ) {
-    var selectedFilter: DaysToFilter by remember { mutableStateOf(DaysToFilter.All) }
+    var selectedFilter: DaysToFilter by remember { mutableStateOf(defaultSelection()) }
 
     Row(
         modifier = Modifier
@@ -107,6 +114,9 @@ fun FilterScreen(
         defaultSelection = selectedFilter is DaysToFilter.SevenDays,
         isFilterSelected = { selectedFilter = DaysToFilter.SevenDays }
     )
+    if (selectedFilter is DaysToFilter.SevenDays) {
+        SelectedDates { getStartEndDate(selectedFilter) }
+    }
 
     Spacer(modifier = Modifier.height(32.dp))
 
@@ -115,6 +125,9 @@ fun FilterScreen(
         defaultSelection = selectedFilter is DaysToFilter.OneMonth,
         isFilterSelected = { selectedFilter = DaysToFilter.OneMonth }
     )
+    if (selectedFilter is DaysToFilter.OneMonth) {
+        SelectedDates { getStartEndDate(selectedFilter) }
+    }
 
     Spacer(modifier = Modifier.height(32.dp))
 
@@ -123,6 +136,9 @@ fun FilterScreen(
         defaultSelection = selectedFilter is DaysToFilter.ThreeMonth,
         isFilterSelected = { selectedFilter = DaysToFilter.ThreeMonth }
     )
+    if (selectedFilter is DaysToFilter.ThreeMonth) {
+        SelectedDates { getStartEndDate(selectedFilter) }
+    }
 
     Spacer(modifier = Modifier.height(16.dp))
 
@@ -297,6 +313,32 @@ private fun FilterOptions(
             style = textParagraphT1Highlight(
                 textColor = Neutral80,
                 fontFamily = notoSans
+            )
+        )
+    }
+}
+
+@Composable
+fun SelectedDates(
+    getStartEndDate: () -> Pair<Long, Long>?
+) = Column(
+    modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 30.dp)
+) {
+    val date = getStartEndDate()
+    val startDate = date?.first
+    val endDate = date?.second
+    if (startDate != null && endDate != null) {
+        VerticalSpacer(height = 6.dp)
+        Text(
+            text = stringResource(
+                id = R.string.from_to,
+                startDate.toDateMonthYear(),
+                endDate.toDateMonthYear()
+            ),
+            style = textCaptionCP1(
+                textColor = Neutral70
             )
         )
     }

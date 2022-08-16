@@ -106,5 +106,22 @@ class RevampLedgerViewModel @Inject constructor(
 
     fun updateFilter(daysToFilter: DaysToFilter) = callInViewModelScope {
         _selectedDaysToFilterEvent.emit(daysToFilter)
+        viewModelState.update {
+            it.copy(selectedFilter = daysToFilter)
+        }
+    }
+
+    fun getSelectedDates(daysToFilter: DaysToFilter) = when (daysToFilter) {
+        DaysToFilter.SevenDays -> calculateTime(7)
+        DaysToFilter.OneMonth -> calculateTime(30)
+        DaysToFilter.ThreeMonth -> calculateTime(90)
+        else -> null
+    }
+
+    private fun calculateTime(dayCount: Int): Pair<Long, Long> {
+        val daysSec = dayCount * 24 * 60 * 60
+        val currentDaySec = System.currentTimeMillis() / 1000
+        val pastDaySec = currentDaySec.minus(daysSec)
+        return Pair(pastDaySec, currentDaySec)
     }
 }
