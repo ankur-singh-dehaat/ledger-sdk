@@ -30,6 +30,7 @@ import lib.dehaat.ledger.presentation.ledger.bottomsheets.FilterScreen
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
 import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitScreen
+import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.transactions.ui.TransactionsScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.LedgerHeaderScreen
@@ -118,7 +119,12 @@ fun RevampLedgerScreen(
                                         )
                                     },
                                     onShowInvoiceListDetailsClick = {
-                                        detailPageNavigationCallback.navigateToInvoiceListPage()
+                                        detailPageNavigationCallback.navigateToInvoiceListPage(
+                                            InvoiceListViewModel.getBundle(
+                                                uiState.summaryViewData?.minInterestOutstandingDate,
+                                                uiState.summaryViewData?.minOutstandingAmountDue
+                                            )
+                                        )
                                     },
                                     onOtherPaymentModeClick = onOtherPaymentModeClick
                                 )

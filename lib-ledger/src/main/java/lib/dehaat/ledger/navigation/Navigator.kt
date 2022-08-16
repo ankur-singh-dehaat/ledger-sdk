@@ -77,9 +77,11 @@ fun navigateToOutstandingDetailPage(
 )
 
 fun navigateToInvoiceListPage(
-    navController: NavHostController
-) = navController.navigate(
-    LedgerRoutes.InvoiceListScreen.screen
+    navController: NavHostController,
+    bundle: Bundle
+) = navController.navigateTo(
+    route = LedgerRoutes.InvoiceListScreen.screen,
+    args = bundle
 )
 
 fun navigateToOtherPaymentModesScreen(

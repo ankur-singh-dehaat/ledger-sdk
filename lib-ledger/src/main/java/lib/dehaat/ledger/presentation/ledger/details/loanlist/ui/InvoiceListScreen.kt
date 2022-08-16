@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.themes.LedgerColors
+import lib.dehaat.ledger.initializer.toDateMonthName
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
@@ -43,6 +44,7 @@ import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textSubHeadingS3
+import lib.dehaat.ledger.util.getAmountInRupees
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -86,20 +88,28 @@ fun InvoiceListScreen(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(
-                                text = "24 जुलाई तक भुगतान करें ",
-                                style = textParagraphT1Highlight(
-                                    textColor = Neutral90,
-                                    fontFamily = notoSans
+                            viewModel.dueDate?.let {
+                                Text(
+                                    text = stringResource(
+                                        id = R.string.pay_till_date,
+                                        it.toDateMonthName()
+                                    ),
+                                    style = textParagraphT1Highlight(
+                                        textColor = Neutral90,
+                                        fontFamily = notoSans
+                                    )
                                 )
-                            )
-                            Text(
-                                text = "24 जुलाई तक भुगतान करें ",
-                                style = textSubHeadingS3(
-                                    textColor = Neutral90,
-                                    fontFamily = notoSans
+                            }
+
+                            viewModel.amountDue?.let {
+                                Text(
+                                    text = it.getAmountInRupees(),
+                                    style = textSubHeadingS3(
+                                        textColor = Neutral90,
+                                        fontFamily = notoSans
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
 

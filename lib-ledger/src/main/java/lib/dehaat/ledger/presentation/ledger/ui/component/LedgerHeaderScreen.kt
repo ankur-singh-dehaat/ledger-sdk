@@ -89,10 +89,11 @@ fun LedgerHeaderScreen(
         ViewDetails(onTotalOutstandingDetailsClick)
     }
 
-    if (showAdvanceAmount) {
+    val totalOutstandingAmount = summaryViewData?.totalOutstandingAmount?.toIntOrNull() ?: 0
+    if (totalOutstandingAmount < 0) {
         Spacer(modifier = Modifier.height(4.dp))
         Text(
-            text = stringResource(id = R.string.your_advance_amount, "check this with back-end"),
+            text = stringResource(id = R.string.your_advance_amount, totalOutstandingAmount.toString().getAmountInRupees()),
             style = textCaptionCP1(
                 textColor = Neutral80,
                 fontFamily = notoSans

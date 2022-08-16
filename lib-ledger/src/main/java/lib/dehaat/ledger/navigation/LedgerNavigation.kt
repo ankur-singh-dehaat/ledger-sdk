@@ -414,8 +414,8 @@ fun provideDetailPageNavCallBacks(
         navigateToOutstandingDetailPage(navController, viewState)
     }
 
-    override fun navigateToInvoiceListPage() {
-        navigateToInvoiceListPage(navController)
+    override fun navigateToInvoiceListPage(bundle: Bundle) {
+        navigateToInvoiceListPage(navController, bundle)
     }
 
     override fun navigateToOtherPaymentModesScreen() {

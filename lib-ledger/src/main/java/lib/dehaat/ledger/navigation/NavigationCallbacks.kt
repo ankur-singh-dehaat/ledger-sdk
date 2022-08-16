@@ -26,7 +26,9 @@ interface DetailPageNavigationCallback {
         viewState: OutstandingCreditLimitViewState?
     )
 
-    fun navigateToInvoiceListPage()
+    fun navigateToInvoiceListPage(
+        bundle: Bundle
+    )
 
     fun navigateToOtherPaymentModesScreen()
 
