@@ -60,6 +60,10 @@ class RevampLedgerViewModel @Inject constructor(
         it.copy(showFilterSheet = true)
     }
 
+    fun hideFilterBottomSheet() = viewModelState.update {
+        it.copy(showFilterSheet = false)
+    }
+
     private fun getCreditSummaryFromServer() {
         callInViewModelScope {
             callingAPI()

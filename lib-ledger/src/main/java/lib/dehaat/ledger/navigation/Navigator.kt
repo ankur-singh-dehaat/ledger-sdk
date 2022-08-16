@@ -122,6 +122,14 @@ fun navigateToRevampPaymentDetailPage(
     args = bundle
 )
 
+fun navigateToRevampWeeklyInterestDetailPage(
+    navController: NavHostController,
+    bundle: Bundle
+) = navController.navigateTo(
+    route = LedgerRoutes.RevampLedgerWeeklyInterestDetailScreen.screen,
+    args = bundle
+)
+
 fun NavController.navigateTo(
     route: String,
     args: Bundle,

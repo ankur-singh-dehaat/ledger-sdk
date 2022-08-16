@@ -39,4 +39,6 @@ interface DetailPageNavigationCallback {
     fun navigateToRevampCreditNoteDetailPage(bundle: Bundle)
 
     fun navigateToRevampPaymentDetailPage(bundle: Bundle)
+
+    fun navigateToRevampWeeklyInterestDetailPage(bundle: Bundle)
 }

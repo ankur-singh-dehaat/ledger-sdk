@@ -32,4 +32,7 @@ sealed class LedgerRoutes(val screen: String) {
 
     object RevampLedgerPaymentDetailScreen :
         LedgerRoutes("revamp_ledger_payment_detail_screen")
+
+    object RevampLedgerWeeklyInterestDetailScreen :
+        LedgerRoutes("revamp_ledger_weekly_interest_detail_screen")
 }

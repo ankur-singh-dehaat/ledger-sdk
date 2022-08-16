@@ -2,18 +2,12 @@ package lib.dehaat.ledger.presentation.ledger.details.interest.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -23,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.themes.DBAColors
 import lib.dehaat.ledger.initializer.themes.LedgerColors
+import lib.dehaat.ledger.initializer.toDateMonthYear
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.ledger.details.interest.InterestDetailsViewModel
@@ -32,11 +27,10 @@ import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.Pumpkin10
 import lib.dehaat.ledger.resources.notoSans
-import lib.dehaat.ledger.resources.textButtonB2
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
-import lib.dehaat.ledger.resources.textSubHeadingS3
+import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
     showBackground = true,
@@ -77,7 +71,11 @@ fun InterestDetailScreen(
                     modifier = Modifier
                         .background(color = Pumpkin10, shape = RoundedCornerShape(4.dp))
                         .padding(horizontal = 12.dp, vertical = 4.dp),
-                    text = "11-जुलाई-2022 से 17-जुलाई-2022",
+                    text = stringResource(
+                        id = R.string.from_to,
+                        viewModel.interestStartDate.toDateMonthYear(),
+                        viewModel.interestEndDate.toDateMonthYear()
+                    ),
                     style = textParagraphT2Highlight(
                         textColor = Neutral80,
                         fontFamily = notoSans
@@ -97,7 +95,7 @@ fun InterestDetailScreen(
                 VerticalSpacer(height = 4.dp)
 
                 Text(
-                    text = "₹ 6,950",
+                    text = viewModel.interestAmount.getAmountInRupees(),
                     style = textHeadingH3(
                         textColor = Neutral80,
                         fontFamily = notoSans
@@ -105,7 +103,7 @@ fun InterestDetailScreen(
                 )
             }
 
-            VerticalSpacer(height = 16.dp)
+            /*VerticalSpacer(height = 16.dp)
 
             Column(
                 modifier = Modifier
@@ -169,7 +167,7 @@ fun InterestDetailScreen(
                         Divider(modifier = Modifier.padding(horizontal = 20.dp))
                     }
                 }
-            }
+            }*/
         }
     }
 }
