@@ -40,7 +40,10 @@ fun TransactionsScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         stickyHeader {
-            TransactionListHeader(showFilterSheet)
+            TransactionListHeader(
+                ledgerViewModel,
+                showFilterSheet
+            )
         }
         items(transactions) { transaction ->
             transaction?.let {
