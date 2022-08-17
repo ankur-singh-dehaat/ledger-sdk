@@ -121,7 +121,7 @@ fun LedgerNavigation(
                 ledgerColors = ledgerColors,
                 onBackPress = finishActivity,
                 detailPageNavigationCallback = provideDetailPageNavCallBacks(navController),
-                onPayNowClick = { /*TODO*/ },
+                onPayNowClick = { ledgerCallbacks.onRevampPayNowClick(it) },
                 onOtherPaymentModeClick = { ledgerCallbacks.onPaymentOptionsClick(resultLauncher) }
             )
         }
@@ -145,9 +145,7 @@ fun LedgerNavigation(
             )
         }
 
-        composable(
-            route = LedgerRoutes.InvoiceListScreen.screen
-        ) {
+        composable(LedgerRoutes.InvoiceListScreen.screen) {
             val invoiceListViewModel = hiltViewModel<InvoiceListViewModel>()
             InvoiceListScreen(
                 viewModel = invoiceListViewModel,
@@ -176,9 +174,7 @@ fun LedgerNavigation(
             }
         }
 
-        composable(
-            route = LedgerRoutes.OtherPaymentModesScreen.screen
-        ) {
+        composable(LedgerRoutes.OtherPaymentModesScreen.screen) {
             val otherPaymentModesViewModel = hiltViewModel<OtherPaymentModesViewModel>()
 
             OtherPaymentModeScreen(

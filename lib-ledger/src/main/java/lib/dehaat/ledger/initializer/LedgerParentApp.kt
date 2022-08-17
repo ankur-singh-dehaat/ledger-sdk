@@ -1,7 +1,7 @@
 package lib.dehaat.ledger.initializer
 
-import lib.dehaat.ledger.initializer.callbacks.DownloadInvoiceSuccess
 import lib.dehaat.ledger.initializer.callbacks.DownloadInvoiceIntent
+import lib.dehaat.ledger.initializer.callbacks.DownloadInvoiceSuccess
 import lib.dehaat.ledger.initializer.callbacks.LedgerCallBack
 import lib.dehaat.ledger.initializer.themes.AIMSColors
 import lib.dehaat.ledger.initializer.themes.DBAColors
@@ -18,6 +18,7 @@ sealed class LedgerParentApp(
     ) : LedgerParentApp(
         LedgerCallBack(
             onClickPayNow = {},
+            onRevampPayNowClick = {},
             onDownloadInvoiceSuccess = downloadInvoiceClick,
             onPaymentOptionsClick = {},
             downloadInvoiceIntent = downloadInvoiceIntent

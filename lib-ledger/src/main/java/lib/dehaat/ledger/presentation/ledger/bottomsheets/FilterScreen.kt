@@ -193,7 +193,9 @@ private fun CustomFilterOption(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = { isFilterSelected(null, null) })
+            .clickable {
+                isFilterSelected(null, null)
+            }
     ) {
         FilterOptions(
             filterName = filterName,

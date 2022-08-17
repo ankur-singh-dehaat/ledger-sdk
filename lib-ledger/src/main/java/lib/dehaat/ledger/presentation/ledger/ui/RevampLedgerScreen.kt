@@ -16,7 +16,10 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
@@ -47,7 +50,7 @@ fun RevampLedgerScreen(
     ledgerColors: LedgerColors,
     onBackPress: () -> Unit,
     detailPageNavigationCallback: DetailPageNavigationCallback,
-    onPayNowClick: () -> Unit,
+    onPayNowClick: (String?) -> Unit,
     onOtherPaymentModeClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -55,6 +58,8 @@ fun RevampLedgerScreen(
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val nestedScrollViewState = rememberNestedScrollViewState()
+    var outstandingCalculationVisibility by rememberSaveable { mutableStateOf(false) }
+    outstandingCalculationVisibility = !sheetState.isVisible && uiState.state == UIState.SUCCESS
 
     CommonContainer(
         title = viewModel.dcName,
@@ -63,7 +68,7 @@ fun RevampLedgerScreen(
         backgroundColor = Background,
         bottomBar = {
             AnimatedVisibility(
-                visible = !sheetState.isVisible && uiState.state == UIState.SUCCESS,
+                visible = outstandingCalculationVisibility,
                 enter = expandVertically(),
                 exit = shrinkVertically()
             ) {
@@ -112,7 +117,7 @@ fun RevampLedgerScreen(
                                     saveInterest = true,
                                     showAdvanceAmount = true,
                                     showPayNowButton = LedgerSDK.isDBA,
-                                    onPayNowClick = onPayNowClick,
+                                    onPayNowClick = { onPayNowClick(uiState.summaryViewData?.minInterestAmountDue) },
                                     onTotalOutstandingDetailsClick = {
                                         detailPageNavigationCallback.navigateToOutstandingDetailPage(
                                             viewModel.outstandingCreditLimitViewState

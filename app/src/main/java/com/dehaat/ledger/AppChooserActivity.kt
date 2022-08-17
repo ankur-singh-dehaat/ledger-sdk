@@ -38,6 +38,7 @@ class AppChooserActivity : AppCompatActivity() {
                         LedgerParentApp.DBA(
                             ledgerCallBack = LedgerCallBack(
                                 onClickPayNow = { showToast(it.toString()) },
+                                onRevampPayNowClick = { showToast(it.toString()) },
                                 onDownloadInvoiceSuccess = { showToast(it.toString()) },
                                 onPaymentOptionsClick = { resultLauncher ->
                                     showToast(resultLauncher.toString())
