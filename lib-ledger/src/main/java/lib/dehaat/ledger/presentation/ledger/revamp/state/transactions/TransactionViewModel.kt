@@ -119,7 +119,7 @@ class TransactionViewModel @Inject constructor(
 
     fun updateSelectedFilter(daysToFilter: DaysToFilter) {
         this.daysToFilter = daysToFilter
-        getTransactionPaging()
+        transactionsList = getTransactionPaging()
         refresh()
     }
 
