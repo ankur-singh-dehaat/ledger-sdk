@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.SeaGreen10
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB2
 import lib.dehaat.ledger.resources.textParagraphT1
 import lib.dehaat.ledger.resources.textParagraphT2
@@ -64,20 +63,14 @@ fun RevampKeyValueChip(
     Text(
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
         text = key,
-        style = textParagraphT2(
-            textColor = Neutral80,
-            fontFamily = notoSans
-        )
+        style = textParagraphT2(Neutral80)
     )
 
     Log.d("TAG", "RevampKeyValueChip: $value")
     Text(
         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
         text = value,
-        style = textButtonB2(
-            textColor = Neutral80,
-            fontFamily = notoSans
-        )
+        style = textButtonB2(Neutral80)
     )
 }
 

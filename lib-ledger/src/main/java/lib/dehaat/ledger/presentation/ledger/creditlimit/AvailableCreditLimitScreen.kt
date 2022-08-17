@@ -21,7 +21,6 @@ import lib.dehaat.ledger.presentation.ledger.ui.component.ViewDetails
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 
@@ -58,10 +57,7 @@ fun AvailableCreditLimitScreen(
     ) {
         Text(
             text = totalAvailableCreditLimit,
-            style = textHeadingH3(
-                textColor = Neutral80,
-                fontFamily = notoSans
-            )
+            style = textHeadingH3(Neutral80)
         )
 
         ViewDetails(onViewDetailsClick)

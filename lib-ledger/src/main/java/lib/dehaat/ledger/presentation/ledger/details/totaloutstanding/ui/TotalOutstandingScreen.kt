@@ -36,7 +36,6 @@ import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.Pumpkin10
 import lib.dehaat.ledger.resources.SeaGreen10
 import lib.dehaat.ledger.resources.SeaGreen20
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.util.getAmountInRupees
@@ -87,10 +86,7 @@ fun TotalOutstandingScreen(
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     text = it.totalOutstandingAmount.getAmountInRupees(),
-                    style = textHeadingH3(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textHeadingH3(Neutral80)
                 )
 
                 VerticalSpacer(height = 16.dp)

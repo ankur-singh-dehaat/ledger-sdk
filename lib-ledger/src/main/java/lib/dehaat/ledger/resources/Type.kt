@@ -257,13 +257,14 @@ fun textHeadingH1(
     fontWeight: FontWeight = FontWeight.SemiBold,
     lineHeight: TextUnit = 40.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansSemiBold
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
-    fontFamily = fontFamily
+    fontFamily = fontFamily,
+    textDecoration = textDecoration
 )
 
 @Composable
@@ -279,7 +280,8 @@ fun textHeadingH2(
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
-    fontFamily = fontFamily
+    fontFamily = fontFamily,
+    textDecoration = textDecoration
 )
 
 @Composable
@@ -289,12 +291,13 @@ fun textHeadingH3(
     fontWeight: FontWeight = FontWeight.SemiBold,
     lineHeight: TextUnit = 32.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansSemiBold
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -311,6 +314,7 @@ fun textHeadingH4(
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -321,12 +325,13 @@ fun textHeadingH5(
     fontWeight: FontWeight = FontWeight.SemiBold,
     lineHeight: TextUnit = 28.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansSemiBold
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -343,6 +348,7 @@ fun textHeadingH6(
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -353,12 +359,13 @@ fun textSubHeadingS1(
     fontWeight: FontWeight = FontWeight.SemiBold,
     lineHeight: TextUnit = 24.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansSemiBold
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -375,6 +382,7 @@ fun textSubHeadingS2(
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -385,12 +393,13 @@ fun textSubHeadingS3(
     fontWeight: FontWeight = FontWeight.SemiBold,
     lineHeight: TextUnit = 24.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansSemiBold
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -401,12 +410,13 @@ fun textParagraphT1(
     fontWeight: FontWeight = FontWeight.Normal,
     lineHeight: TextUnit = 24.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansRegular
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -423,6 +433,7 @@ fun textParagraphT1Highlight(
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -433,7 +444,7 @@ fun textParagraphT2(
     fontWeight: FontWeight = FontWeight.Normal,
     lineHeight: TextUnit = 20.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansRegular
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -456,6 +467,7 @@ fun textParagraphT2Highlight(
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -466,12 +478,13 @@ fun textParagraphT3(
     fontWeight: FontWeight = FontWeight.Normal,
     lineHeight: TextUnit = 16.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansRegular
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
     fontWeight = fontWeight,
     lineHeight = lineHeight,
+    textDecoration = textDecoration,
     fontFamily = fontFamily
 )
 
@@ -499,7 +512,7 @@ fun textButtonB1(
     fontWeight: FontWeight = FontWeight.SemiBold,
     lineHeight: TextUnit = 20.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansSemiBold
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -516,7 +529,7 @@ fun textButtonB2(
     fontWeight: FontWeight = FontWeight.SemiBold,
     lineHeight: TextUnit = 18.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansSemiBold
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,

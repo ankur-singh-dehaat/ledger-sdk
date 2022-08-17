@@ -19,7 +19,6 @@ import lib.dehaat.ledger.initializer.toDateMonthYear
 import lib.dehaat.ledger.presentation.RevampLedgerViewModel
 import lib.dehaat.ledger.resources.Neutral60
 import lib.dehaat.ledger.resources.Neutral80
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
 import lib.dehaat.ledger.resources.textSubHeadingS3
 
@@ -40,10 +39,7 @@ fun TransactionListHeader(
             .padding(horizontal = 20.dp)
             .padding(top = 20.dp, bottom = 12.dp),
         text = stringResource(id = R.string.all_transactions_list),
-        style = textSubHeadingS3(
-            textColor = Neutral80,
-            fontFamily = notoSans
-        )
+        style = textSubHeadingS3(Neutral80)
     )
 
     Divider()

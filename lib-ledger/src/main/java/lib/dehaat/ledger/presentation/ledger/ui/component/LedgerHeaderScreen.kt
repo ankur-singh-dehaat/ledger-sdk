@@ -26,7 +26,6 @@ import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
@@ -77,10 +76,7 @@ fun LedgerHeaderScreen(
     ) {
         Text(
             text = summaryViewData?.totalOutstandingAmount.getAmountInRupees(),
-            style = textHeadingH3(
-                textColor = Neutral80,
-                fontFamily = notoSans
-            )
+            style = textHeadingH3(Neutral80)
         )
 
         ViewDetails(onTotalOutstandingDetailsClick)
@@ -123,8 +119,7 @@ fun LedgerHeaderScreen(
             text = stringResource(id = R.string.know_other_payment_methods),
             style = textParagraphT2(
                 textColor = Neutral70,
-                textDecoration = TextDecoration.Underline,
-                fontFamily = notoSans
+                textDecoration = TextDecoration.Underline
             ),
             textAlign = TextAlign.End
         )

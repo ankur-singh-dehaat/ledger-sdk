@@ -53,7 +53,6 @@ import lib.dehaat.ledger.resources.Neutral60
 import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.SeaGreen100
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB2
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textHeadingH3
@@ -108,19 +107,13 @@ fun AvailableCreditLimitDetailsScreen(
                     Text(
                         modifier = Modifier.padding(horizontal = 8.dp),
                         text = stringResource(id = R.string.available_credit_limit),
-                        style = textParagraphT1(
-                            textColor = Neutral80,
-                            fontFamily = notoSans
-                        )
+                        style = textParagraphT1(Neutral80)
                     )
 
                     Text(
                         modifier = Modifier.padding(horizontal = 8.dp),
                         text = uiState.totalAvailableCreditLimit.getAmountInRupees(),
-                        style = textHeadingH3(
-                            textColor = Neutral80,
-                            fontFamily = notoSans
-                        )
+                        style = textHeadingH3(Neutral80)
                     )
 
                     VerticalSpacer(height = 12.dp)
@@ -208,10 +201,7 @@ fun AvailableCreditLimitDetailsScreen(
 
                         Text(
                             text = stringResource(id = R.string.how_does_payment_increase_credit_limit),
-                            style = textSubHeadingS3(
-                                textColor = Neutral80,
-                                fontFamily = notoSans
-                            )
+                            style = textSubHeadingS3(Neutral80)
                         )
                     }
 
@@ -305,10 +295,7 @@ private fun InformationalScreen(
                         R.string.when_you_owe_interest
                     }
                 ),
-                style = textButtonB2(
-                    textColor = Neutral70,
-                    fontFamily = notoSans
-                )
+                style = textButtonB2(Neutral70)
             )
             if (!isFullPaymentInfo) {
                 Text(

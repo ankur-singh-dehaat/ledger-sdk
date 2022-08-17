@@ -30,7 +30,6 @@ import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.Pumpkin120
 import lib.dehaat.ledger.resources.SeaGreen110
 import lib.dehaat.ledger.resources.TextLightGrey
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT2
 import lib.dehaat.ledger.util.getAmountInRupees
@@ -96,10 +95,7 @@ fun TotalOutstandingCalculation(
 
                 Text(
                     text = stringResource(id = R.string.total_outstanding_calculation_method),
-                    style = textParagraphT2(
-                        textColor = TextLightGrey,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT2(TextLightGrey)
                 )
             }
         }
@@ -113,10 +109,7 @@ fun TotalOutstandingCalculation(
         ) {
             Text(
                 text = stringResource(id = R.string.total_outstanding_footer),
-                style = textParagraphT2(
-                    textColor = Neutral90,
-                    fontFamily = notoSans
-                ),
+                style = textParagraphT2(Neutral90),
                 textAlign = TextAlign.Center
             )
             Icon(
@@ -136,10 +129,7 @@ fun TotalOutstandingCalculation(
                 )
                 Text(
                     text = summaryViewData?.totalPurchaseAmount.getAmountInRupees(),
-                    style = textParagraphT2(
-                        textColor = Pumpkin120,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT2(Pumpkin120)
                 )
             }
 
@@ -155,10 +145,7 @@ fun TotalOutstandingCalculation(
                 )
                 Text(
                     text = summaryViewData?.interestTillDate.getAmountInRupees(),
-                    style = textParagraphT2(
-                        textColor = Pumpkin120,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT2(Pumpkin120)
                 )
             }
             Icon(
@@ -180,10 +167,7 @@ fun TotalOutstandingCalculation(
                 )
                 Text(
                     text = summaryViewData?.paymentAmountTillDate.getAmountInRupees(),
-                    style = textParagraphT2(
-                        textColor = SeaGreen110,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT2(SeaGreen110)
                 )
             }
         }

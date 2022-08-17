@@ -20,7 +20,6 @@ import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.SeaGreen10
 import lib.dehaat.ledger.resources.SeaGreen20
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
 

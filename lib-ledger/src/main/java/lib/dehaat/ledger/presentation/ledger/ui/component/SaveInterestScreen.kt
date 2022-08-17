@@ -26,7 +26,6 @@ import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.Pumpkin120
 import lib.dehaat.ledger.resources.Warning10
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textParagraphT1
 import lib.dehaat.ledger.resources.textParagraphT2
 import lib.dehaat.ledger.resources.textSubHeadingS3
@@ -59,10 +58,7 @@ fun SaveInterestScreen(
 
     Text(
         text = stringResource(id = R.string.save_interest),
-        style = textSubHeadingS3(
-            textColor = Pumpkin120,
-            fontFamily = notoSans
-        )
+        style = textSubHeadingS3(Pumpkin120)
     )
 
     Row(
@@ -75,18 +71,12 @@ fun SaveInterestScreen(
                 id = R.string.pay_till_date,
                 summaryViewData?.minInterestOutstandingDate?.toDateMonthName() ?: ""
             ),
-            style = textParagraphT1(
-                textColor = Neutral90,
-                fontFamily = notoSans
-            )
+            style = textParagraphT1(Neutral90)
         )
 
         Text(
             text = summaryViewData?.minOutstandingAmountDue.getAmountInRupees(),
-            style = textSubHeadingS3(
-                textColor = Neutral90,
-                fontFamily = notoSans
-            )
+            style = textSubHeadingS3(Neutral90)
         )
     }
 
@@ -99,8 +89,7 @@ fun SaveInterestScreen(
             text = stringResource(id = R.string.view_details),
             style = textParagraphT2(
                 textColor = Neutral70,
-                textDecoration = TextDecoration.Underline,
-                fontFamily = notoSans
+                textDecoration = TextDecoration.Underline
             ),
             textAlign = TextAlign.End
         )

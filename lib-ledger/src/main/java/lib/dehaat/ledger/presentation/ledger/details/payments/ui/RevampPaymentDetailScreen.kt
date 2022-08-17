@@ -33,7 +33,6 @@ import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
@@ -90,10 +89,7 @@ fun RevampPaymentDetailScreen(
 
                             Text(
                                 text = paymentSummary?.totalAmount.getAmountInRupees(),
-                                style = textHeadingH3(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textHeadingH3(Neutral80)
                             )
                         }
 

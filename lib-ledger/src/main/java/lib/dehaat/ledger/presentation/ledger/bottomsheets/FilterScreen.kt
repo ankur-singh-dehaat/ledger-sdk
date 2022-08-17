@@ -43,7 +43,6 @@ import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.SeaGreen100
 import lib.dehaat.ledger.resources.TextWhite
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB1
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textHeadingH5
@@ -86,10 +85,7 @@ fun FilterScreen(
     ) {
         Text(
             text = stringResource(id = R.string.filter),
-            style = textHeadingH5(
-                textColor = Neutral80,
-                fontFamily = notoSans
-            )
+            style = textHeadingH5(Neutral80)
         )
 
         Icon(
@@ -176,10 +172,7 @@ fun FilterScreen(
                 )
                 .padding(vertical = 8.dp),
             textAlign = TextAlign.Center,
-            style = textButtonB1(
-                textColor = TextWhite,
-                fontFamily = notoSans
-            )
+            style = textButtonB1(TextWhite)
         )
     }
 }
@@ -245,10 +238,7 @@ private fun FilterDateSelector(
     var date by remember { mutableStateOf("") }
     Text(
         text = title,
-        style = textParagraphT2(
-            textColor = Neutral80,
-            fontFamily = notoSans
-        )
+        style = textParagraphT2(Neutral80)
     )
     VerticalSpacer(height = 4.dp)
 
@@ -278,10 +268,7 @@ private fun FilterDateSelector(
         HorizontalSpacer(width = 8.dp)
         Text(
             text = date.ifEmpty { "DD/MM/YYYY" },
-            style = textParagraphT2(
-                textColor = Neutral50
-            ),
-            fontFamily = notoSans
+            style = textParagraphT2(Neutral50)
         )
     }
 }

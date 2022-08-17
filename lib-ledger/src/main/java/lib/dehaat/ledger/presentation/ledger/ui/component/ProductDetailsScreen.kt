@@ -27,7 +27,6 @@ import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductsInfoViewDataV
 import lib.dehaat.ledger.resources.BorderColor
 import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
@@ -48,10 +47,7 @@ fun ProductDetailsScreen(
         modifier = Modifier
             .padding(horizontal = 20.dp),
         text = stringResource(id = R.string.product_details),
-        style = textSubHeadingS3(
-            textColor = Neutral80,
-            fontFamily = notoSans
-        )
+        style = textSubHeadingS3(Neutral80)
     )
 
     Text(

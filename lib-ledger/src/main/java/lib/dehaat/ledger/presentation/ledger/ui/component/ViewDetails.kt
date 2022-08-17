@@ -8,7 +8,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.resources.Neutral70
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textParagraphT2
 
 @Composable
@@ -20,8 +19,7 @@ fun ViewDetails(
         text = stringResource(id = R.string.view_details),
         style = textParagraphT2(
             textColor = Neutral70,
-            textDecoration = TextDecoration.Underline,
-            fontFamily = notoSans
+            textDecoration = TextDecoration.Underline
         )
     )
 }

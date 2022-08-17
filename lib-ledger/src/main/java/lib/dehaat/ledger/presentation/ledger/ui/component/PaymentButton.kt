@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.resources.SeaGreen100
 import lib.dehaat.ledger.resources.TextWhite
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB1
 
 @Preview(
@@ -46,9 +45,6 @@ fun PaymentButton(
             )
             .padding(vertical = 8.dp),
         textAlign = TextAlign.Center,
-        style = textButtonB1(
-            textColor = TextWhite,
-            fontFamily = notoSans
-        )
+        style = textButtonB1(TextWhite)
     )
 }

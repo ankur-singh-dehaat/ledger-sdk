@@ -34,7 +34,6 @@ import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Pumpkin120
 import lib.dehaat.ledger.resources.SeaGreen110
 import lib.dehaat.ledger.resources.Warning10
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.util.getAmountInRupees

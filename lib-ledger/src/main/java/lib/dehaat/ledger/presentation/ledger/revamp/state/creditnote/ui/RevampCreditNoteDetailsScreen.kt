@@ -32,7 +32,6 @@ import lib.dehaat.ledger.resources.BlueGreen10
 import lib.dehaat.ledger.resources.FrenchBlue120
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB2
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
 
@@ -81,10 +80,7 @@ fun RevampCreditNoteDetailsScreen(
                             ),
                             style = Pair(
                                 textParagraphT2Highlight(Neutral90),
-                                textButtonB2(
-                                    textColor = Neutral90,
-                                    fontFamily = notoSans
-                                )
+                                textButtonB2(Neutral90)
                             )
                         )
 
@@ -118,10 +114,7 @@ fun RevampCreditNoteDetailsScreen(
                             ),
                             style = Pair(
                                 textParagraphT2Highlight(Neutral80),
-                                textButtonB2(
-                                    textColor = Neutral90,
-                                    fontFamily = notoSans
-                                )
+                                textButtonB2(Neutral90)
                             )
                         )
 

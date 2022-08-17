@@ -26,7 +26,6 @@ import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.Pumpkin10
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
@@ -90,10 +89,7 @@ fun InterestDetailScreen(
 
                 Text(
                     text = viewModel.interestAmount.getAmountInRupees(),
-                    style = textHeadingH3(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textHeadingH3(Neutral80)
                 )
             }
 
@@ -119,10 +115,7 @@ fun InterestDetailScreen(
                                 modifier = Modifier
                                     .padding(horizontal = 20.dp),
                                 text = stringResource(id = R.string.daily_interest_details),
-                                style = textSubHeadingS3(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textSubHeadingS3(Neutral80)
                             )
 
                             VerticalSpacer(height = 12.dp)
@@ -148,10 +141,7 @@ fun InterestDetailScreen(
                             )
                             Text(
                                 text = "+ ₹ 480",
-                                style = textButtonB2(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textButtonB2(Neutral80)
                             )
                         }
 

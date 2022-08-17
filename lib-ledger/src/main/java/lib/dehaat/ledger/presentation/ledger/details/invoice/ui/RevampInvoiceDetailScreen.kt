@@ -52,7 +52,6 @@ import lib.dehaat.ledger.resources.Pumpkin10
 import lib.dehaat.ledger.resources.Pumpkin120
 import lib.dehaat.ledger.resources.SeaGreen100
 import lib.dehaat.ledger.resources.Success10
-import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textButtonB2
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT1Highlight

@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.resources.LedgerTheme
-import lib.dehaat.ledger.resources.notoSans
 
 @Preview(
     showBackground = true
@@ -49,15 +48,13 @@ fun FilterHeader(
     Spacer(modifier = Modifier.width(16.dp))
 
     Text(
-        text = stringResource(id = R.string.filter),
-        fontFamily = notoSans
+        text = stringResource(id = R.string.filter)
     )
 
     Spacer(modifier = Modifier.width(4.dp))
 
     Text(
-        text = stringResource(id = R.string.transactions_so_far),
-        fontFamily = notoSans
+        text = stringResource(id = R.string.transactions_so_far)
     )
 
     Spacer(modifier = Modifier.width(10.dp))
