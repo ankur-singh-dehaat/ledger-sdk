@@ -1,9 +1,6 @@
 package lib.dehaat.ledger.resources
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import lib.dehaat.ledger.R
 
 val DarkGray = Color(0xFF202020)
 val TextBlack = Color(0xFF333333)
@@ -46,5 +43,3 @@ val Success10 = Color(0XFFE6FFCC)
 
 val Warning10 = Color(0XFFFFF4E5)
 val Background = Color(0XFFE9E6E6)
-
-val notoSans = FontFamily(Font(R.font.noto_sans))
