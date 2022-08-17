@@ -126,17 +126,11 @@ fun TransactionCard(
                 }
                 Text(
                     text = name,
-                    style = textParagraphT1Highlight(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(
                     text = transaction.amount.getAmountInRupees(),
-                    style = textParagraphT1Highlight(
-                        textColor = transactionType.amountColor(),
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(transactionType.amountColor())
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))
@@ -155,9 +149,7 @@ fun TransactionCard(
                         }
                         else -> transaction.date.toDateMonthYear()
                     },
-                    style = textCaptionCP1(
-                        textColor = Neutral60
-                    )
+                    style = textCaptionCP1(Neutral60)
                 )
 
                 if (transactionType is TransactionType.Invoice) {
@@ -169,10 +161,7 @@ fun TransactionCard(
                             id = R.string.interest_start_dates,
                             transaction.interestStartDate.toDateMonthYear()
                         ),
-                        style = textCaptionCP1(
-                            textColor = Neutral80,
-                            fontFamily = notoSans
-                        )
+                        style = textCaptionCP1(Neutral80)
                     )
                 }
             }

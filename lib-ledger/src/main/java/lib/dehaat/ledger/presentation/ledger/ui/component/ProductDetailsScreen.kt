@@ -58,10 +58,7 @@ fun ProductDetailsScreen(
         modifier = Modifier
             .padding(horizontal = 20.dp),
         text = stringResource(id = R.string.total_items, productDetails?.count.toString()),
-        style = textCaptionCP1(
-            textColor = Neutral70,
-            fontFamily = notoSans
-        )
+        style = textCaptionCP1(Neutral70)
     )
 
     VerticalSpacer(height = 12.dp)
@@ -79,10 +76,7 @@ fun ProductDetailsScreen(
 
         VerticalSpacer(height = 12.dp)
 
-        val commonStyle = textParagraphT2Highlight(
-            textColor = Neutral80,
-            fontFamily = notoSans
-        )
+        val commonStyle = textParagraphT2Highlight(Neutral80)
 
         RevampKeyValuePair(
             pair = Pair(
@@ -113,10 +107,7 @@ fun ProductDetailsScreen(
 
         Divider()
 
-        val totalAmountStyle = textParagraphT1Highlight(
-            textColor = Neutral80,
-            fontFamily = notoSans
-        )
+        val totalAmountStyle = textParagraphT1Highlight(Neutral80)
         RevampKeyValuePair(
             pair = Pair(
                 stringResource(id = R.string.total_amount),
@@ -163,18 +154,12 @@ private fun RevampProductView(
         ) {
             Text(
                 text = product.name,
-                style = textParagraphT2Highlight(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral80)
             )
 
             Text(
                 text = stringResource(id = R.string.quantity, product.quantity),
-                style = textParagraphT2Highlight(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral80)
             )
         }
 
@@ -184,18 +169,12 @@ private fun RevampProductView(
         ) {
             Text(
                 text = product.priceTotalDiscexcl.toString(),
-                style = textParagraphT2Highlight(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral80)
             )
 
             Text(
                 text = product.priceTotal.getAmountInRupees(),
-                style = textParagraphT2Highlight(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral80)
             )
         }
     }

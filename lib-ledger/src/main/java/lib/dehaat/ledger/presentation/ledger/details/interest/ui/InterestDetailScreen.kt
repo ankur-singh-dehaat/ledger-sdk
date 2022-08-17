@@ -76,20 +76,14 @@ fun InterestDetailScreen(
                         viewModel.interestStartDate.toDateMonthYear(),
                         viewModel.interestEndDate.toDateMonthYear()
                     ),
-                    style = textParagraphT2Highlight(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT2Highlight(Neutral80)
                 )
 
                 VerticalSpacer(height = 20.dp)
 
                 Text(
                     text = stringResource(id = R.string.interest_amount),
-                    style = textParagraphT1Highlight(
-                        textColor = Neutral90,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Neutral90)
                 )
 
                 VerticalSpacer(height = 4.dp)
@@ -150,10 +144,7 @@ fun InterestDetailScreen(
                         ) {
                             Text(
                                 text = "16-जुलाई-2022",
-                                style = textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textParagraphT2Highlight(Neutral80)
                             )
                             Text(
                                 text = "+ ₹ 480",

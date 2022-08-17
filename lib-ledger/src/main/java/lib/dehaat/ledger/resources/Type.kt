@@ -246,6 +246,10 @@ fun text12Sp(
     color = textColor,
 )
 
+/**
+ * Font Styles derived from https://www.figma.com/file/rRPSy4h3oe4aDuBSOJbbG2/F.A.D.S.---Base-Style?node-id=4%3A2
+ */
+
 @Composable
 fun textHeadingH1(
     textColor: Color = TextBlack,
@@ -269,7 +273,7 @@ fun textHeadingH2(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 40.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -301,7 +305,7 @@ fun textHeadingH4(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 32.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -333,7 +337,7 @@ fun textHeadingH6(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 28.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -365,7 +369,7 @@ fun textSubHeadingS2(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 24.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -413,7 +417,7 @@ fun textParagraphT1Highlight(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 24.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -446,7 +450,7 @@ fun textParagraphT2Highlight(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 20.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -478,7 +482,7 @@ fun textParagraphT3Highlight(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 16.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -529,7 +533,7 @@ fun textCaptionCP1(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 16.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,
@@ -546,7 +550,7 @@ fun textCaptionCP2(
     fontWeight: FontWeight = FontWeight.Medium,
     lineHeight: TextUnit = 14.sp,
     textDecoration: TextDecoration? = null,
-    fontFamily: FontFamily? = null
+    fontFamily: FontFamily = notoSansDisplayMedium
 ) = TextStyle(
     color = textColor,
     fontSize = fontSize,

@@ -46,10 +46,7 @@ fun AvailableCreditLimitScreen(
 
     Text(
         text = stringResource(id = R.string.available_credit_limit_for_order_placement),
-        style = textParagraphT1Highlight(
-            textColor = Neutral90,
-            fontFamily = notoSans
-        )
+        style = textParagraphT1Highlight(Neutral90)
     )
 
     Spacer(modifier = Modifier.height(6.dp))

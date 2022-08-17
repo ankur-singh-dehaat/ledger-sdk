@@ -94,10 +94,7 @@ fun InvoiceListScreen(
                                         id = R.string.pay_till_date,
                                         it.toDateMonthName()
                                     ),
-                                    style = textParagraphT1Highlight(
-                                        textColor = Neutral90,
-                                        fontFamily = notoSans
-                                    )
+                                    style = textParagraphT1Highlight(Neutral90)
                                 )
                             }
 
@@ -228,17 +225,11 @@ fun InvoiceWithAccumulatedInterest(
             ) {
                 Text(
                     text = stringResource(id = R.string.invoice),
-                    style = textParagraphT1Highlight(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(
                     text = "बकाया राशि: ₹ 18,550",
-                    style = textParagraphT1Highlight(
-                        textColor = Error100,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Error100)
                 )
             }
             VerticalSpacer(height = 4.dp)
@@ -248,9 +239,7 @@ fun InvoiceWithAccumulatedInterest(
             ) {
                 Text(
                     text = "18-जुलाई-2022 से आज तक",
-                    style = textCaptionCP1(
-                        textColor = Neutral60
-                    )
+                    style = textCaptionCP1(Neutral60)
                 )
 
                 InvoiceInformationChip(
@@ -293,17 +282,11 @@ fun InvoiceWithUpcomingInterest(
             ) {
                 Text(
                     text = stringResource(id = R.string.invoice),
-                    style = textParagraphT1Highlight(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(
                     text = "+ ₹ 5,160",
-                    style = textParagraphT1Highlight(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Neutral80)
                 )
             }
             VerticalSpacer(height = 4.dp)
@@ -313,9 +296,7 @@ fun InvoiceWithUpcomingInterest(
             ) {
                 Text(
                     text = "18-जुलाई-2022 से आज तक",
-                    style = textCaptionCP1(
-                        textColor = Neutral60
-                    )
+                    style = textCaptionCP1(Neutral60)
                 )
 
                 InvoiceInformationChip(

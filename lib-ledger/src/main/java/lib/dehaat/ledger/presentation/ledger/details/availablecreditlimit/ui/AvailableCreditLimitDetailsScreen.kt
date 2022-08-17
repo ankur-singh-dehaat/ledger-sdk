@@ -259,10 +259,7 @@ private fun InformationalScreen(
                     R.string.when_does_payment_amount_not_adds_up
                 }
             ),
-            style = textParagraphT1Highlight(
-                textColor = Neutral80,
-                fontFamily = notoSans
-            )
+            style = textParagraphT1Highlight(Neutral80)
         )
 
         val modifier = if (isDetailsVisible) {
@@ -316,10 +313,7 @@ private fun InformationalScreen(
             if (!isFullPaymentInfo) {
                 Text(
                     text = stringResource(id = R.string.payment_amount_used_to_pay_outstanding_interest),
-                    style = textCaptionCP1(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textCaptionCP1(Neutral80)
                 )
             }
 
@@ -327,10 +321,7 @@ private fun InformationalScreen(
 
             Text(
                 text = stringResource(id = R.string.example),
-                style = textParagraphT2Highlight(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral80)
             )
 
             VerticalSpacer(height = 4.dp)
@@ -343,10 +334,7 @@ private fun InformationalScreen(
                         R.string.partial_payment_example
                     }
                 ),
-                style = textParagraphT2Highlight(
-                    textColor = Neutral60,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral60)
             )
         }
     }

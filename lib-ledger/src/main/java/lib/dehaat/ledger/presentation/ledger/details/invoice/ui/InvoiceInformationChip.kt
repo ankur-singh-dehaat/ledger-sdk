@@ -27,9 +27,6 @@ fun InvoiceInformationChip(
 ) {
     Text(
         text = title,
-        style = textCaptionCP1(
-            textColor = textColor,
-            fontFamily = notoSans
-        )
+        style = textCaptionCP1(textColor)
     )
 }

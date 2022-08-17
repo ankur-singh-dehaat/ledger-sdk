@@ -69,10 +69,7 @@ fun RevampCreditNoteDetailsScreen(
                                 .background(color = BlueGreen10, RoundedCornerShape(8.dp))
                                 .padding(horizontal = 12.dp, vertical = 4.dp),
                             text = summary?.reason ?: "",
-                            style = textParagraphT2Highlight(
-                                textColor = FrenchBlue120,
-                                fontFamily = notoSans
-                            )
+                            style = textParagraphT2Highlight(FrenchBlue120)
                         )
 
                         VerticalSpacer(height = 20.dp)
@@ -83,10 +80,7 @@ fun RevampCreditNoteDetailsScreen(
                                 summary?.amount ?: ""
                             ),
                             style = Pair(
-                                textParagraphT2Highlight(
-                                    textColor = Neutral90,
-                                    fontFamily = notoSans
-                                ),
+                                textParagraphT2Highlight(Neutral90),
                                 textButtonB2(
                                     textColor = Neutral90,
                                     fontFamily = notoSans
@@ -100,14 +94,8 @@ fun RevampCreditNoteDetailsScreen(
                                 summary?.timestamp.toDateMonthYear()
                             ),
                             style = Pair(
-                                textParagraphT2Highlight(
-                                    textColor = Neutral90,
-                                    fontFamily = notoSans
-                                ),
-                                textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                textParagraphT2Highlight(Neutral90),
+                                textParagraphT2Highlight(Neutral80)
                             )
                         )
 
@@ -129,10 +117,7 @@ fun RevampCreditNoteDetailsScreen(
                                 summary?.invoiceNumber ?: ""
                             ),
                             style = Pair(
-                                textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                ),
+                                textParagraphT2Highlight(Neutral80),
                                 textButtonB2(
                                     textColor = Neutral90,
                                     fontFamily = notoSans
@@ -146,14 +131,8 @@ fun RevampCreditNoteDetailsScreen(
                                 summary?.invoiceDate.toDateMonthYear()
                             ),
                             style = Pair(
-                                textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                ),
-                                textParagraphT2Highlight(
-                                    textColor = Neutral90,
-                                    fontFamily = notoSans
-                                )
+                                textParagraphT2Highlight(Neutral80),
+                                textParagraphT2Highlight(Neutral90)
                             )
                         )
 

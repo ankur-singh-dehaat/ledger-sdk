@@ -11,6 +11,13 @@ fun String?.getAmountInRupeesWithoutDecimal(): String {
 
 fun String?.getAmountInRupees(): String {
     val value = this?.toDoubleOrNull()
+    val isNegativeValue = value?.let { it < 0 } ?: false
+    if (isNegativeValue) {
+        value?.let {
+            val amount = it * -1
+            return String.format("%s%s", "- ₹", formatDecimal(amount))
+        }
+    }
     return String.format("%s%s", "₹", formatDecimal(value))
 }
 

@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.datasource.DummyDataSource
+import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
@@ -28,7 +29,7 @@ import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.notoSans
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textHeadingH3
-import lib.dehaat.ledger.resources.textParagraphT1
+import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2
 import lib.dehaat.ledger.util.getAmountInRupees
 
@@ -41,20 +42,17 @@ private fun LedgerHeaderScreenPreview() {
     LedgerHeaderScreen(
         summaryViewData = DummyDataSource.summaryViewData,
         saveInterest = true,
-        showAdvanceAmount = true,
         showPayNowButton = true,
         onPayNowClick = {},
         onTotalOutstandingDetailsClick = {},
-        onShowInvoiceListDetailsClick = {},
-        onOtherPaymentModeClick = {}
-    )
+        onShowInvoiceListDetailsClick = {}
+    ) {}
 }
 
 @Composable
 fun LedgerHeaderScreen(
     summaryViewData: SummaryViewData?,
     saveInterest: Boolean,
-    showAdvanceAmount: Boolean,
     showPayNowButton: Boolean,
     onPayNowClick: () -> Unit,
     onTotalOutstandingDetailsClick: () -> Unit,
@@ -64,15 +62,13 @@ fun LedgerHeaderScreen(
     modifier = Modifier
         .background(Color.White)
         .padding(horizontal = 20.dp)
-        .padding(top = 24.dp, bottom = 12.dp)
+        .padding(bottom = 12.dp)
         .fillMaxWidth()
 ) {
+    VerticalSpacer(height = 24.dp)
     Text(
         text = stringResource(id = R.string.total_outstanding),
-        style = textParagraphT1(
-            textColor = Neutral90,
-            fontFamily = notoSans
-        )
+        style = textParagraphT1Highlight(Neutral90)
     )
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -82,7 +78,8 @@ fun LedgerHeaderScreen(
         Text(
             text = summaryViewData?.totalOutstandingAmount.getAmountInRupees(),
             style = textHeadingH3(
-                textColor = Neutral80
+                textColor = Neutral80,
+                fontFamily = notoSans
             )
         )
 
@@ -91,13 +88,14 @@ fun LedgerHeaderScreen(
 
     val totalOutstandingAmount = summaryViewData?.totalOutstandingAmount?.toIntOrNull() ?: 0
     if (totalOutstandingAmount < 0) {
-        Spacer(modifier = Modifier.height(4.dp))
+        val outstandingAmount = totalOutstandingAmount * -1
+        VerticalSpacer(height = 4.dp)
         Text(
-            text = stringResource(id = R.string.your_advance_amount, totalOutstandingAmount.toString().getAmountInRupees()),
-            style = textCaptionCP1(
-                textColor = Neutral80,
-                fontFamily = notoSans
-            )
+            text = stringResource(
+                id = R.string.your_advance_amount,
+                outstandingAmount.toString().getAmountInRupees()
+            ),
+            style = textCaptionCP1(Neutral80)
         )
     }
 

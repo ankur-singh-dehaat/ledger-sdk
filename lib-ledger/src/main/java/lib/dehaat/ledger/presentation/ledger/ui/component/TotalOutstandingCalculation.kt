@@ -132,10 +132,7 @@ fun TotalOutstandingCalculation(
             Column(verticalArrangement = Arrangement.SpaceEvenly) {
                 Text(
                     text = stringResource(id = R.string.total_purchase_rs),
-                    style = textCaptionCP1(
-                        textColor = Pumpkin120,
-                        fontFamily = notoSans
-                    )
+                    style = textCaptionCP1(Pumpkin120)
                 )
                 Text(
                     text = summaryViewData?.totalPurchaseAmount.getAmountInRupees(),
@@ -154,10 +151,7 @@ fun TotalOutstandingCalculation(
             Column(verticalArrangement = Arrangement.SpaceEvenly) {
                 Text(
                     text = stringResource(id = R.string.interest_rs),
-                    style = textCaptionCP1(
-                        textColor = Pumpkin120,
-                        fontFamily = notoSans
-                    )
+                    style = textCaptionCP1(Pumpkin120)
                 )
                 Text(
                     text = summaryViewData?.interestTillDate.getAmountInRupees(),
@@ -182,10 +176,7 @@ fun TotalOutstandingCalculation(
             Column(verticalArrangement = Arrangement.SpaceEvenly) {
                 Text(
                     text = stringResource(id = R.string.payment_rs),
-                    style = textCaptionCP1(
-                        textColor = SeaGreen110,
-                        fontFamily = notoSans
-                    )
+                    style = textCaptionCP1(SeaGreen110)
                 )
                 Text(
                     text = summaryViewData?.paymentAmountTillDate.getAmountInRupees(),

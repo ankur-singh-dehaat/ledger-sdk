@@ -67,7 +67,5 @@ fun TransactionListHeader(
 private fun SelectedFilters(text: String) = Text(
     modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
     text = text,
-    style = textParagraphT2Highlight(
-        textColor = Neutral60
-    )
+    style = textParagraphT2Highlight(Neutral60)
 )

@@ -81,10 +81,7 @@ fun TotalOutstandingScreen(
                 Text(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     text = stringResource(id = R.string.total_outstanding),
-                    style = textParagraphT1Highlight(
-                        textColor = Neutral90,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Neutral90)
                 )
 
                 Text(

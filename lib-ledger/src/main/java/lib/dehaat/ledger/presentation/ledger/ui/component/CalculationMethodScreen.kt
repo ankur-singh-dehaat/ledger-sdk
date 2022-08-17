@@ -54,10 +54,7 @@ fun CalculationMethodScreen(
     Text(
         modifier = Modifier.padding(horizontal = 8.dp),
         text = title,
-        style = textParagraphT1Highlight(
-            textColor = Neutral90,
-            fontFamily = notoSans
-        )
+        style = textParagraphT1Highlight(Neutral90)
     )
 
     VerticalSpacer(height = 8.dp)
@@ -76,18 +73,12 @@ fun CalculationMethodScreen(
         ) {
             Text(
                 text = first.first,
-                style = textParagraphT2Highlight(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral80)
             )
 
             Text(
                 text = first.second,
-                style = textParagraphT2Highlight(
-                    textColor = Neutral90,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral90)
             )
         }
 
@@ -98,18 +89,12 @@ fun CalculationMethodScreen(
         ) {
             Text(
                 text = second.first,
-                style = textParagraphT2Highlight(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral80)
             )
 
             Text(
                 text = second.second,
-                style = textParagraphT2Highlight(
-                    textColor = Neutral90,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT2Highlight(Neutral90)
             )
         }
 
@@ -122,18 +107,12 @@ fun CalculationMethodScreen(
         ) {
             Text(
                 text = total.first,
-                style = textParagraphT1Highlight(
-                    textColor = Neutral80,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT1Highlight(Neutral80)
             )
 
             Text(
                 text = total.second,
-                style = textParagraphT1Highlight(
-                    textColor = Neutral90,
-                    fontFamily = notoSans
-                )
+                style = textParagraphT1Highlight(Neutral90)
             )
         }
 

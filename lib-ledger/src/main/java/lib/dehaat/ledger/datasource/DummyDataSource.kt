@@ -58,7 +58,7 @@ object DummyDataSource {
         purchaseAmountTillDate = "",
         totalAvailableCreditLimit = "",
         totalCreditLimit = "",
-        totalOutstandingAmount = "320000",
+        totalOutstandingAmount = "-320000",
         totalPurchaseAmount = "",
         undeliveredInvoiceAmount = ""
     )

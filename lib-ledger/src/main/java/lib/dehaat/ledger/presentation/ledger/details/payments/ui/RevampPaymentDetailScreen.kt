@@ -83,10 +83,7 @@ fun RevampPaymentDetailScreen(
                         Column {
                             Text(
                                 text = stringResource(id = R.string.payment_amount),
-                                style = textParagraphT1Highlight(
-                                    textColor = Neutral90,
-                                    fontFamily = notoSans
-                                )
+                                style = textParagraphT1Highlight(Neutral90)
                             )
 
                             VerticalSpacer(height = 4.dp)
@@ -123,18 +120,12 @@ fun RevampPaymentDetailScreen(
                         ) {
                             Text(
                                 text = stringResource(id = R.string.payment_date),
-                                style = textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textParagraphT2Highlight(Neutral80)
                             )
 
                             Text(
                                 text = paymentSummary?.timestamp.toDateMonthYear(),
-                                style = textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textParagraphT2Highlight(Neutral80)
                             )
                         }
 
@@ -144,18 +135,12 @@ fun RevampPaymentDetailScreen(
                         ) {
                             Text(
                                 text = stringResource(id = R.string.payment_method),
-                                style = textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textParagraphT2Highlight(Neutral80)
                             )
 
                             Text(
                                 text = paymentSummary?.mode ?: "",
-                                style = textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textParagraphT2Highlight(Neutral80)
                             )
                         }
 
@@ -165,18 +150,12 @@ fun RevampPaymentDetailScreen(
                         ) {
                             Text(
                                 text = stringResource(id = R.string.reference_id),
-                                style = textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textParagraphT2Highlight(Neutral80)
                             )
 
                             Text(
                                 text = paymentSummary?.referenceId ?: "",
-                                style = textParagraphT2Highlight(
-                                    textColor = Neutral80,
-                                    fontFamily = notoSans
-                                )
+                                style = textParagraphT2Highlight(Neutral80)
                             )
                         }
                     }

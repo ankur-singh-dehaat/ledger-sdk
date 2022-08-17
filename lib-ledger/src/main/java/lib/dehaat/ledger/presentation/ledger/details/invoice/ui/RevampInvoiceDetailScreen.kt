@@ -128,12 +128,8 @@ fun RevampInvoiceDetailScreen(
                                     uiState.invoiceDetailsViewData?.summary?.totalOutstandingAmount.getAmountInRupees()
                                 ),
                                 style = Pair(
-                                    textParagraphT2Highlight(
-                                        textColor = Error100
-                                    ),
-                                    textButtonB2(
-                                        textColor = Error100
-                                    )
+                                    textParagraphT2Highlight(Error100),
+                                    textButtonB2(Error100)
                                 )
                             )
                         }
@@ -145,12 +141,8 @@ fun RevampInvoiceDetailScreen(
                                 summary?.invoiceAmount.getAmountInRupees()
                             ),
                             style = Pair(
-                                textParagraphT2Highlight(
-                                    textColor = Neutral90
-                                ),
-                                textButtonB2(
-                                    textColor = Neutral90
-                                )
+                                textParagraphT2Highlight(Neutral90),
+                                textButtonB2(Neutral90)
                             )
                         )
 
@@ -161,12 +153,8 @@ fun RevampInvoiceDetailScreen(
                                 summary?.invoiceId ?: ""
                             ),
                             style = Pair(
-                                textParagraphT2Highlight(
-                                    textColor = Neutral80
-                                ),
-                                textParagraphT2Highlight(
-                                    textColor = Neutral90
-                                )
+                                textParagraphT2Highlight(Neutral80),
+                                textParagraphT2Highlight(Neutral90)
                             )
                         )
 
@@ -177,12 +165,8 @@ fun RevampInvoiceDetailScreen(
                                 summary?.invoiceDate.toDateMonthYear()
                             ),
                             style = Pair(
-                                textParagraphT2Highlight(
-                                    textColor = Neutral80
-                                ),
-                                textButtonB2(
-                                    textColor = Neutral90
-                                )
+                                textParagraphT2Highlight(Neutral80),
+                                textButtonB2(Neutral90)
                             )
                         )
 
@@ -193,12 +177,8 @@ fun RevampInvoiceDetailScreen(
                                 summary?.interestStartDate.toDateMonthYear()
                             ),
                             style = Pair(
-                                textParagraphT2Highlight(
-                                    textColor = Neutral80
-                                ),
-                                textButtonB2(
-                                    textColor = Neutral90
-                                )
+                                textParagraphT2Highlight(Neutral80),
+                                textButtonB2(Neutral90)
                             )
                         )
 
@@ -279,25 +259,17 @@ private fun CreditNoteCard(
             ) {
                 Text(
                     text = stringResource(id = R.string.credit_note, creditNote.creditNoteType),
-                    style = textParagraphT1Highlight(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(
                     text = creditNote.creditNoteAmount.getAmountInRupees(),
-                    style = textParagraphT1Highlight(
-                        textColor = Neutral80,
-                        fontFamily = notoSans
-                    )
+                    style = textParagraphT1Highlight(Neutral80)
                 )
             }
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = creditNote.creditNoteDate.toDateMonthYear(),
-                style = textCaptionCP1(
-                    textColor = Neutral60
-                )
+                style = textCaptionCP1(Neutral60)
             )
         }
     }

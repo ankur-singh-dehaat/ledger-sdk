@@ -311,10 +311,7 @@ private fun FilterOptions(
 
         Text(
             text = filterName,
-            style = textParagraphT1Highlight(
-                textColor = Neutral80,
-                fontFamily = notoSans
-            )
+            style = textParagraphT1Highlight(Neutral80)
         )
     }
 }
@@ -338,9 +335,7 @@ fun SelectedDates(
                 startDate.toDateMonthYear(),
                 endDate.toDateMonthYear()
             ),
-            style = textCaptionCP1(
-                textColor = Neutral70
-            )
+            style = textCaptionCP1(Neutral70)
         )
     }
 }
