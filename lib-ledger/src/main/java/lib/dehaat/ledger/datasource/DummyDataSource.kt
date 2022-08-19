@@ -10,8 +10,8 @@ import lib.dehaat.ledger.presentation.model.creditsummary.CreditSummaryViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.InfoViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.OverdueViewData
+import lib.dehaat.ledger.presentation.model.detail.payment.PaymentDetailSummaryViewData
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
-import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductViewDataV2
 import lib.dehaat.ledger.presentation.model.revamp.transactions.TransactionViewDataV2
 import lib.dehaat.ledger.presentation.model.transactions.TransactionViewData
 
@@ -113,12 +113,18 @@ object DummyDataSource {
         type = "INVOICE"
     )
 
-    private val revampProduct = ProductViewDataV2(
-        name = "Triticum - 30 ( 10 Kg)",
-        quantity = 10.0,
-        fname = "fname",
-        priceTotal = "10000",
-        priceTotalDiscexcl = 10.0
+    val paymentDetailSummaryViewData = PaymentDetailSummaryViewData(
+        referenceId = "refId",
+        timestamp = 78386423894,
+        totalAmount = "1200",
+        mode = "CASH",
+        principalComponent = null,
+        interestComponent = null,
+        overdueInterestComponent = null,
+        penaltyComponent = null,
+        advanceComponent = null,
+        paidTo = null,
+        belongsToGapl = null
     )
 
     private val dbaApp by lazy {

@@ -18,9 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import lib.dehaat.ledger.R
-import lib.dehaat.ledger.initializer.themes.DBAColors
+import lib.dehaat.ledger.datasource.DummyDataSource
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.initializer.toDateMonthYear
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
@@ -29,6 +28,7 @@ import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
+import lib.dehaat.ledger.presentation.model.detail.payment.PaymentDetailSummaryViewData
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Neutral80
@@ -43,12 +43,8 @@ import lib.dehaat.ledger.util.getAmountInRupees
     name = "RevampPaymentDetailScreen Preview"
 )
 @Composable
-private fun RevampPaymentDetailScreenPreview() = LedgerTheme {
-    RevampPaymentDetailScreen(
-        viewModel = hiltViewModel(),
-        ledgerColors = DBAColors(),
-        onBackPress = {}
-    )
+private fun PaymentDetailsScreenPreview() = LedgerTheme {
+    PaymentDetails(DummyDataSource.paymentDetailSummaryViewData)
 }
 
 @Composable
@@ -66,96 +62,7 @@ fun RevampPaymentDetailScreen(
     ) {
         when (uiState.state) {
             UIState.SUCCESS -> {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.White)
-                            .padding(horizontal = 20.dp)
-                            .padding(top = 24.dp, bottom = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column {
-                            Text(
-                                text = stringResource(id = R.string.payment_amount),
-                                style = textParagraphT1Highlight(Neutral90)
-                            )
-
-                            VerticalSpacer(height = 4.dp)
-
-                            Text(
-                                text = paymentSummary?.totalAmount.getAmountInRupees(),
-                                style = textHeadingH3(Neutral80)
-                            )
-                        }
-
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_check),
-                            contentDescription = stringResource(id = R.string.accessibility_icon)
-                        )
-                    }
-
-                    VerticalSpacer(height = 16.dp)
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.White)
-                            .padding(horizontal = 20.dp)
-                            .padding(top = 12.dp, bottom = 16.dp),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.payment_date),
-                                style = textParagraphT2Highlight(Neutral80)
-                            )
-
-                            Text(
-                                text = paymentSummary?.timestamp.toDateMonthYear(),
-                                style = textParagraphT2Highlight(Neutral80)
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.payment_method),
-                                style = textParagraphT2Highlight(Neutral80)
-                            )
-
-                            Text(
-                                text = paymentSummary?.mode ?: "",
-                                style = textParagraphT2Highlight(Neutral80)
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.reference_id),
-                                style = textParagraphT2Highlight(Neutral80)
-                            )
-
-                            Text(
-                                text = paymentSummary?.referenceId ?: "",
-                                style = textParagraphT2Highlight(Neutral80)
-                            )
-                        }
-                    }
-                }
+                PaymentDetails(paymentSummary)
             }
             UIState.LOADING -> {
                 ShowProgressDialog(ledgerColors) {
@@ -165,6 +72,100 @@ fun RevampPaymentDetailScreen(
             is UIState.ERROR -> {
                 NoDataFound((uiState.state as? UIState.ERROR)?.message)
             }
+        }
+    }
+}
+
+@Composable
+private fun PaymentDetails(
+    paymentSummary: PaymentDetailSummaryViewData?
+) = Column(
+    modifier = Modifier.fillMaxWidth()
+) {
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White)
+            .padding(horizontal = 20.dp)
+            .padding(top = 24.dp, bottom = 20.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column {
+            Text(
+                text = stringResource(id = R.string.payment_amount),
+                style = textParagraphT1Highlight(Neutral90)
+            )
+
+            VerticalSpacer(height = 4.dp)
+
+            Text(
+                text = paymentSummary?.totalAmount.getAmountInRupees(),
+                style = textHeadingH3(Neutral80)
+            )
+        }
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_check),
+            contentDescription = stringResource(id = R.string.accessibility_icon)
+        )
+    }
+
+    VerticalSpacer(height = 16.dp)
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White)
+            .padding(horizontal = 20.dp)
+            .padding(top = 12.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(id = R.string.payment_date),
+                style = textParagraphT2Highlight(Neutral80)
+            )
+
+            Text(
+                text = paymentSummary?.timestamp.toDateMonthYear(),
+                style = textParagraphT2Highlight(Neutral80)
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(id = R.string.payment_method),
+                style = textParagraphT2Highlight(Neutral80)
+            )
+
+            Text(
+                text = paymentSummary?.mode ?: "",
+                style = textParagraphT2Highlight(Neutral80)
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = stringResource(id = R.string.reference_id),
+                style = textParagraphT2Highlight(Neutral80)
+            )
+
+            Text(
+                text = paymentSummary?.referenceId ?: "",
+                style = textParagraphT2Highlight(Neutral80)
+            )
         }
     }
 }
