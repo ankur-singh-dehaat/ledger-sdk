@@ -338,8 +338,7 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerWeeklyInterestDetailScreen.screen,
-            arguments = InterestDetailsViewModel.getArgs()
+            route = LedgerRoutes.RevampLedgerWeeklyInterestDetailScreen.screen
         ) {
             val interestDetailsViewModel = hiltViewModel<InterestDetailsViewModel>()
 

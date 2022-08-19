@@ -2,8 +2,6 @@ package lib.dehaat.ledger.presentation.ledger.details.interest
 
 import android.os.Bundle
 import androidx.lifecycle.SavedStateHandle
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import lib.dehaat.ledger.presentation.common.BaseViewModel
@@ -34,20 +32,5 @@ class InterestDetailsViewModel @Inject constructor(
             putString(KEY_INTEREST_START_DATE, interestStartDate.toString())
             putString(KEY_INTEREST_END_DATE, interestEndDate.toString())
         }
-
-        fun getArgs() = listOf(
-            navArgument(KEY_INTEREST_AMOUNT) {
-                type = NavType.StringType
-                nullable = true
-            },
-            navArgument(KEY_INTEREST_START_DATE) {
-                type = NavType.StringType
-                nullable = true
-            },
-            navArgument(KEY_INTEREST_END_DATE) {
-                type = NavType.StringType
-                nullable = true
-            }
-        )
     }
 }
