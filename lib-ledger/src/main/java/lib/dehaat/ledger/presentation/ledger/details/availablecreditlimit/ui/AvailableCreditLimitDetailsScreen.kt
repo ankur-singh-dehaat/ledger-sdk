@@ -31,11 +31,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import lib.dehaat.ledger.R
-import lib.dehaat.ledger.initializer.themes.DBAColors
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
@@ -46,7 +43,6 @@ import lib.dehaat.ledger.presentation.ledger.ui.component.CalculationMethodScree
 import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValueChip
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.BlueGreen10
-import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Mustard10
 import lib.dehaat.ledger.resources.Neutral10
 import lib.dehaat.ledger.resources.Neutral60
@@ -61,20 +57,6 @@ import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
 import lib.dehaat.ledger.resources.textSubHeadingS3
 import lib.dehaat.ledger.util.getAmountInRupees
-
-@Preview(
-    showBackground = true,
-    name = "TotalAvailableCreditDetailsLimitScreen Preview"
-)
-@Composable
-private fun AvailableCreditLimitDetailsScreenPrev() = LedgerTheme {
-    AvailableCreditLimitDetailsScreen(
-        viewModel = hiltViewModel(),
-        ledgerColors = DBAColors()
-    ) {
-
-    }
-}
 
 @Composable
 fun AvailableCreditLimitDetailsScreen(

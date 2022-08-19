@@ -91,7 +91,7 @@ class AppChooserActivity : AppCompatActivity() {
                         context = this,
                         partnerId = "123456",
                         dcName = "DC AIMS",
-                        isDCFinanced = false,
+                        isDCFinanced = true,
                         language = "en"
                     )
                 }

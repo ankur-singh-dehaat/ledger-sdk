@@ -31,7 +31,7 @@
     <string name="purchases_till_date">आज तक की ख़रीदी</string>
     <string name="total_credit_note_amount">कुल क्रेडिट नोट राशि</string>
     <string name="available_credit_limit">उपलब्ध क्रेडिट लिमिट</string>
-    <string name="total_credit_limit">कुल क्रेडिट लिमिट</string>
+    <string name="total_credit_limit">कुल क्रेडिट लिमिट\n</string>
     <string name="total_outstanding_plus_products_to_be_deliver">कुल बकाया + डिलिवर होने वाले ऑर्डर</string>
     <string name="total_credit_limit_calculation_method">कुल क्रेडिट लिमिट कैल्क्युलेशन विधि:</string>
     <string name="permanent_credit_limit">पर्मानेंट क्रेडिट लिमिट</string>
