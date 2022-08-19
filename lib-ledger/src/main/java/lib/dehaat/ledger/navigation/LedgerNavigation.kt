@@ -326,8 +326,7 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen,
-            arguments = PaymentDetailViewModel.getArgs()
+            route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen
         ) {
             val paymentDetailViewModel = hiltViewModel<PaymentDetailViewModel>()
             RevampPaymentDetailScreen(
