@@ -84,12 +84,6 @@ fun navigateToInvoiceListPage(
     args = bundle
 )
 
-fun navigateToOtherPaymentModesScreen(
-    navController: NavHostController
-) = navController.navigate(
-    LedgerRoutes.LedgerPaymentDetailScreen.screen
-)
-
 fun navigateToAvailableCreditLimitDetailPage(
     navController: NavHostController,
     viewState: AvailableCreditLimitViewState?

@@ -1,11 +1,8 @@
 package lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote
 
 import android.os.Bundle
-import android.provider.Settings.Global.putString
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import com.cleanarch.base.entity.result.api.APIResultEntity
 import com.dehaat.androidbase.helper.callInViewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -90,12 +87,5 @@ class CreditNoteDetailsViewModel @Inject constructor(
         fun getBundle(ledgerId: String) = Bundle().apply {
             putString(LedgerConstants.KEY_LEDGER_ID, ledgerId)
         }
-
-        fun getArgs() = listOf(
-            navArgument(LedgerConstants.KEY_LEDGER_ID) {
-                type = NavType.StringType
-                nullable = true
-            }
-        )
     }
 }

@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.NavType
-import androidx.navigation.navArgument
 import com.cleanarch.base.entity.result.api.APIResultEntity
 import com.dehaat.androidbase.helper.callInViewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -92,16 +90,5 @@ class RevampInvoiceDetailViewModel @Inject constructor(
             putString(LedgerConstants.KEY_LEDGER_ID, ledgerId)
             putString(LedgerConstants.KEY_SOURCE, source)
         }
-
-        fun getArgs() = listOf(
-            navArgument(LedgerConstants.KEY_LEDGER_ID) {
-                type = NavType.StringType
-                nullable = true
-            },
-            navArgument(LedgerConstants.KEY_SOURCE) {
-                type = NavType.StringType
-                nullable = true
-            }
-        )
     }
 }

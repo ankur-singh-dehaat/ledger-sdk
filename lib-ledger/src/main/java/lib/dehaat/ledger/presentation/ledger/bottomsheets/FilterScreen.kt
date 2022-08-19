@@ -74,7 +74,8 @@ fun FilterScreen(
         .padding(horizontal = 20.dp)
         .padding(top = 20.dp, bottom = 16.dp)
 ) {
-    var selectedFilter: DaysToFilter by remember { mutableStateOf(defaultSelection()) }
+    val defaultValue = defaultSelection()
+    var selectedFilter: DaysToFilter by remember(defaultValue) { mutableStateOf(defaultSelection()) }
 
     Row(
         modifier = Modifier

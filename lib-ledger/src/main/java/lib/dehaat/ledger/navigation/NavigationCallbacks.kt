@@ -30,8 +30,6 @@ interface DetailPageNavigationCallback {
         bundle: Bundle
     )
 
-    fun navigateToOtherPaymentModesScreen()
-
     fun navigateToAvailableCreditLimitDetailPage(
         viewState: AvailableCreditLimitViewState?
     )

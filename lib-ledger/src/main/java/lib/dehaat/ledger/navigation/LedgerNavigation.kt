@@ -28,8 +28,6 @@ import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScr
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.RevampInvoiceDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.ui.InvoiceListScreen
-import lib.dehaat.ledger.presentation.ledger.details.otherpaymentmode.OtherPaymentModesViewModel
-import lib.dehaat.ledger.presentation.ledger.details.otherpaymentmode.ui.OtherPaymentModeScreen
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.RevampPaymentDetailScreen
@@ -174,17 +172,6 @@ fun LedgerNavigation(
             }
         }
 
-        composable(LedgerRoutes.OtherPaymentModesScreen.screen) {
-            val otherPaymentModesViewModel = hiltViewModel<OtherPaymentModesViewModel>()
-
-            OtherPaymentModeScreen(
-                viewModel = otherPaymentModesViewModel,
-                ledgerColors = ledgerColors
-            ) {
-                navController.popBackStack()
-            }
-        }
-
         composable(
             route = LedgerRoutes.LedgerInvoiceDetailScreen.screen.withArgsPath(
                 LedgerConstants.KEY_LEDGER_ID,
@@ -228,8 +215,7 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen,
-            arguments = RevampInvoiceDetailViewModel.getArgs()
+            route = LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen
         ) {
             val invoiceDetailViewModel = hiltViewModel<RevampInvoiceDetailViewModel>()
             RevampInvoiceDetailScreen(
@@ -274,8 +260,7 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen,
-            arguments = CreditNoteDetailsViewModel.getArgs()
+            route = LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen
         ) {
             val creditNoteDetailsViewModel = hiltViewModel<CreditNoteDetailsViewModel>()
             RevampCreditNoteDetailsScreen(
@@ -410,10 +395,6 @@ fun provideDetailPageNavCallBacks(
 
     override fun navigateToInvoiceListPage(bundle: Bundle) {
         navigateToInvoiceListPage(navController, bundle)
-    }
-
-    override fun navigateToOtherPaymentModesScreen() {
-        navigateToOtherPaymentModesScreen(navController)
     }
 
     override fun navigateToAvailableCreditLimitDetailPage(
