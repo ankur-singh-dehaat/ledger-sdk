@@ -9,6 +9,7 @@ import lib.dehaat.ledger.framework.model.detail.payment.ResponsePaymentDetail
 import lib.dehaat.ledger.framework.model.revamp.creditnote.ResponseCreditNoteDetails
 import lib.dehaat.ledger.framework.model.revamp.creditsummary.ResponseCreditSummaryV2
 import lib.dehaat.ledger.framework.model.revamp.invoicedetails.ResponseInvoiceDetails
+import lib.dehaat.ledger.framework.model.revamp.invoicelist.ResponseInvoiceList
 import lib.dehaat.ledger.framework.model.revamp.transactions.ResponseTransaction
 import lib.dehaat.ledger.framework.model.transactions.ResponseTransactions
 import lib.dehaat.ledger.framework.model.transactionsummary.ResponseTransactionSummary
@@ -87,4 +88,12 @@ interface LedgerAPIService {
         @Query("invoice_id") identityId: String,
         @Query("source") source: String
     ): Response<ResponseDownloadInvoice>
+
+    @GET("/finance/invoice/v2")
+    suspend fun getInvoiceList(
+        @Query("partnerId") partnerId: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
+        @Query("filter") filter: String
+    ): Response<ResponseInvoiceList>
 }

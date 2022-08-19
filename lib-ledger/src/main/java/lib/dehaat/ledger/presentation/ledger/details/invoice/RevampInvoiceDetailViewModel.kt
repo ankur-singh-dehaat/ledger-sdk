@@ -1,7 +1,6 @@
 package lib.dehaat.ledger.presentation.ledger.details.invoice
 
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cleanarch.base.entity.result.api.APIResultEntity
@@ -42,7 +41,6 @@ class RevampInvoiceDetailViewModel @Inject constructor(
 
     init {
         getInvoiceDetailFromServer()
-        Log.d("TAG", "navCheck: $ledgerId")
     }
 
     private fun getInvoiceDetailFromServer() {

@@ -10,6 +10,7 @@ import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
 import lib.dehaat.ledger.entities.revamp.creditnote.CreditNoteDetailsEntity
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
+import lib.dehaat.ledger.entities.revamp.invoicelist.InvoiceListEntity
 import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
@@ -69,4 +70,11 @@ interface ILedgerRepository {
     suspend fun getCreditNoteDetails(
         ledgerId: String
     ): APIResultEntity<CreditNoteDetailsEntity?>
+
+    suspend fun getInterestApproachedInvoices(
+        partnerId: String,
+        limit: Int,
+        offset: Int,
+        isInterestApproached: Boolean
+    ): APIResultEntity<List<InvoiceListEntity>?>
 }

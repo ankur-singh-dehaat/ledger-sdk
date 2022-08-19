@@ -1,10 +1,8 @@
 package lib.dehaat.ledger.data
 
-import com.cleanarch.base.entity.result.api.APIResultEntity
 import javax.inject.Inject
 import lib.dehaat.ledger.data.source.ILedgerDataSource
 import lib.dehaat.ledger.domain.ILedgerRepository
-import lib.dehaat.ledger.entities.detail.creditnote.CreditNoteDetailEntity
 
 class LedgerRepository @Inject constructor(private val networkSource: ILedgerDataSource) :
     ILedgerRepository {
@@ -92,5 +90,17 @@ class LedgerRepository @Inject constructor(private val networkSource: ILedgerDat
         ledgerId: String
     ) = networkSource.getCreditNoteDetailV2(
         ledgerId
+    )
+
+    override suspend fun getInterestApproachedInvoices(
+        partnerId: String,
+        limit: Int,
+        offset: Int,
+        isInterestApproached: Boolean
+    ) = networkSource.getInvoices(
+        partnerId,
+        limit,
+        offset,
+        isInterestApproached
     )
 }

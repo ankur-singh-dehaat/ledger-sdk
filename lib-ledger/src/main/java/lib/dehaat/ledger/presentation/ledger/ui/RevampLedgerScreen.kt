@@ -126,7 +126,8 @@ fun RevampLedgerScreen(
                                         detailPageNavigationCallback.navigateToInvoiceListPage(
                                             InvoiceListViewModel.getBundle(
                                                 uiState.summaryViewData?.minInterestOutstandingDate,
-                                                uiState.summaryViewData?.minOutstandingAmountDue
+                                                uiState.summaryViewData?.minOutstandingAmountDue,
+                                                viewModel.partnerId
                                             )
                                         )
                                     },

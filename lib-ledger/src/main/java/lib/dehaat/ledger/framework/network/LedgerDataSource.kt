@@ -145,6 +145,34 @@ class LedgerDataSource @Inject constructor(
         it?.data?.let { data -> mapper.toCreditNoteDetailsEntity(data) }
     }
 
+    override suspend fun getInvoices(
+        partnerId: String,
+        limit: Int,
+        offset: Int,
+        isInterestApproached: Boolean
+    ) = callAPI(
+        dispatcher,
+        {
+            apiService.getInvoiceList(
+                partnerId, limit, offset, if (isInterestApproached) {
+                    "interest-approached-invoices"
+                } else {
+                    "interest-approaching-invoices"
+                }
+            )
+        }
+    ) {
+        if (isInterestApproached) {
+            it?.data?.interestApproachedInvoices?.let { data ->
+                mapper.toInterestApproachedInvoiceListEntity(data)
+            }
+        } else {
+            it?.data?.interestApproachingInvoices?.let { data ->
+                mapper.toInterestApproachedInvoiceListEntity(data)
+            }
+        }
+    }
+
     private suspend fun <D, C> callAPI(
         dispatchers: IDispatchers,
         apiCall: suspend () -> Response<D>,

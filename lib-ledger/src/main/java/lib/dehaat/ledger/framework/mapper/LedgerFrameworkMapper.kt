@@ -22,6 +22,7 @@ import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
 import lib.dehaat.ledger.entities.revamp.invoice.ProductEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.ProductsInfoEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.SummaryEntityV2
+import lib.dehaat.ledger.entities.revamp.invoicelist.InvoiceListEntity
 import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
@@ -43,6 +44,7 @@ import lib.dehaat.ledger.framework.model.detail.payment.PaymentDetailData
 import lib.dehaat.ledger.framework.model.revamp.creditnote.CreditNoteDetailsData
 import lib.dehaat.ledger.framework.model.revamp.creditsummary.CreditV2
 import lib.dehaat.ledger.framework.model.revamp.invoicedetails.InvoiceDataV2
+import lib.dehaat.ledger.framework.model.revamp.invoicelist.InterestInvoice
 import lib.dehaat.ledger.framework.model.revamp.transactions.TransactionData
 import lib.dehaat.ledger.framework.model.transactions.Transaction
 import lib.dehaat.ledger.framework.model.transactions.TransactionsData
@@ -379,6 +381,23 @@ class LedgerFrameworkMapper @Inject constructor() {
             interestOutstandingAmount = interestOutstandingAmount,
             overdueInterestOutstandingAmount = overdueInterestOutstandingAmount,
             penaltyOutstandingAmount = penaltyOutstandingAmount
+        )
+    }
+
+    fun toInterestApproachedInvoiceListEntity(
+        data: List<InterestInvoice>?
+    ) = data?.map {
+        InvoiceListEntity(
+            it.amount,
+            it.date,
+            it.interestStartDate,
+            it.interestFreePeriodEndDate,
+            it.ledgerId,
+            it.locusId,
+            it.outstandingAmount,
+            it.partnerId,
+            it.source,
+            it.type
         )
     }
 }

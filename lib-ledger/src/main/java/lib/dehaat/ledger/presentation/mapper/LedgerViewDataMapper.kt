@@ -18,6 +18,7 @@ import lib.dehaat.ledger.entities.revamp.creditnote.SummaryEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
 import lib.dehaat.ledger.entities.revamp.invoice.ProductEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.ProductsInfoEntityV2
+import lib.dehaat.ledger.entities.revamp.invoicelist.InvoiceListEntity
 import lib.dehaat.ledger.entities.revamp.transaction.TransactionEntityV2
 import lib.dehaat.ledger.entities.transactions.TransactionEntity
 import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
@@ -33,6 +34,7 @@ import lib.dehaat.ledger.presentation.model.detail.creditnote.SummaryViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.InvoiceDetailDataViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.LoanViewData
 import lib.dehaat.ledger.presentation.model.detail.invoice.OverdueInfoViewData
+import lib.dehaat.ledger.presentation.model.invoicelist.InvoiceListViewData
 import lib.dehaat.ledger.presentation.model.revamp.creditnote.CreditNoteDetailsViewData
 import lib.dehaat.ledger.presentation.model.revamp.creditnote.CreditNoteSummaryViewData
 import lib.dehaat.ledger.presentation.model.revamp.invoice.CreditNoteViewData
@@ -339,6 +341,21 @@ class LedgerViewDataMapper @Inject constructor() {
             interestOutstandingAmount = interestOutstandingAmount,
             overdueInterestOutstandingAmount = overdueInterestOutstandingAmount,
             penaltyOutstandingAmount = penaltyOutstandingAmount
+        )
+    }
+
+    fun toInvoiceListViewData(entity: List<InvoiceListEntity>?) = entity?.map {
+        InvoiceListViewData(
+            amount = it.amount,
+            date = it.date,
+            interestStartDate = it.interestStartDate,
+            interestFreePeriodEndDate = it.interestFreePeriodEndDate,
+            ledgerId = it.ledgerId,
+            locusId = it.locusId,
+            outstandingAmount = it.outstandingAmount,
+            partnerId = it.partnerId,
+            source = it.source,
+            type = it.type
         )
     }
 }
