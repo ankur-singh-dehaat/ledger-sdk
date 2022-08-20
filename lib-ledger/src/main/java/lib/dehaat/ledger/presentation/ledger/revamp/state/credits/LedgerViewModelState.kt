@@ -16,7 +16,7 @@ data class LedgerViewModelState(
     fun toUIState() = LedgerUIState(
         summaryViewData = summaryViewData,
         showFilterSheet = showFilterSheet,
-        selectedFilter = selectedFilter,
+        appliedFilter = selectedFilter,
         state = when {
             isSuccess -> UIState.SUCCESS
             isError -> UIState.ERROR(errorMessage)
@@ -29,6 +29,6 @@ data class LedgerViewModelState(
 data class LedgerUIState(
     val summaryViewData: SummaryViewData?,
     val showFilterSheet: Boolean,
-    val selectedFilter: DaysToFilter,
+    val appliedFilter: DaysToFilter,
     val state: UIState
 )

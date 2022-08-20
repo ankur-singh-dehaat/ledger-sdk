@@ -86,7 +86,7 @@ fun RevampLedgerScreen(
                     sheetContent = {
                         if (uiState.showFilterSheet) {
                             FilterScreen(
-                                defaultSelection = { viewModel.uiState.value.selectedFilter },
+                                appliedFilter = uiState.appliedFilter,
                                 onFilterApply = { daysToFilter ->
                                     viewModel.updateFilter(daysToFilter)
                                     scope.launch {
@@ -95,7 +95,8 @@ fun RevampLedgerScreen(
                                 },
                                 getStartEndDate = { daysToFilter ->
                                     viewModel.getSelectedDates(daysToFilter)
-                                }
+                                },
+                                stateChange = sheetState.isVisible
                             ) {
                                 scope.launch {
                                     sheetState.animateTo(ModalBottomSheetValue.Hidden)

@@ -56,17 +56,20 @@ import lib.dehaat.ledger.resources.textParagraphT2
 @Composable
 private fun FilterScreenPreview() = LedgerTheme {
     FilterScreen(
-        defaultSelection = { DaysToFilter.All },
+        appliedFilter = DaysToFilter.All,
         onFilterApply = {},
-        getStartEndDate = { Pair(0, 0) }
-    ) {}
+        getStartEndDate = { Pair(0, 0) },
+        stateChange = false,
+        {},
+    )
 }
 
 @Composable
 fun FilterScreen(
-    defaultSelection: () -> DaysToFilter,
+    appliedFilter: DaysToFilter,
     onFilterApply: (DaysToFilter) -> Unit,
     getStartEndDate: (DaysToFilter) -> Pair<Long, Long>?,
+    stateChange: Boolean,
     onFilterClose: () -> Unit
 ) = Column(
     modifier = Modifier
@@ -74,7 +77,7 @@ fun FilterScreen(
         .padding(horizontal = 20.dp)
         .padding(top = 20.dp, bottom = 16.dp)
 ) {
-    var selectedFilter: DaysToFilter by remember { mutableStateOf(defaultSelection()) }
+    var selectedFilter: DaysToFilter by remember(stateChange) { mutableStateOf(appliedFilter) }
 
     Row(
         modifier = Modifier

@@ -32,7 +32,7 @@ fun TransactionListHeader(
         .background(Color.White)
 ) {
     val uiState = ledgerViewModel.uiState.collectAsState()
-    val filters = uiState.value.selectedFilter
+    val filters = uiState.value.appliedFilter
     Divider()
     Text(
         modifier = Modifier

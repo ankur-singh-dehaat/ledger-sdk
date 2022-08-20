@@ -4,7 +4,7 @@
     <string name="total_outstanding_details">Total Outstanding Details</string>
     <string name="ledger">Ledger</string>
     <string name="total_outstanding_calculation_method">Total Outstanding Calculation Method:</string>
-    <string name="total_outstanding_footer">Total\nOutstanding</string>
+    <string name="total_outstanding_footer">Total\nO/S</string>
     <string name="total_purchase_rs">Total Purchase (₹)</string>
     <string name="interest_rs">Interest (₹)</string>
     <string name="payment_rs">Payment (₹)</string>
