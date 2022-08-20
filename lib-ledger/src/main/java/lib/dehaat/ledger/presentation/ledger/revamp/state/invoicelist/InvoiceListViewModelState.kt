@@ -8,16 +8,18 @@ data class InvoiceListViewModelState(
     val interestApproachedInvoices: List<InvoiceListViewData>? = null,
     val isError: Boolean = false,
     val errorMessage: String = "",
-    val isLoading: Boolean = false,
+    val interestApproachingLoading: Boolean = false,
+    val interestApproachedLoading: Boolean = false,
     val isSuccess: Boolean = false
 ) {
     fun toUIState() = InvoiceListUIState(
         interestApproachingInvoices = interestApproachingInvoices,
         interestApproachedInvoices = interestApproachedInvoices,
+        interestApproachingLoading = interestApproachingLoading,
+        interestApproachedLoading = interestApproachedLoading,
         state = when {
             isSuccess -> UIState.SUCCESS
             isError -> UIState.ERROR(errorMessage)
-            isLoading -> UIState.LOADING
             else -> UIState.SUCCESS
         }
     )
@@ -26,5 +28,7 @@ data class InvoiceListViewModelState(
 data class InvoiceListUIState(
     val interestApproachingInvoices: List<InvoiceListViewData>?,
     val interestApproachedInvoices: List<InvoiceListViewData>?,
+    val interestApproachingLoading: Boolean,
+    val interestApproachedLoading: Boolean,
     val state: UIState
 )

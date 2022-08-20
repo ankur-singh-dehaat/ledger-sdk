@@ -35,7 +35,6 @@ import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
-import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceInformationChip
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
@@ -64,7 +63,9 @@ private fun InvoiceListScreenPreview() = LedgerTheme {
         interestDueDate = 623784623,
         amountDue = "40000",
         interestApproached = null,
-        interestApproaching = null
+        interestApproachedLoading = false,
+        interestApproaching = null,
+        interestApproachingLoading = false
     )
 }
 
@@ -75,8 +76,6 @@ fun InvoiceListScreen(
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val interestApproached = uiState.interestApproachedInvoices
-    val interestApproaching = uiState.interestApproachingInvoices
 
     CommonContainer(
         title = stringResource(id = R.string.invoice_list),
@@ -89,15 +88,13 @@ fun InvoiceListScreen(
                 InvoiceList(
                     viewModel.dueDate,
                     viewModel.amountDue,
-                    interestApproached,
-                    interestApproaching
+                    uiState.interestApproachedInvoices,
+                    uiState.interestApproachedLoading,
+                    uiState.interestApproachingInvoices,
+                    uiState.interestApproachingLoading
                 )
             }
-            UIState.LOADING -> {
-                ShowProgressDialog(ledgerColors) {
-                    viewModel.updateProgressDialog(false)
-                }
-            }
+            UIState.LOADING -> Unit
             is UIState.ERROR -> {
                 Column {
                     SaveInterestHeader(
@@ -117,7 +114,9 @@ private fun InvoiceList(
     interestDueDate: Long?,
     amountDue: String?,
     interestApproached: List<InvoiceListViewData>?,
-    interestApproaching: List<InvoiceListViewData>?
+    interestApproachedLoading: Boolean,
+    interestApproaching: List<InvoiceListViewData>?,
+    interestApproachingLoading: Boolean
 ) = Column(
     modifier = Modifier
         .fillMaxWidth()

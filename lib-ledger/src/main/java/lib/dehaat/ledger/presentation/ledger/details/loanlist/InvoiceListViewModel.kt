@@ -39,25 +39,38 @@ class InvoiceListViewModel @Inject constructor(
             viewModelState.value.toUIState()
         )
 
-    private var limit = 1
-    private var offset = 1
+    private var limit = 10
+    private var approachedOffset = 0
+    private var approachingOffset = 0
 
     init {
+        updateInterestApproachedLoading(true)
         getInterestApproachedInvoicesFromServer()
+        updateInterestApproachingLoading(true)
         getInterestApproachingInvoicesFromServer()
     }
 
     private fun getInterestApproachedInvoicesFromServer() {
         callInViewModelScope {
-            updateProgressDialog(true)
             val response = getInvoiceListUseCase.getInvoices(
                 partnerId = partnerId,
                 limit = limit,
-                offset = offset,
+                offset = approachedOffset,
                 isInterestApproached = true
             )
-            updateProgressDialog(false)
             processInterestApproachedInvoicesResponse(response)
+        }
+    }
+
+    private fun getInterestApproachingInvoicesFromServer() {
+        callInViewModelScope {
+            val response = getInvoiceListUseCase.getInvoices(
+                partnerId = partnerId,
+                limit = limit,
+                offset = approachingOffset,
+                isInterestApproached = false
+            )
+            processInterestApproachingInvoicesResponse(response)
         }
     }
 
@@ -65,38 +78,45 @@ class InvoiceListViewModel @Inject constructor(
         result: APIResultEntity<List<InvoiceListEntity>?>
     ) = result.processAPIResponseWithFailureSnackBar(::sendFailureEvent) { entity ->
         val viewData = mapper.toInvoiceListViewData(entity)
+        val data =
+            viewModelState.value.interestApproachedInvoices?.toMutableList() ?: mutableListOf()
+        viewData?.let { list -> data.addAll(list) }
         viewModelState.update {
             it.copy(
-                interestApproachedInvoices = viewData,
+                interestApproachedInvoices = data,
                 isSuccess = true
             )
         }
-    }
-
-    private fun getInterestApproachingInvoicesFromServer() {
-        callInViewModelScope {
-            updateProgressDialog(true)
-            val response = getInvoiceListUseCase.getInvoices(
-                partnerId = partnerId,
-                limit = limit,
-                offset = offset,
-                isInterestApproached = false
-            )
-            updateProgressDialog(false)
-            processInterestApproachingInvoicesResponse(response)
-        }
+        viewData?.let { list ->
+            if (list.size == 10 && approachedOffset < 2) {
+                approachedOffset += 1
+                getInterestApproachedInvoicesFromServer()
+            } else {
+                updateInterestApproachedLoading(false)
+            }
+        } ?: updateInterestApproachedLoading(false)
     }
 
     private fun processInterestApproachingInvoicesResponse(
         result: APIResultEntity<List<InvoiceListEntity>?>
     ) = result.processAPIResponseWithFailureSnackBar(::sendFailureEvent) { entity ->
         val viewData = mapper.toInvoiceListViewData(entity)
+        val data = viewModelState.value.interestApproachingInvoices?.toMutableList()
+        viewData?.let { list -> data?.addAll(list) }
         viewModelState.update {
             it.copy(
-                interestApproachingInvoices = viewData,
+                interestApproachingInvoices = data,
                 isSuccess = true
             )
         }
+        viewData?.let {
+            if (it.size == 10 && approachingOffset < 2) {
+                approachingOffset += 1
+                getInterestApproachingInvoicesFromServer()
+            } else {
+                updateInterestApproachingLoading(false)
+            }
+        } ?: updateInterestApproachingLoading(false)
     }
 
     private fun sendFailureEvent(message: String) {
@@ -108,8 +128,12 @@ class InvoiceListViewModel @Inject constructor(
         }
     }
 
-    fun updateProgressDialog(show: Boolean) = viewModelState.update {
-        it.copy(isLoading = show)
+    private fun updateInterestApproachingLoading(show: Boolean) = viewModelState.update {
+        it.copy(interestApproachingLoading = show)
+    }
+
+    private fun updateInterestApproachedLoading(show: Boolean) = viewModelState.update {
+        it.copy(interestApproachedLoading = show)
     }
 
     companion object {
