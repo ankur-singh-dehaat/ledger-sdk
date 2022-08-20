@@ -5,7 +5,7 @@ data class InvoiceListViewData(
     val date: Long,
     val interestStartDate: Long?,
     val interestFreePeriodEndDate: Long?,
-    val ledgerId: Int,
+    val ledgerId: String,
     val locusId: Int,
     val outstandingAmount: String,
     val partnerId: String,

@@ -88,7 +88,7 @@ class InvoiceListViewModel @Inject constructor(
             )
         }
         viewData?.let { list ->
-            if (list.size == 10 && approachedOffset < 2) {
+            if (list.size == 2 && approachedOffset < 5) {
                 approachedOffset += 1
                 getInterestApproachedInvoicesFromServer()
             } else {

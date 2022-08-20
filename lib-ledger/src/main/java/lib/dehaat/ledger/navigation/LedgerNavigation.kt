@@ -147,7 +147,8 @@ fun LedgerNavigation(
             val invoiceListViewModel = hiltViewModel<InvoiceListViewModel>()
             InvoiceListScreen(
                 viewModel = invoiceListViewModel,
-                ledgerColors = ledgerColors
+                ledgerColors = ledgerColors,
+                detailPageNavigationCallback = provideDetailPageNavCallBacks(navController),
             ) {
                 navController.popBackStack()
             }

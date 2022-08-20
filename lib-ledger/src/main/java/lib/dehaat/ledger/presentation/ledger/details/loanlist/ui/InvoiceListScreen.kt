@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -29,12 +28,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
+import lib.dehaat.ledger.initializer.themes.AIMSColors
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.initializer.toDateMonthName
+import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
+import lib.dehaat.ledger.presentation.ledger.components.ShowProgress
+import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceInformationChip
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
@@ -60,12 +63,14 @@ import lib.dehaat.ledger.util.getAmountInRupees
 @Composable
 private fun InvoiceListScreenPreview() = LedgerTheme {
     InvoiceList(
+        ledgerColors = AIMSColors(),
         interestDueDate = 623784623,
         amountDue = "40000",
         interestApproached = null,
         interestApproachedLoading = false,
         interestApproaching = null,
-        interestApproachingLoading = false
+        interestApproachingLoading = false,
+        onInvoiceClick = {}
     )
 }
 
@@ -73,6 +78,7 @@ private fun InvoiceListScreenPreview() = LedgerTheme {
 fun InvoiceListScreen(
     viewModel: InvoiceListViewModel,
     ledgerColors: LedgerColors,
+    detailPageNavigationCallback: DetailPageNavigationCallback,
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -86,12 +92,21 @@ fun InvoiceListScreen(
         when (uiState.state) {
             UIState.SUCCESS -> {
                 InvoiceList(
-                    viewModel.dueDate,
-                    viewModel.amountDue,
-                    uiState.interestApproachedInvoices,
-                    uiState.interestApproachedLoading,
-                    uiState.interestApproachingInvoices,
-                    uiState.interestApproachingLoading
+                    ledgerColors = ledgerColors,
+                    interestDueDate = viewModel.dueDate,
+                    amountDue = viewModel.amountDue,
+                    interestApproached = uiState.interestApproachedInvoices,
+                    interestApproachedLoading = uiState.interestApproachedLoading,
+                    interestApproaching = uiState.interestApproachingInvoices,
+                    interestApproachingLoading = uiState.interestApproachingLoading,
+                    onInvoiceClick = { transaction ->
+                        detailPageNavigationCallback.navigateToRevampInvoiceDetailPage(
+                            RevampInvoiceDetailViewModel.getBundle(
+                                transaction.ledgerId,
+                                transaction.source
+                            )
+                        )
+                    }
                 )
             }
             UIState.LOADING -> Unit
@@ -111,107 +126,105 @@ fun InvoiceListScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun InvoiceList(
+    ledgerColors: LedgerColors,
     interestDueDate: Long?,
     amountDue: String?,
     interestApproached: List<InvoiceListViewData>?,
     interestApproachedLoading: Boolean,
     interestApproaching: List<InvoiceListViewData>?,
-    interestApproachingLoading: Boolean
-) = Column(
+    interestApproachingLoading: Boolean,
+    onInvoiceClick: (InvoiceListViewData) -> Unit
+) = LazyColumn(
     modifier = Modifier
-        .fillMaxWidth()
+        .fillMaxWidth(),
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxWidth(),
-    ) {
+    item {
+        SaveInterestHeader(
+            interestDueDate = interestDueDate,
+            amountDue = amountDue
+        )
+    }
+    item { VerticalSpacer(height = 16.dp) }
+    interestApproached?.let { invoices ->
         stickyHeader {
-            SaveInterestHeader(
-                interestDueDate = interestDueDate,
-                amountDue = amountDue
-            )
-            VerticalSpacer(height = 16.dp)
-        }
-
-        interestApproached?.let {
-            stickyHeader {
-                Column(
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White)
+            ) {
+                Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.White)
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 22.dp, bottom = 14.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .padding(top = 22.dp, bottom = 14.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_attention),
-                            contentDescription = stringResource(id = R.string.accessibility_icon),
-                            tint = Error100
-                        )
-                        HorizontalSpacer(width = 10.dp)
-                        Text(
-                            text = stringResource(id = R.string.invoice_on_which_interest_is_charged),
-                            style = textSubHeadingS3(Error100)
-                        )
-                    }
-                    Divider()
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_attention),
+                        contentDescription = stringResource(id = R.string.accessibility_icon),
+                        tint = Error100
+                    )
+                    HorizontalSpacer(width = 10.dp)
+                    Text(
+                        text = stringResource(id = R.string.invoice_on_which_interest_is_charged),
+                        style = textSubHeadingS3(Error100)
+                    )
                 }
+                Divider()
             }
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(16.dp)
-                        .background(Color.White)
-                ) {}
-            }
-            items(interestApproached) {
-                InvoiceWithAccumulatedInterest {}
-            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp)
+                    .background(Color.White)
+            ) {}
         }
 
         item {
-            VerticalSpacer(height = 16.dp)
-        }
-
-        interestApproaching?.let {
-            stickyHeader {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(Color.White)
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .padding(top = 20.dp, bottom = 12.dp),
-                        text = stringResource(id = R.string.invoices_not_attracting_interest),
-                        style = textSubHeadingS3(Neutral80)
-                    )
-
-                    Divider()
-
-                    VerticalSpacer(height = 16.dp)
-                }
-            }
-            item {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(16.dp)
-                        .background(Color.White)
-                ) {}
-            }
-            items(interestApproaching) {
-                InvoiceWithUpcomingInterest {}
+            invoices.forEach {
+                InvoiceWithAccumulatedInterest(it) { onInvoiceClick(it) }
             }
         }
+        item { if (interestApproachedLoading) ShowProgress(ledgerColors) }
     }
+    item { VerticalSpacer(height = 16.dp) }
+    interestApproaching?.let { invoices ->
+        stickyHeader {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White)
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 20.dp, bottom = 12.dp),
+                    text = stringResource(id = R.string.invoices_not_attracting_interest),
+                    style = textSubHeadingS3(Neutral80)
+                )
 
-    VerticalSpacer(height = 16.dp)
+                Divider()
+
+                VerticalSpacer(height = 16.dp)
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp)
+                    .background(Color.White)
+            ) {}
+        }
+
+        item {
+            invoices.forEach {
+                InvoiceWithUpcomingInterest(it) { onInvoiceClick(it) }
+            }
+        }
+
+        item { if (interestApproachingLoading) ShowProgress(ledgerColors) }
+
+    }
+    item { VerticalSpacer(height = 16.dp) }
 }
 
 @Composable
@@ -257,6 +270,7 @@ private fun SaveInterestHeader(
 
 @Composable
 private fun InvoiceWithAccumulatedInterest(
+    invoiceListViewData: InvoiceListViewData,
     onClick: () -> Unit
 ) = Column(
     modifier = Modifier
@@ -314,6 +328,7 @@ private fun InvoiceWithAccumulatedInterest(
 
 @Composable
 fun InvoiceWithUpcomingInterest(
+    invoiceListViewData: InvoiceListViewData,
     onClick: () -> Unit
 ) = Column(
     modifier = Modifier

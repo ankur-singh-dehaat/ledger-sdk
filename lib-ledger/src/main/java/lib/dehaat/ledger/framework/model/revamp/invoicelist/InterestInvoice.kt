@@ -15,7 +15,7 @@ data class InterestInvoice(
     @Json(name = "interest_free_period_end_date")
     val interestFreePeriodEndDate: Long?,
     @Json(name = "ledger_id")
-    val ledgerId: Int,
+    val ledgerId: String,
     @Json(name = "locus_id")
     val locusId: Int,
     @Json(name = "outstanding_amount")
