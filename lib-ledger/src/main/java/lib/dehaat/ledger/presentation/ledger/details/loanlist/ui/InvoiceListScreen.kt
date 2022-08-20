@@ -31,6 +31,7 @@ import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.themes.AIMSColors
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.initializer.toDateMonthName
+import lib.dehaat.ledger.initializer.toDateMonthYear
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
@@ -300,7 +301,10 @@ private fun InvoiceWithAccumulatedInterest(
                     style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(
-                    text = "बकाया राशि: ₹ 18,550",
+                    text = stringResource(
+                        id = R.string.outstanding_amount_rs,
+                        invoiceListViewData.outstandingAmount.getAmountInRupees()
+                    ),
                     style = textParagraphT1Highlight(Error100)
                 )
             }
@@ -310,12 +314,18 @@ private fun InvoiceWithAccumulatedInterest(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "18-जुलाई-2022 से आज तक",
+                    text = stringResource(
+                        id = R.string.until_today,
+                        invoiceListViewData.date.toDateMonthYear()
+                    ),
                     style = textCaptionCP1(Neutral60)
                 )
 
                 InvoiceInformationChip(
-                    title = "इनवॉइस राशि: ₹ 2,25,800",
+                    title = stringResource(
+                        id = R.string.invoice_amount_rs,
+                        invoiceListViewData.amount.getAmountInRupees()
+                    ),
                     backgroundColor = Neutral10,
                     textColor = Neutral80
                 )
@@ -358,7 +368,7 @@ fun InvoiceWithUpcomingInterest(
                     style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(
-                    text = "+ ₹ 5,160",
+                    text = invoiceListViewData.amount.getAmountInRupees(),
                     style = textParagraphT1Highlight(Neutral80)
                 )
             }
@@ -368,12 +378,15 @@ fun InvoiceWithUpcomingInterest(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "18-जुलाई-2022 से आज तक",
+                    text = stringResource(
+                        id = R.string.until_today,
+                        invoiceListViewData.date.toDateMonthYear()
+                    ),
                     style = textCaptionCP1(Neutral60)
                 )
 
                 InvoiceInformationChip(
-                    title = "2 दिन में ब्याज शुरू होगा",
+                    title = stringResource(R.string.interest_will_be_starting_in),
                     backgroundColor = Warning10,
                     textColor = Pumpkin120
                 )

@@ -86,6 +86,10 @@
     <string name="received_date">Received Date</string>
     <string name="download_invoice">Download Invoice"</string>
     <string name="from_to">%s to %s</string>
+    <string name="outstanding_amount_rs">Outstanding Amount: %s</string>
+    <string name="until_today">From %s until today</string>
+    <string name="invoice_amount_rs">Invoice Amount: %s</string>
+    <string name="interest_will_be_starting_in">Interest will be starting in %s days</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>
