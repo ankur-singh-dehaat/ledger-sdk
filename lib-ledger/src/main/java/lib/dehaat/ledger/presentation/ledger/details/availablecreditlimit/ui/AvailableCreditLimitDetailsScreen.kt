@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.themes.LedgerColors
@@ -39,10 +40,12 @@ import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.AvailableCreditLimitViewModel
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.ui.component.CalculationMethodScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValueChip
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.BlueGreen10
+import lib.dehaat.ledger.resources.LedgerTheme
 import lib.dehaat.ledger.resources.Mustard10
 import lib.dehaat.ledger.resources.Neutral10
 import lib.dehaat.ledger.resources.Neutral60
@@ -58,13 +61,29 @@ import lib.dehaat.ledger.resources.textParagraphT2Highlight
 import lib.dehaat.ledger.resources.textSubHeadingS3
 import lib.dehaat.ledger.util.getAmountInRupees
 
+@Preview(
+    showBackground = true
+)
+@Composable
+private fun AvailableCreditLimitDetailsScreenPreview() = LedgerTheme {
+    CreditLimitDetailsScreen(
+        AvailableCreditLimitViewState(
+            totalAvailableCreditLimit = "4569",
+            totalCreditLimit = "100000",
+            outstandingAndDeliveredAmount = "237498",
+            permanentCreditLimit = "2347893",
+            bufferLimit = "236489",
+            totalLimit = "832940"
+        )
+    )
+}
+
 @Composable
 fun AvailableCreditLimitDetailsScreen(
     viewModel: AvailableCreditLimitViewModel,
     ledgerColors: LedgerColors,
     onBackPress: () -> Unit
 ) {
-    val state = rememberScrollState()
     val uiState = viewModel.viewState
     val scaffoldState = rememberScaffoldState()
     CommonContainer(
@@ -74,131 +93,134 @@ fun AvailableCreditLimitDetailsScreen(
         backgroundColor = Background
     ) {
         uiState?.let {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(state = state)
-            ) {
-                Column(
-                    modifier = Modifier
-                        .background(Color.White)
-                        .padding(horizontal = 20.dp)
-                ) {
-                    VerticalSpacer(height = 24.dp)
-
-                    Text(
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        text = stringResource(id = R.string.available_credit_limit),
-                        style = textParagraphT1(Neutral80)
-                    )
-
-                    Text(
-                        modifier = Modifier.padding(horizontal = 8.dp),
-                        text = uiState.totalAvailableCreditLimit.getAmountInRupees(),
-                        style = textHeadingH3(Neutral80)
-                    )
-
-                    VerticalSpacer(height = 12.dp)
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(IntrinsicSize.Min),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RevampKeyValueChip(
-                            modifier = Modifier
-                                .weight(1.5F),
-                            key = stringResource(id = R.string.total_credit_limit),
-                            value = uiState.totalCreditLimit.getAmountInRupees(),
-                            backgroundColor = BlueGreen10
-                        )
-
-                        Icon(
-                            modifier = Modifier.padding(horizontal = 8.dp),
-                            painter = painterResource(id = R.drawable.ic_minus),
-                            contentDescription = stringResource(id = R.string.accessibility_icon),
-                            tint = Neutral80
-                        )
-
-                        RevampKeyValueChip(
-                            modifier = Modifier
-                                .weight(2.5F),
-                            key = stringResource(id = R.string.total_outstanding_plus_products_to_be_deliver),
-                            value = uiState.outstandingAndDeliveredAmount.getAmountInRupees(),
-                            backgroundColor = Mustard10
-                        )
-                    }
-
-                    VerticalSpacer(height = 16.dp)
-
-                    Divider()
-
-                    VerticalSpacer(height = 32.dp)
-
-                    VerticalSpacer(height = 8.dp)
-
-                    CalculationMethodScreen(
-                        backgroundColor = BlueGreen10,
-                        dividerColor = Color.White,
-                        title = stringResource(id = R.string.total_credit_limit_calculation_method),
-                        first = Pair(
-                            stringResource(id = R.string.permanent_credit_limit),
-                            uiState.permanentCreditLimit.getAmountInRupees()
-                        ),
-                        second = Pair(
-                            stringResource(id = R.string.buffer_limit),
-                            uiState.bufferLimit.getAmountInRupees()
-                        ),
-                        total = Pair(
-                            stringResource(id = R.string.total_credit_limit),
-                            uiState.totalLimit.getAmountInRupees()
-                        )
-                    )
-
-                    VerticalSpacer(height = 16.dp)
-                }
-
-                VerticalSpacer(height = 16.dp)
-
-                Column(
-                    modifier = Modifier
-                        .background(Color.White)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(horizontal = 20.dp)
-                            .padding(
-                                top = 20.dp,
-                                bottom = 12.dp
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_idea_bulb),
-                            contentDescription = stringResource(id = R.string.accessibility_icon),
-                        )
-
-                        HorizontalSpacer(width = 8.dp)
-
-                        Text(
-                            text = stringResource(id = R.string.how_does_payment_increase_credit_limit),
-                            style = textSubHeadingS3(Neutral80)
-                        )
-                    }
-
-                    Divider()
-
-                    Column(
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)
-                    ) {
-                        InformationalScreen(true)
-                        VerticalSpacer(height = 12.dp)
-                        InformationalScreen(false)
-                    }
-                }
-            }
+            CreditLimitDetailsScreen(uiState = it)
         } ?: NoDataFound()
+    }
+}
+
+@Composable
+fun CreditLimitDetailsScreen(uiState: AvailableCreditLimitViewState) = Column(
+    modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(state = rememberScrollState())
+) {
+    Column(
+        modifier = Modifier
+            .background(Color.White)
+            .padding(horizontal = 20.dp)
+    ) {
+        VerticalSpacer(height = 24.dp)
+
+        Text(
+            modifier = Modifier.padding(horizontal = 8.dp),
+            text = stringResource(id = R.string.available_credit_limit),
+            style = textParagraphT1(Neutral80)
+        )
+
+        Text(
+            modifier = Modifier.padding(horizontal = 8.dp),
+            text = uiState.totalAvailableCreditLimit.getAmountInRupees(),
+            style = textHeadingH3(Neutral80)
+        )
+
+        VerticalSpacer(height = 12.dp)
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            RevampKeyValueChip(
+                modifier = Modifier
+                    .weight(1.5F),
+                key = stringResource(id = R.string.total_credit_limit),
+                value = uiState.totalCreditLimit.getAmountInRupees(),
+                backgroundColor = BlueGreen10
+            )
+
+            Icon(
+                modifier = Modifier.padding(horizontal = 8.dp),
+                painter = painterResource(id = R.drawable.ic_minus),
+                contentDescription = stringResource(id = R.string.accessibility_icon),
+                tint = Neutral80
+            )
+
+            RevampKeyValueChip(
+                modifier = Modifier
+                    .weight(2.5F),
+                key = stringResource(id = R.string.total_outstanding_plus_products_to_be_deliver),
+                value = uiState.outstandingAndDeliveredAmount.getAmountInRupees(),
+                backgroundColor = Mustard10
+            )
+        }
+
+        VerticalSpacer(height = 16.dp)
+
+        Divider()
+
+        VerticalSpacer(height = 32.dp)
+
+        VerticalSpacer(height = 8.dp)
+
+        CalculationMethodScreen(
+            backgroundColor = BlueGreen10,
+            dividerColor = Color.White,
+            title = stringResource(id = R.string.total_credit_limit_calculation_method),
+            first = Pair(
+                stringResource(id = R.string.permanent_credit_limit),
+                uiState.permanentCreditLimit.getAmountInRupees()
+            ),
+            second = Pair(
+                stringResource(id = R.string.buffer_limit),
+                uiState.bufferLimit.getAmountInRupees()
+            ),
+            total = Pair(
+                stringResource(id = R.string.total_credit_limit),
+                uiState.totalLimit.getAmountInRupees()
+            )
+        )
+
+        VerticalSpacer(height = 16.dp)
+    }
+
+    VerticalSpacer(height = 16.dp)
+
+    Column(
+        modifier = Modifier
+            .background(Color.White)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(
+                    top = 20.dp,
+                    bottom = 12.dp
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_idea_bulb),
+                contentDescription = stringResource(id = R.string.accessibility_icon),
+            )
+
+            HorizontalSpacer(width = 8.dp)
+
+            Text(
+                text = stringResource(id = R.string.how_does_payment_increase_credit_limit),
+                style = textSubHeadingS3(Neutral80)
+            )
+        }
+
+        Divider()
+
+        Column(
+            modifier = Modifier.padding(horizontal = 20.dp, vertical = 20.dp)
+        ) {
+            InformationalScreen(true)
+            VerticalSpacer(height = 12.dp)
+            InformationalScreen(false)
+        }
     }
 }
 
