@@ -44,10 +44,28 @@ class InvoiceListViewModel @Inject constructor(
     private var approachingOffset = 0
 
     init {
-        updateInterestApproachedLoading(true)
+        interestApproachedLoading()
         getInterestApproachedInvoicesFromServer()
-        updateInterestApproachingLoading(true)
+        interestApproachingLoading()
         getInterestApproachingInvoicesFromServer()
+    }
+
+    fun loadMoreInterestApproachedInvoices() {
+        interestApproachedLoading()
+        getInterestApproachedInvoicesFromServer()
+    }
+
+    fun loadMoreInterestApproachingInvoices() {
+        interestApproachingLoading()
+        getInterestApproachingInvoicesFromServer()
+    }
+
+    fun minimizeInterestApproachedList() = viewModelState.update {
+        it.copy(interestApproachedMinimized = true)
+    }
+
+    fun minimizeInterestApproachingList() = viewModelState.update {
+        it.copy(interestApproachingMinimized = true)
     }
 
     private fun getInterestApproachedInvoicesFromServer() {
@@ -84,17 +102,17 @@ class InvoiceListViewModel @Inject constructor(
         viewModelState.update {
             it.copy(
                 interestApproachedInvoices = data,
-                isSuccess = true
+                isSuccess = true,
+                interestApproachedLoading = false
             )
         }
         viewData?.let { list ->
-            if (list.size == 2 && approachedOffset < 5) {
+            if (list.size == 10) {
                 approachedOffset += 1
-                getInterestApproachedInvoicesFromServer()
             } else {
-                updateInterestApproachedLoading(false)
+                viewModelState.update { state -> state.copy(interestApproachedExhausted = true) }
             }
-        } ?: updateInterestApproachedLoading(false)
+        }
     }
 
     private fun processInterestApproachingInvoicesResponse(
@@ -106,17 +124,17 @@ class InvoiceListViewModel @Inject constructor(
         viewModelState.update {
             it.copy(
                 interestApproachingInvoices = data,
-                isSuccess = true
+                isSuccess = true,
+                interestApproachingLoading = false
             )
         }
         viewData?.let {
-            if (it.size == 10 && approachingOffset < 2) {
+            if (it.size == 10) {
                 approachingOffset += 1
-                getInterestApproachingInvoicesFromServer()
             } else {
-                updateInterestApproachingLoading(false)
+                viewModelState.update { state -> state.copy(interestApproachingExhausted = true) }
             }
-        } ?: updateInterestApproachingLoading(false)
+        }
     }
 
     private fun sendFailureEvent(message: String) {
@@ -128,12 +146,18 @@ class InvoiceListViewModel @Inject constructor(
         }
     }
 
-    private fun updateInterestApproachingLoading(show: Boolean) = viewModelState.update {
-        it.copy(interestApproachingLoading = show)
+    private fun interestApproachingLoading() = viewModelState.update {
+        it.copy(
+            interestApproachingLoading = true,
+            interestApproachingMinimized = false
+        )
     }
 
-    private fun updateInterestApproachedLoading(show: Boolean) = viewModelState.update {
-        it.copy(interestApproachedLoading = show)
+    private fun interestApproachedLoading() = viewModelState.update {
+        it.copy(
+            interestApproachedLoading = true,
+            interestApproachedMinimized = false
+        )
     }
 
     companion object {

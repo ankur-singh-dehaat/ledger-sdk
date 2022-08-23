@@ -90,6 +90,8 @@
     <string name="until_today">From %s until today</string>
     <string name="invoice_amount_rs">Invoice Amount: %s</string>
     <string name="interest_will_be_starting_in">Interest will be starting in %s days</string>
+    <string name="load_more">Load More (10)</string>
+    <string name="close_list">Close List</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

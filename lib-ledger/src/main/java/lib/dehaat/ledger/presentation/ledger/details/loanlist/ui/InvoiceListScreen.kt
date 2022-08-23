@@ -3,8 +3,10 @@ package lib.dehaat.ledger.presentation.ledger.details.loanlist.ui
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -43,6 +46,7 @@ import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetail
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceInformationChip
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.invoicelist.InvoiceUiState
 import lib.dehaat.ledger.presentation.model.invoicelist.InvoiceListViewData
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.Error100
@@ -52,6 +56,7 @@ import lib.dehaat.ledger.resources.Neutral60
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
 import lib.dehaat.ledger.resources.Pumpkin120
+import lib.dehaat.ledger.resources.SeaGreen100
 import lib.dehaat.ledger.resources.Warning10
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
@@ -68,12 +73,21 @@ private fun InvoiceListScreenPreview() = LedgerTheme {
         ledgerColors = AIMSColors(),
         interestDueDate = 623784623,
         amountDue = "40000",
-        interestApproachedInvoices = DummyDataSource.invoices,
-        interestApproachedLoading = false,
-        interestApproachingInvoices = DummyDataSource.invoices,
-        interestApproachingLoading = false,
-        onInvoiceClick = {}
-    )
+        interestApproachedInvoices = InvoiceUiState(
+            haveMoreData = false,
+            isLoading = false,
+            invoices = DummyDataSource.invoices
+        ),
+        interestApproachingInvoices = InvoiceUiState(
+            haveMoreData = false,
+            isLoading = false,
+            invoices = DummyDataSource.invoices
+        ),
+        interestApproachingMinimizeList = {},
+        interestApproachingLoadMore = {},
+        interestApproachedMinimizeList = {},
+        interestApproachedLoadMore = {}
+    ) {}
 }
 
 @Composable
@@ -98,18 +112,19 @@ fun InvoiceListScreen(
                     interestDueDate = viewModel.dueDate,
                     amountDue = viewModel.amountDue,
                     interestApproachedInvoices = uiState.interestApproachedInvoices,
-                    interestApproachedLoading = uiState.interestApproachedLoading,
                     interestApproachingInvoices = uiState.interestApproachingInvoices,
-                    interestApproachingLoading = uiState.interestApproachingLoading,
-                    onInvoiceClick = { transaction ->
-                        detailPageNavigationCallback.navigateToRevampInvoiceDetailPage(
-                            RevampInvoiceDetailViewModel.getBundle(
-                                transaction.ledgerId,
-                                transaction.source
-                            )
+                    interestApproachedLoadMore = { viewModel.loadMoreInterestApproachedInvoices() },
+                    interestApproachedMinimizeList = { viewModel.minimizeInterestApproachedList() },
+                    interestApproachingLoadMore = { viewModel.loadMoreInterestApproachingInvoices() },
+                    interestApproachingMinimizeList = { viewModel.minimizeInterestApproachingList() }
+                ) { transaction ->
+                    detailPageNavigationCallback.navigateToRevampInvoiceDetailPage(
+                        RevampInvoiceDetailViewModel.getBundle(
+                            transaction.ledgerId,
+                            transaction.source
                         )
-                    }
-                )
+                    )
+                }
             }
             UIState.LOADING -> Unit
             is UIState.ERROR -> {
@@ -131,10 +146,12 @@ private fun InvoiceList(
     ledgerColors: LedgerColors,
     interestDueDate: Long?,
     amountDue: String?,
-    interestApproachedInvoices: List<InvoiceListViewData>?,
-    interestApproachedLoading: Boolean,
-    interestApproachingInvoices: List<InvoiceListViewData>?,
-    interestApproachingLoading: Boolean,
+    interestApproachedInvoices: InvoiceUiState?,
+    interestApproachingInvoices: InvoiceUiState?,
+    interestApproachedLoadMore: () -> Unit,
+    interestApproachedMinimizeList: () -> Unit,
+    interestApproachingLoadMore: () -> Unit,
+    interestApproachingMinimizeList: () -> Unit,
     onInvoiceClick: (InvoiceListViewData) -> Unit
 ) = LazyColumn(
     modifier = Modifier
@@ -147,7 +164,7 @@ private fun InvoiceList(
         )
     }
     item { VerticalSpacer(height = 16.dp) }
-    interestApproachedInvoices?.let { invoices ->
+    interestApproachedInvoices?.let { invoiceState ->
         stickyHeader {
             Column(
                 modifier = Modifier
@@ -175,25 +192,24 @@ private fun InvoiceList(
             }
         }
 
-        item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-                    .background(Color.White),
-                content = {}
-            )
-        }
+        item { White16Spacer() }
 
         item {
-            invoices.forEach {
+            invoiceState.invoices.forEach {
                 InvoiceWithAccumulatedInterest(it) { onInvoiceClick(it) }
             }
         }
-        item { if (interestApproachedLoading) ShowProgress(ledgerColors) }
+
+        item {
+            White16Spacer()
+            InvoiceListFooter(invoiceState, ledgerColors) {
+                if (invoiceState.haveMoreData) interestApproachedLoadMore() else interestApproachedMinimizeList()
+            }
+            White16Spacer()
+        }
     }
     item { VerticalSpacer(height = 16.dp) }
-    interestApproachingInvoices?.let { invoices ->
+    interestApproachingInvoices?.let { invoiceState ->
         stickyHeader {
             Column(
                 modifier = Modifier
@@ -212,24 +228,21 @@ private fun InvoiceList(
             }
         }
 
-        item {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(16.dp)
-                    .background(Color.White),
-                content = {}
-            )
-        }
+        item { White16Spacer() }
 
         item {
-            invoices.forEach {
+            invoiceState.invoices.forEach {
                 InvoiceWithUpcomingInterest(it) { onInvoiceClick(it) }
             }
         }
 
-        item { if (interestApproachingLoading) ShowProgress(ledgerColors) }
-
+        item {
+            White16Spacer()
+            InvoiceListFooter(invoiceState, ledgerColors) {
+                if (invoiceState.haveMoreData) interestApproachingLoadMore() else interestApproachingMinimizeList()
+            }
+            White16Spacer()
+        }
     }
 }
 
@@ -404,3 +417,54 @@ fun InvoiceWithUpcomingInterest(
     VerticalSpacer(height = 16.dp)
     Divider()
 }
+
+@Composable
+private fun InvoiceListFooter(
+    invoiceUiState: InvoiceUiState,
+    ledgerColors: LedgerColors,
+    onClick: () -> Unit
+) = Box(
+    modifier = Modifier
+        .fillMaxWidth()
+        .background(Color.White),
+    contentAlignment = Alignment.Center
+) {
+    when {
+        invoiceUiState.isLoading -> ShowProgress(ledgerColors)
+        invoiceUiState.haveMoreData -> {
+            Text(
+                modifier = Modifier
+                    .clickable(onClick = onClick)
+                    .border(
+                        shape = RoundedCornerShape(8.dp),
+                        color = SeaGreen100, width = 1.dp
+                    )
+                    .padding(vertical = 14.dp, horizontal = 35.dp),
+                text = stringResource(R.string.load_more),
+                style = textSubHeadingS3(SeaGreen100)
+            )
+        }
+        !invoiceUiState.haveMoreData -> {
+            Text(
+                modifier = Modifier
+                    .clickable(onClick = onClick)
+                    .border(
+                        shape = RoundedCornerShape(8.dp),
+                        color = SeaGreen100, width = 1.dp
+                    )
+                    .padding(vertical = 14.dp, horizontal = 35.dp),
+                text = stringResource(R.string.close_list),
+                style = textSubHeadingS3(SeaGreen100)
+            )
+        }
+    }
+}
+
+@Composable
+private fun White16Spacer() = Column(
+    modifier = Modifier
+        .fillMaxWidth()
+        .height(16.dp)
+        .background(Color.White),
+    content = {}
+)

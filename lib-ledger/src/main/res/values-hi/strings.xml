@@ -90,6 +90,8 @@
     <string name="until_today">%s से आज तक</string>
     <string name="invoice_amount_rs">इनवॉइस राशि: %s</string>
     <string name="interest_will_be_starting_in">%s दिन में ब्याज शुरू होगा</string>
+    <string name="load_more">और लोड करें (10)</string>
+    <string name="close_list">लिस्ट बंद करें</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>
