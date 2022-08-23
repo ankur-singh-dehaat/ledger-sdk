@@ -128,7 +128,7 @@ fun TransactionCard(
                     style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(
-                    text = transaction.amount.getAmountInRupees(),
+                    text = transactionType.getAmount(transaction.amount.getAmountInRupees()),
                     style = textParagraphT1Highlight(transactionType.amountColor())
                 )
             }
@@ -210,7 +210,14 @@ fun TransactionType.getIcon() = when (this) {
 
 fun TransactionType.amountColor() = when (this) {
     is TransactionType.Invoice -> Pumpkin120
+    is TransactionType.Interest -> Pumpkin120
     is TransactionType.CreditNote -> SeaGreen110
     is TransactionType.Payment -> SeaGreen110
-    is TransactionType.Interest -> Pumpkin120
+}
+
+private fun TransactionType.getAmount(amount: String) = when (this) {
+    is TransactionType.Invoice -> "+ $amount"
+    is TransactionType.Interest -> "+ $amount"
+    is TransactionType.CreditNote -> "- $amount"
+    is TransactionType.Payment -> "- $amount"
 }
