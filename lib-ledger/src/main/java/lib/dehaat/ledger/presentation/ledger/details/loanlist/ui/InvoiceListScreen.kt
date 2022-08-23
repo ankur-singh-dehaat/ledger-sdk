@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
@@ -42,10 +43,12 @@ import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.components.ShowProgress
+import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
 import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceInformationChip
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.invoicelist.InvoiceLoadingState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.invoicelist.InvoiceUiState
 import lib.dehaat.ledger.presentation.model.invoicelist.InvoiceListViewData
 import lib.dehaat.ledger.resources.Background
@@ -74,13 +77,11 @@ private fun InvoiceListScreenPreview() = LedgerTheme {
         interestDueDate = 623784623,
         amountDue = "40000",
         interestApproachedInvoices = InvoiceUiState(
-            haveMoreData = false,
-            isLoading = false,
+            loadingState = InvoiceLoadingState.Minimize,
             invoices = DummyDataSource.invoices
         ),
         interestApproachingInvoices = InvoiceUiState(
-            haveMoreData = false,
-            isLoading = false,
+            loadingState = InvoiceLoadingState.Minimize,
             invoices = DummyDataSource.invoices
         ),
         interestApproachingMinimizeList = {},
@@ -126,7 +127,9 @@ fun InvoiceListScreen(
                     )
                 }
             }
-            UIState.LOADING -> Unit
+            UIState.LOADING -> {
+                ShowProgressDialog(ledgerColors) {}
+            }
             is UIState.ERROR -> {
                 Column {
                     SaveInterestHeader(
@@ -202,8 +205,12 @@ private fun InvoiceList(
 
         item {
             White16Spacer()
-            InvoiceListFooter(invoiceState, ledgerColors) {
-                if (invoiceState.haveMoreData) interestApproachedLoadMore() else interestApproachedMinimizeList()
+            InvoiceListFooter(invoiceState.loadingState, ledgerColors) {
+                if (invoiceState.loadingState is InvoiceLoadingState.LoadMore) {
+                    interestApproachedLoadMore()
+                } else {
+                    interestApproachedMinimizeList()
+                }
             }
             White16Spacer()
         }
@@ -238,8 +245,12 @@ private fun InvoiceList(
 
         item {
             White16Spacer()
-            InvoiceListFooter(invoiceState, ledgerColors) {
-                if (invoiceState.haveMoreData) interestApproachingLoadMore() else interestApproachingMinimizeList()
+            InvoiceListFooter(invoiceState.loadingState, ledgerColors) {
+                if (invoiceState.loadingState is InvoiceLoadingState.LoadMore) {
+                    interestApproachingLoadMore()
+                } else {
+                    interestApproachingMinimizeList()
+                }
             }
             White16Spacer()
         }
@@ -420,7 +431,7 @@ fun InvoiceWithUpcomingInterest(
 
 @Composable
 private fun InvoiceListFooter(
-    invoiceUiState: InvoiceUiState,
+    state: InvoiceLoadingState,
     ledgerColors: LedgerColors,
     onClick: () -> Unit
 ) = Box(
@@ -429,9 +440,9 @@ private fun InvoiceListFooter(
         .background(Color.White),
     contentAlignment = Alignment.Center
 ) {
-    when {
-        invoiceUiState.isLoading -> ShowProgress(ledgerColors)
-        invoiceUiState.haveMoreData -> {
+    when (state) {
+        InvoiceLoadingState.Loading -> ShowProgress(ledgerColors)
+        InvoiceLoadingState.LoadMore -> {
             Text(
                 modifier = Modifier
                     .clickable(onClick = onClick)
@@ -441,10 +452,11 @@ private fun InvoiceListFooter(
                     )
                     .padding(vertical = 14.dp, horizontal = 35.dp),
                 text = stringResource(R.string.load_more),
-                style = textSubHeadingS3(SeaGreen100)
+                style = textSubHeadingS3(SeaGreen100),
+                textAlign = TextAlign.Center
             )
         }
-        !invoiceUiState.haveMoreData -> {
+        InvoiceLoadingState.Minimize -> {
             Text(
                 modifier = Modifier
                     .clickable(onClick = onClick)
@@ -454,7 +466,8 @@ private fun InvoiceListFooter(
                     )
                     .padding(vertical = 14.dp, horizontal = 35.dp),
                 text = stringResource(R.string.close_list),
-                style = textSubHeadingS3(SeaGreen100)
+                style = textSubHeadingS3(SeaGreen100),
+                textAlign = TextAlign.Center
             )
         }
     }

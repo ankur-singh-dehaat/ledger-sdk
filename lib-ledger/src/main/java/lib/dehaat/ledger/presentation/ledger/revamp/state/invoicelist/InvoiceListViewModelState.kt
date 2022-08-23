@@ -12,7 +12,7 @@ data class InvoiceListViewModelState(
     val interestApproachingMinimized: Boolean = true,
     val interestApproachedExhausted: Boolean = false,
     val interestApproachingExhausted: Boolean = false,
-    val isFirstLoad: Boolean = true,
+    val isLoading: Boolean = true,
     val isError: Boolean = false,
     val errorMessage: String = "",
     val isSuccess: Boolean = false
@@ -20,10 +20,13 @@ data class InvoiceListViewModelState(
     fun toUIState() = InvoiceListUIState(
         interestApproachingInvoices = interestApproachingInvoices?.let {
             InvoiceUiState(
-                haveMoreData = !interestApproachingExhausted || interestApproachingExhausted,
-                isLoading = interestApproachingLoading,
-                invoices = if (interestApproachingMinimized && it.size > 4) {
-                    it.subList(0, 4)
+                loadingState = when {
+                    interestApproachingLoading -> InvoiceLoadingState.Loading
+                    !interestApproachingExhausted -> InvoiceLoadingState.LoadMore
+                    else -> InvoiceLoadingState.Minimize
+                },
+                invoices = if (interestApproachingMinimized && it.size > 5) {
+                    it.subList(0, 5)
                 } else {
                     it
                 }
@@ -31,8 +34,11 @@ data class InvoiceListViewModelState(
         },
         interestApproachedInvoices = interestApproachedInvoices?.let {
             InvoiceUiState(
-                haveMoreData = !interestApproachedExhausted || interestApproachedMinimized,
-                isLoading = interestApproachedLoading,
+                loadingState = when {
+                    interestApproachedLoading -> InvoiceLoadingState.Loading
+                    !interestApproachedExhausted -> InvoiceLoadingState.LoadMore
+                    else -> InvoiceLoadingState.Minimize
+                },
                 invoices = if (interestApproachedMinimized && it.size > 5) {
                     it.subList(0, 5)
                 } else {
@@ -42,6 +48,7 @@ data class InvoiceListViewModelState(
         },
         state = when {
             isSuccess -> UIState.SUCCESS
+            isLoading -> UIState.LOADING
             isError -> UIState.ERROR(errorMessage)
             else -> UIState.SUCCESS
         }
@@ -55,7 +62,12 @@ data class InvoiceListUIState(
 )
 
 data class InvoiceUiState(
-    val haveMoreData: Boolean,
-    val isLoading: Boolean,
+    val loadingState: InvoiceLoadingState,
     val invoices: List<InvoiceListViewData>
 )
+
+sealed class InvoiceLoadingState {
+    object LoadMore : InvoiceLoadingState()
+    object Minimize : InvoiceLoadingState()
+    object Loading : InvoiceLoadingState()
+}

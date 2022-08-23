@@ -44,6 +44,7 @@ class InvoiceListViewModel @Inject constructor(
     private var approachingOffset = 0
 
     init {
+        viewModelState.update { it.copy(isLoading = true) }
         interestApproachedLoading()
         getInterestApproachedInvoicesFromServer()
         interestApproachingLoading()
@@ -103,11 +104,12 @@ class InvoiceListViewModel @Inject constructor(
             it.copy(
                 interestApproachedInvoices = data,
                 isSuccess = true,
-                interestApproachedLoading = false
+                interestApproachedLoading = false,
+                isLoading = false
             )
         }
-        viewData?.let { list ->
-            if (list.size == 10) {
+        viewData?.let {
+            if (it.size == 10) {
                 approachedOffset += 1
             } else {
                 viewModelState.update { state -> state.copy(interestApproachedExhausted = true) }
@@ -125,7 +127,8 @@ class InvoiceListViewModel @Inject constructor(
             it.copy(
                 interestApproachingInvoices = data,
                 isSuccess = true,
-                interestApproachingLoading = false
+                interestApproachingLoading = false,
+                isLoading = false
             )
         }
         viewData?.let {
