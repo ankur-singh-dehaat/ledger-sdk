@@ -11,6 +11,7 @@ import lib.dehaat.ledger.presentation.model.creditsummary.CreditViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.InfoViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.OverdueViewData
 import lib.dehaat.ledger.presentation.model.detail.payment.PaymentDetailSummaryViewData
+import lib.dehaat.ledger.presentation.model.invoicelist.InvoiceListViewData
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.presentation.model.revamp.transactions.TransactionViewDataV2
 import lib.dehaat.ledger.presentation.model.transactions.TransactionViewData
@@ -83,6 +84,23 @@ object DummyDataSource {
             advanceAmount = "000018"
         )
     }
+
+    private val invoice = InvoiceListViewData(
+        amount = "20000",
+        date = 6237462923,
+        interestStartDate = 623847623,
+        interestFreePeriodEndDate = 6234786239,
+        ledgerId = "3647",
+        locusId = 3444,
+        outstandingAmount = "26348",
+        partnerId = "26384",
+        source = "SAP",
+        type = "INVOICE"
+    )
+
+    val invoices =
+        listOf(invoice, invoice, invoice, invoice, invoice, invoice, invoice, invoice, invoice)
+
     val transactionViewData by lazy {
         TransactionViewData(
             ledgerId = "ledgerId",

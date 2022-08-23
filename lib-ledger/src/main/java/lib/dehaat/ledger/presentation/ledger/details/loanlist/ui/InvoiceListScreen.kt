@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
+import lib.dehaat.ledger.datasource.DummyDataSource
 import lib.dehaat.ledger.initializer.themes.AIMSColors
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.initializer.toDateMonthName
@@ -67,9 +68,9 @@ private fun InvoiceListScreenPreview() = LedgerTheme {
         ledgerColors = AIMSColors(),
         interestDueDate = 623784623,
         amountDue = "40000",
-        interestApproached = null,
+        interestApproachedInvoices = DummyDataSource.invoices,
         interestApproachedLoading = false,
-        interestApproaching = null,
+        interestApproachingInvoices = DummyDataSource.invoices,
         interestApproachingLoading = false,
         onInvoiceClick = {}
     )
@@ -96,9 +97,9 @@ fun InvoiceListScreen(
                     ledgerColors = ledgerColors,
                     interestDueDate = viewModel.dueDate,
                     amountDue = viewModel.amountDue,
-                    interestApproached = uiState.interestApproachedInvoices,
+                    interestApproachedInvoices = uiState.interestApproachedInvoices,
                     interestApproachedLoading = uiState.interestApproachedLoading,
-                    interestApproaching = uiState.interestApproachingInvoices,
+                    interestApproachingInvoices = uiState.interestApproachingInvoices,
                     interestApproachingLoading = uiState.interestApproachingLoading,
                     onInvoiceClick = { transaction ->
                         detailPageNavigationCallback.navigateToRevampInvoiceDetailPage(
@@ -130,9 +131,9 @@ private fun InvoiceList(
     ledgerColors: LedgerColors,
     interestDueDate: Long?,
     amountDue: String?,
-    interestApproached: List<InvoiceListViewData>?,
+    interestApproachedInvoices: List<InvoiceListViewData>?,
     interestApproachedLoading: Boolean,
-    interestApproaching: List<InvoiceListViewData>?,
+    interestApproachingInvoices: List<InvoiceListViewData>?,
     interestApproachingLoading: Boolean,
     onInvoiceClick: (InvoiceListViewData) -> Unit
 ) = LazyColumn(
@@ -146,7 +147,7 @@ private fun InvoiceList(
         )
     }
     item { VerticalSpacer(height = 16.dp) }
-    interestApproached?.let { invoices ->
+    interestApproachedInvoices?.let { invoices ->
         stickyHeader {
             Column(
                 modifier = Modifier
@@ -172,12 +173,16 @@ private fun InvoiceList(
                 }
                 Divider()
             }
+        }
+
+        item {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(16.dp)
-                    .background(Color.White)
-            ) {}
+                    .background(Color.White),
+                content = {}
+            )
         }
 
         item {
@@ -188,7 +193,7 @@ private fun InvoiceList(
         item { if (interestApproachedLoading) ShowProgress(ledgerColors) }
     }
     item { VerticalSpacer(height = 16.dp) }
-    interestApproaching?.let { invoices ->
+    interestApproachingInvoices?.let { invoices ->
         stickyHeader {
             Column(
                 modifier = Modifier
@@ -204,16 +209,17 @@ private fun InvoiceList(
                 )
 
                 Divider()
-
-                VerticalSpacer(height = 16.dp)
             }
+        }
 
+        item {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(16.dp)
-                    .background(Color.White)
-            ) {}
+                    .background(Color.White),
+                content = {}
+            )
         }
 
         item {
@@ -225,7 +231,6 @@ private fun InvoiceList(
         item { if (interestApproachingLoading) ShowProgress(ledgerColors) }
 
     }
-    item { VerticalSpacer(height = 16.dp) }
 }
 
 @Composable
@@ -386,7 +391,10 @@ fun InvoiceWithUpcomingInterest(
                 )
 
                 InvoiceInformationChip(
-                    title = stringResource(R.string.interest_will_be_starting_in),
+                    title = stringResource(
+                        R.string.interest_will_be_starting_in,
+                        invoiceListViewData.date
+                    ),
                     backgroundColor = Warning10,
                     textColor = Pumpkin120
                 )

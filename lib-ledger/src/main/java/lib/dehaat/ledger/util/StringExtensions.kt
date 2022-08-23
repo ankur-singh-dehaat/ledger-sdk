@@ -16,9 +16,16 @@ fun String?.getAmountInRupees(): String {
         value?.let {
             val amount = it * -1
             return String.format("%s%s", "- ₹", formatDecimal(amount))
+                .getAmountWithoutTrailingZeroes()
         }
     }
-    return String.format("%s%s", "₹", formatDecimal(value))
+    return String.format("%s%s", "₹", formatDecimal(value)).getAmountWithoutTrailingZeroes()
+}
+
+private fun String.getAmountWithoutTrailingZeroes() = if (this.endsWith(".00")) {
+    this.substringBeforeLast(".00")
+} else {
+    this
 }
 
 fun String?.getAmountInRupeesOrDash(): String = this?.let {
