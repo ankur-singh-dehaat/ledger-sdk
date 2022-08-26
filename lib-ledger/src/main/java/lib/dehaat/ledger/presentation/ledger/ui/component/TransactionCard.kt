@@ -194,7 +194,7 @@ sealed class TransactionType(@StringRes val name: Int, val type: String) {
 
     data class Interest(
         val interestName: Int = R.string.interest_amount,
-        val interestType: String = "WEEKLY_INTEREST"
+        val interestType: String = "INTEREST"
     ) : TransactionType(
         name = interestName, type = interestType
     )
