@@ -13,4 +13,6 @@ object LedgerConstants {
     const val KEY_DC_FINANCED = "KEY_DC_FINANCED"
     const val KEY_AVAILABLE_CREDIT = "KEY_AVAILABLE_CREDIT"
     const val KEY_OUTSTANDING_CREDIT = "KEY_OUTSTANDING_CREDIT"
+    const val API_REQUEST_TRACE_ID = "api-request-trace-id"
+    const val IB_REQUEST_IDENTIFIER = "IB-Request-Identifier"
 }
