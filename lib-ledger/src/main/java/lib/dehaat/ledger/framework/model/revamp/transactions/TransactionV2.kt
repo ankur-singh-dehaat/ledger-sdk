@@ -25,7 +25,7 @@ data class TransactionV2(
     @Json(name = "partner_id")
     val partnerId: String,
     @Json(name = "payment_mode")
-    val paymentMode: String,
+    val paymentMode: String?,
     @Json(name = "source")
     val source: String,
     @Json(name = "source_no")

@@ -26,6 +26,7 @@ import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.Neutral70
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
+import lib.dehaat.ledger.resources.SeaGreen110
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
@@ -64,6 +65,7 @@ fun LedgerHeaderScreen(
         .padding(bottom = 12.dp)
         .fillMaxWidth()
 ) {
+    val totalOutstandingAmount = summaryViewData?.totalOutstandingAmount?.toDoubleOrNull() ?: 0.0
     VerticalSpacer(height = 24.dp)
     Text(
         text = stringResource(id = R.string.total_outstanding),
@@ -76,13 +78,14 @@ fun LedgerHeaderScreen(
     ) {
         Text(
             text = summaryViewData?.totalOutstandingAmount.getAmountInRupees(),
-            style = textHeadingH3(Neutral80)
+            style = textHeadingH3(
+                textColor = if (totalOutstandingAmount < 0) SeaGreen110 else Neutral80
+            )
         )
 
         ViewDetails(onTotalOutstandingDetailsClick)
     }
 
-    val totalOutstandingAmount = summaryViewData?.totalOutstandingAmount?.toIntOrNull() ?: 0
     if (totalOutstandingAmount < 0) {
         val outstandingAmount = totalOutstandingAmount * -1
         VerticalSpacer(height = 4.dp)

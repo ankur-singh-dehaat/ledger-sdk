@@ -109,19 +109,19 @@ class LedgerFrameworkMapper @Inject constructor() {
 
     fun toTransactionsEntity(data: TransactionData) = data.transactions.map {
         TransactionEntityV2(
-            it.amount,
-            it.creditNoteReason,
-            it.date,
-            it.erpId,
-            it.interestEndDate,
-            it.interestStartDate,
-            it.ledgerId,
-            it.locusId,
-            it.partnerId,
-            it.paymentMode,
-            it.source,
-            it.sourceNo,
-            it.type
+            amount = it.amount,
+            creditNoteReason = it.creditNoteReason,
+            date = it.date,
+            erpId = it.erpId,
+            interestEndDate = it.interestEndDate,
+            interestStartDate = it.interestStartDate,
+            ledgerId = it.ledgerId,
+            locusId = it.locusId,
+            partnerId = it.partnerId,
+            paymentMode = it.paymentMode,
+            source = it.source,
+            sourceNo = it.sourceNo,
+            type = it.type
         )
     }
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -13,6 +14,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
+import com.dehaat.androidbase.helper.showToast
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.RevampLedgerViewModel
@@ -39,6 +41,7 @@ fun TransactionsScreen(
     val viewModel = hiltViewModel<TransactionViewModel>()
     val transactions = viewModel.transactionsList.collectAsLazyPagingItems()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         stickyHeader {
             TransactionListHeader(
@@ -81,7 +84,11 @@ fun TransactionsScreen(
                         transaction = transaction
                     ) {
                         detailPageNavigationCallback.navigateToRevampWeeklyInterestDetailPage(
-                            InterestDetailsViewModel.getBundle(transaction.amount , transaction.interestStartDate, transaction.interestEndDate)
+                            InterestDetailsViewModel.getBundle(
+                                transaction.amount,
+                                transaction.interestStartDate,
+                                transaction.interestEndDate
+                            )
                         )
                     }
                 }
@@ -103,8 +110,10 @@ fun TransactionsScreen(
             lifecycleOwner.lifecycle,
             Lifecycle.State.STARTED
         ).collect { event ->
-            if (event is UiEvent.RefreshList) {
-                transactions.refresh()
+            when (event) {
+                UiEvent.RefreshList -> transactions.refresh()
+                is UiEvent.ShowSnackbar -> context.showToast(event.message)
+                UiEvent.Success -> Unit
             }
         }
     }

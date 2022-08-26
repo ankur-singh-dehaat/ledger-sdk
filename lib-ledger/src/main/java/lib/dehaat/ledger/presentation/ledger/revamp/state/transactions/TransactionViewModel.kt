@@ -91,6 +91,7 @@ class TransactionViewModel @Inject constructor(
     }
 
     private fun sendFailureEvent(message: String) {
+        callInViewModelScope { _uiEvent.emit(UiEvent.ShowSnackbar(message)) }
         Log.d("ERRORS", "sendFailureEvent: $message")
     }
 

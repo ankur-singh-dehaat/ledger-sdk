@@ -10,7 +10,7 @@ data class TransactionEntityV2(
     val ledgerId: String,
     val locusId: Int,
     val partnerId: String,
-    val paymentMode: String,
+    val paymentMode: String?,
     val source: String,
     val sourceNo: String?,
     val type: String
