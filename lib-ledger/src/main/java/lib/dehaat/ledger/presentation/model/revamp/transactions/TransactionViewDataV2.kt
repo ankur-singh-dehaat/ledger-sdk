@@ -8,7 +8,7 @@ data class TransactionViewDataV2(
     val interestEndDate: Long?,
     val interestStartDate: Long?,
     val ledgerId: String,
-    val locusId: Int,
+    val locusId: Int?,
     val partnerId: String,
     val paymentMode: String?,
     val source: String,

@@ -21,7 +21,7 @@ data class TransactionV2(
     @Json(name = "ledger_id")
     val ledgerId: String,
     @Json(name = "locus_id")
-    val locusId: Int,
+    val locusId: Int?,
     @Json(name = "partner_id")
     val partnerId: String,
     @Json(name = "payment_mode")
