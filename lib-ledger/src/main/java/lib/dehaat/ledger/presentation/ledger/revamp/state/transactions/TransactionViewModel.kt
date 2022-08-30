@@ -41,7 +41,8 @@ class TransactionViewModel @Inject constructor(
 
     private var daysToFilter: DaysToFilter = DaysToFilter.All
 
-    var transactionsList: Flow<PagingData<TransactionViewDataV2>> private set
+    var transactionsList: Flow<PagingData<TransactionViewDataV2>>
+        private set
 
     init {
         transactionsList = getTransactionPaging()
@@ -95,14 +96,12 @@ class TransactionViewModel @Inject constructor(
         Log.d("ERRORS", "sendFailureEvent: $message")
     }
 
-    private fun getFromAndToDate(): Pair<Long?, Long?> {
-        return when (daysToFilter) {
-            DaysToFilter.All -> Pair(null, null)
-            DaysToFilter.SevenDays -> calculateTimeInMillisecond(7)
-            DaysToFilter.OneMonth -> calculateTimeInMillisecond(31)
-            DaysToFilter.ThreeMonth -> calculateTimeInMillisecond(31 * 3)
-            is DaysToFilter.CustomDays -> calculateCustomDaysMillisecond(daysToFilter as DaysToFilter.CustomDays)
-        }
+    private fun getFromAndToDate() = when (val filter = daysToFilter) {
+        DaysToFilter.All -> Pair(null, null)
+        DaysToFilter.SevenDays -> calculateTimeInMillisecond(7)
+        DaysToFilter.OneMonth -> calculateTimeInMillisecond(31)
+        DaysToFilter.ThreeMonth -> calculateTimeInMillisecond(31 * 3)
+        is DaysToFilter.CustomDays -> calculateCustomDaysMillisecond(filter)
     }
 
     private fun calculateCustomDaysMillisecond(dayCount: DaysToFilter.CustomDays): Pair<Long, Long> {
