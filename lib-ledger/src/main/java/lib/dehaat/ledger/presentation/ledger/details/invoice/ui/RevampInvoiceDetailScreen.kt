@@ -41,6 +41,8 @@ import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.ledger.ui.component.ProductDetailsScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValuePair
 import lib.dehaat.ledger.presentation.model.revamp.invoice.CreditNoteViewData
+import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductsInfoViewDataV2
+import lib.dehaat.ledger.presentation.model.revamp.invoice.SummaryViewDataV2
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.resources.Error10
 import lib.dehaat.ledger.resources.Error100
@@ -66,7 +68,6 @@ fun RevampInvoiceDetailScreen(
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val summary = uiState.invoiceDetailsViewData?.summary
     CommonContainer(
         title = stringResource(id = R.string.invoice_details),
         onBackPress = onBackPress,
@@ -77,135 +78,12 @@ fun RevampInvoiceDetailScreen(
     ) {
         when (uiState.state) {
             UIState.SUCCESS -> {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState())
+                InvoiceDetailScreen(
+                    uiState.invoiceDetailsViewData?.summary,
+                    uiState.invoiceDetailsViewData?.creditNotes,
+                    uiState.invoiceDetailsViewData?.productsInfo
                 ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(Color.White)
-                            .padding(horizontal = 20.dp)
-                    ) {
-                        VerticalSpacer(height = 24.dp)
-                        when (uiState.invoiceDetailsViewData?.summary?.interestBeingCharged) {
-                            true -> {
-                                uiState.invoiceDetailsViewData?.summary?.interestDays?.let {
-                                    InvoiceInformationChip(
-                                        title = stringResource(
-                                            id = R.string.interest_running,
-                                            it.toString()
-                                        ),
-                                        backgroundColor = Error10,
-                                        textColor = Error100
-                                    )
-                                }
-                            }
-                            false -> {
-                                uiState.invoiceDetailsViewData?.summary?.interestDays?.let {
-                                    InvoiceInformationChip(
-                                        title = stringResource(
-                                            id = R.string.interest_starting,
-                                            it.toString()
-                                        ),
-                                        backgroundColor = Pumpkin10,
-                                        textColor = Pumpkin120
-                                    )
-                                }
-                            }
-                            else -> {
-                                InvoiceInformationChip(
-                                    title = stringResource(id = R.string.full_payment_complete),
-                                    backgroundColor = Success10,
-                                    textColor = Neutral90
-                                )
-                            }
-                        }
-
-                        uiState.invoiceDetailsViewData?.summary?.totalOutstandingAmount?.let {
-                            if (uiState.invoiceDetailsViewData?.summary?.interestBeingCharged == false) {
-                                VerticalSpacer(height = 20.dp)
-                                RevampKeyValuePair(
-                                    pair = Pair(
-                                        stringResource(id = R.string.outstanding_amount),
-                                        it.getAmountInRupees()
-                                    ),
-                                    style = Pair(
-                                        textParagraphT2Highlight(Error100),
-                                        textButtonB2(Error100)
-                                    )
-                                )
-                            }
-                        }
-
-                        VerticalSpacer(height = 12.dp)
-                        RevampKeyValuePair(
-                            pair = Pair(
-                                stringResource(id = R.string.invoice_amount),
-                                summary?.invoiceAmount.getAmountInRupees()
-                            ),
-                            style = Pair(
-                                textParagraphT2Highlight(Neutral90),
-                                textButtonB2(Neutral90)
-                            )
-                        )
-
-                        VerticalSpacer(height = 12.dp)
-                        RevampKeyValuePair(
-                            pair = Pair(
-                                stringResource(id = R.string.invoice_id),
-                                summary?.invoiceId ?: ""
-                            ),
-                            style = Pair(
-                                textParagraphT2Highlight(Neutral80),
-                                textParagraphT2Highlight(Neutral90)
-                            )
-                        )
-
-                        VerticalSpacer(height = 12.dp)
-                        RevampKeyValuePair(
-                            pair = Pair(
-                                stringResource(id = R.string.invoice_date),
-                                summary?.invoiceDate.toDateMonthYear()
-                            ),
-                            style = Pair(
-                                textParagraphT2Highlight(Neutral80),
-                                textButtonB2(Neutral90)
-                            )
-                        )
-
-                        summary?.interestStartDate?.let {
-                            VerticalSpacer(height = 12.dp)
-                            RevampKeyValuePair(
-                                pair = Pair(
-                                    stringResource(id = R.string.interest_start_date),
-                                    it.toDateMonthYear()
-                                ),
-                                style = Pair(
-                                    textParagraphT2Highlight(Neutral80),
-                                    textButtonB2(Neutral90)
-                                )
-                            )
-                        }
-
-                        VerticalSpacer(height = 16.dp)
-                    }
-
-                    VerticalSpacer(height = 16.dp)
-
-                    CreditNoteDetails(uiState.invoiceDetailsViewData?.creditNotes)
-
-                    VerticalSpacer(height = 16.dp)
-
-                    ProductDetailsScreen(uiState.invoiceDetailsViewData?.productsInfo)
-
-                    DownloadInvoiceButton {
-                        val invoiceId = uiState.invoiceDetailsViewData?.summary?.invoiceId
-                        if (invoiceId != null) {
-                            onDownloadInvoiceClick(invoiceId, viewModel.source)
-                        }
-                    }
+                    onDownloadInvoiceClick(it, viewModel.source)
                 }
             }
             UIState.LOADING -> {
@@ -216,6 +94,143 @@ fun RevampInvoiceDetailScreen(
             is UIState.ERROR -> {
                 NoDataFound((uiState.state as? UIState.ERROR)?.message)
             }
+        }
+    }
+}
+
+@Composable
+private fun InvoiceDetailScreen(
+    summary: SummaryViewDataV2?,
+    creditNotes: List<CreditNoteViewData>?,
+    productsInfo: ProductsInfoViewDataV2?,
+    onDownloadInvoiceClick: (String) -> Unit
+) = Column(
+    modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())
+) {
+    val undeliveredInvoice = summary?.interestStartDate == null
+    val interestPaid = summary?.totalOutstandingAmount?.toDoubleOrNull() == 0.0
+    val interestRunning = summary?.interestBeingCharged == true
+    val interestStarting = summary?.interestBeingCharged == false
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White)
+            .padding(horizontal = 20.dp)
+    ) {
+        VerticalSpacer(height = 24.dp)
+        when {
+            interestRunning -> summary?.interestDays?.let {
+                InvoiceInformationChip(
+                    title = stringResource(
+                        id = R.string.interest_running,
+                        it.toString()
+                    ),
+                    backgroundColor = Error10,
+                    textColor = Error100
+                )
+            }
+            interestStarting -> summary?.interestDays?.let {
+                InvoiceInformationChip(
+                    title = stringResource(
+                        id = R.string.interest_starting,
+                        it.toString()
+                    ),
+                    backgroundColor = Pumpkin10,
+                    textColor = Pumpkin120
+                )
+            }
+            interestPaid -> {
+                InvoiceInformationChip(
+                    title = stringResource(id = R.string.full_payment_complete),
+                    backgroundColor = Success10,
+                    textColor = Neutral90
+                )
+            }
+            else -> Unit
+        }
+
+        summary?.totalOutstandingAmount?.let {
+            if (!summary.interestBeingCharged && summary.invoiceAmount != it && it.toDoubleOrNull() == 0.0) {
+                VerticalSpacer(height = 20.dp)
+                RevampKeyValuePair(
+                    pair = Pair(
+                        stringResource(id = R.string.outstanding_amount),
+                        it.getAmountInRupees()
+                    ),
+                    style = Pair(
+                        textParagraphT2Highlight(Error100),
+                        textButtonB2(Error100)
+                    )
+                )
+            }
+        }
+
+        VerticalSpacer(height = 12.dp)
+        RevampKeyValuePair(
+            pair = Pair(
+                stringResource(id = R.string.invoice_amount),
+                summary?.invoiceAmount.getAmountInRupees()
+            ),
+            style = Pair(
+                textParagraphT2Highlight(Neutral90),
+                textButtonB2(Neutral90)
+            )
+        )
+
+        VerticalSpacer(height = 12.dp)
+        RevampKeyValuePair(
+            pair = Pair(
+                stringResource(id = R.string.invoice_id),
+                summary?.invoiceId ?: ""
+            ),
+            style = Pair(
+                textParagraphT2Highlight(Neutral80),
+                textParagraphT2Highlight(Neutral90)
+            )
+        )
+
+        VerticalSpacer(height = 12.dp)
+        RevampKeyValuePair(
+            pair = Pair(
+                stringResource(id = R.string.invoice_date),
+                summary?.invoiceDate.toDateMonthYear()
+            ),
+            style = Pair(
+                textParagraphT2Highlight(Neutral80),
+                textButtonB2(Neutral90)
+            )
+        )
+
+        summary?.interestStartDate?.let {
+            VerticalSpacer(height = 12.dp)
+            RevampKeyValuePair(
+                pair = Pair(
+                    stringResource(id = R.string.interest_start_date),
+                    it.toDateMonthYear()
+                ),
+                style = Pair(
+                    textParagraphT2Highlight(Neutral80),
+                    textButtonB2(Neutral90)
+                )
+            )
+        }
+
+        VerticalSpacer(height = 16.dp)
+    }
+
+    VerticalSpacer(height = 16.dp)
+
+    CreditNoteDetails(creditNotes)
+
+    VerticalSpacer(height = 16.dp)
+
+    ProductDetailsScreen(productsInfo)
+
+    DownloadInvoiceButton {
+        summary?.invoiceId?.let {
+            onDownloadInvoiceClick(it)
         }
     }
 }
