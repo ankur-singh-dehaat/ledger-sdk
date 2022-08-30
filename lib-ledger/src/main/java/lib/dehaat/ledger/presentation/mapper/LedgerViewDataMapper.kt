@@ -176,22 +176,22 @@ class LedgerViewDataMapper @Inject constructor() {
         InvoiceDetailsViewData(
             creditNotes = creditNotes.map {
                 CreditNoteViewData(
-                    it.creditNoteAmount,
-                    it.creditNoteDate,
-                    it.creditNoteType,
-                    it.ledgerId
+                    creditNoteAmount = it.creditNoteAmount,
+                    creditNoteDate = it.creditNoteDate,
+                    creditNoteType = it.creditNoteType,
+                    ledgerId = it.ledgerId
                 )
             },
             productsInfo = getProductInfoViewData(productsInfo),
             summary = SummaryViewDataV2(
-                summary.interestBeingCharged,
-                summary.interestDays,
-                summary.interestStartDate,
-                summary.invoiceAmount,
-                summary.invoiceDate,
-                summary.invoiceId,
-                summary.processingFee,
-                summary.totalOutstandingAmount
+                interestBeingCharged = summary.interestBeingCharged,
+                interestDays = summary.interestDays,
+                interestStartDate = summary.interestStartDate,
+                invoiceAmount = summary.invoiceAmount,
+                invoiceDate = summary.invoiceDate,
+                invoiceId = summary.invoiceId,
+                processingFee = summary.processingFee,
+                totalOutstandingAmount = summary.totalOutstandingAmount
             )
         )
     }

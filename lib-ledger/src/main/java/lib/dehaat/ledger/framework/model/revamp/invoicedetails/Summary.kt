@@ -8,9 +8,9 @@ data class Summary(
     @Json(name = "interest_being_charged")
     val interestBeingCharged: Boolean,
     @Json(name = "interest_days")
-    val interestDays: Int,
+    val interestDays: Int?,
     @Json(name = "interest_start_date")
-    val interestStartDate: Long,
+    val interestStartDate: Long?,
     @Json(name = "invoice_amount")
     val invoiceAmount: String,
     @Json(name = "invoice_date")
@@ -20,5 +20,5 @@ data class Summary(
     @Json(name = "processing_fee")
     val processingFee: String,
     @Json(name = "total_outstanding_amount")
-    val totalOutstandingAmount: String
+    val totalOutstandingAmount: String?
 )

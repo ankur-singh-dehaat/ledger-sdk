@@ -175,14 +175,14 @@ class LedgerFrameworkMapper @Inject constructor() {
             productsInfo = getProductInfoEntityV2(productsInfo),
             summary = with(summary) {
                 SummaryEntityV2(
-                    interestBeingCharged,
-                    interestDays,
-                    interestStartDate,
-                    invoiceAmount,
-                    invoiceDate,
-                    invoiceId,
-                    processingFee,
-                    totalOutstandingAmount
+                    interestBeingCharged = interestBeingCharged,
+                    interestDays = interestDays,
+                    interestStartDate = interestStartDate,
+                    invoiceAmount = invoiceAmount,
+                    invoiceDate = invoiceDate,
+                    invoiceId = invoiceId,
+                    processingFee = processingFee,
+                    totalOutstandingAmount = totalOutstandingAmount
                 )
             }
         )

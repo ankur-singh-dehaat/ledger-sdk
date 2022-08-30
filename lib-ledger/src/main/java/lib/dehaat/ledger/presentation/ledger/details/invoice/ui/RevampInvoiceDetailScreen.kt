@@ -91,24 +91,28 @@ fun RevampInvoiceDetailScreen(
                         VerticalSpacer(height = 24.dp)
                         when (uiState.invoiceDetailsViewData?.summary?.interestBeingCharged) {
                             true -> {
-                                InvoiceInformationChip(
-                                    title = stringResource(
-                                        id = R.string.interest_running,
-                                        uiState.invoiceDetailsViewData?.summary?.interestDays.toString()
-                                    ),
-                                    backgroundColor = Error10,
-                                    textColor = Error100
-                                )
+                                uiState.invoiceDetailsViewData?.summary?.interestDays?.let {
+                                    InvoiceInformationChip(
+                                        title = stringResource(
+                                            id = R.string.interest_running,
+                                            it.toString()
+                                        ),
+                                        backgroundColor = Error10,
+                                        textColor = Error100
+                                    )
+                                }
                             }
                             false -> {
-                                InvoiceInformationChip(
-                                    title = stringResource(
-                                        id = R.string.interest_starting,
-                                        uiState.invoiceDetailsViewData?.summary?.interestDays.toString()
-                                    ),
-                                    backgroundColor = Pumpkin10,
-                                    textColor = Pumpkin120
-                                )
+                                uiState.invoiceDetailsViewData?.summary?.interestDays?.let {
+                                    InvoiceInformationChip(
+                                        title = stringResource(
+                                            id = R.string.interest_starting,
+                                            it.toString()
+                                        ),
+                                        backgroundColor = Pumpkin10,
+                                        textColor = Pumpkin120
+                                    )
+                                }
                             }
                             else -> {
                                 InvoiceInformationChip(
@@ -119,18 +123,20 @@ fun RevampInvoiceDetailScreen(
                             }
                         }
 
-                        if (uiState.invoiceDetailsViewData?.summary?.interestBeingCharged == false) {
-                            VerticalSpacer(height = 20.dp)
-                            RevampKeyValuePair(
-                                pair = Pair(
-                                    stringResource(id = R.string.outstanding_amount),
-                                    uiState.invoiceDetailsViewData?.summary?.totalOutstandingAmount.getAmountInRupees()
-                                ),
-                                style = Pair(
-                                    textParagraphT2Highlight(Error100),
-                                    textButtonB2(Error100)
+                        uiState.invoiceDetailsViewData?.summary?.totalOutstandingAmount?.let {
+                            if (uiState.invoiceDetailsViewData?.summary?.interestBeingCharged == false) {
+                                VerticalSpacer(height = 20.dp)
+                                RevampKeyValuePair(
+                                    pair = Pair(
+                                        stringResource(id = R.string.outstanding_amount),
+                                        it.getAmountInRupees()
+                                    ),
+                                    style = Pair(
+                                        textParagraphT2Highlight(Error100),
+                                        textButtonB2(Error100)
+                                    )
                                 )
-                            )
+                            }
                         }
 
                         VerticalSpacer(height = 12.dp)
@@ -169,17 +175,19 @@ fun RevampInvoiceDetailScreen(
                             )
                         )
 
-                        VerticalSpacer(height = 12.dp)
-                        RevampKeyValuePair(
-                            pair = Pair(
-                                stringResource(id = R.string.interest_start_date),
-                                summary?.interestStartDate.toDateMonthYear()
-                            ),
-                            style = Pair(
-                                textParagraphT2Highlight(Neutral80),
-                                textButtonB2(Neutral90)
+                        summary?.interestStartDate?.let {
+                            VerticalSpacer(height = 12.dp)
+                            RevampKeyValuePair(
+                                pair = Pair(
+                                    stringResource(id = R.string.interest_start_date),
+                                    it.toDateMonthYear()
+                                ),
+                                style = Pair(
+                                    textParagraphT2Highlight(Neutral80),
+                                    textButtonB2(Neutral90)
+                                )
                             )
-                        )
+                        }
 
                         VerticalSpacer(height = 16.dp)
                     }
