@@ -148,11 +148,12 @@ object DummyDataSource {
     private val dbaApp by lazy {
         LedgerParentApp.DBA(
             ledgerCallBack = LedgerCallBack(
-                {},
-                {},
-                { _, _ -> },
-                { _, _ -> null },
-                {}
+                onClickPayNow = {},
+                onRevampPayNowClick = {},
+                onDownloadInvoiceSuccess = {},
+                onPaymentOptionsClick = {},
+                downloadInvoiceIntent = { _, _ -> null },
+                exceptionHandler = {}
             )
         )
     }

@@ -77,7 +77,7 @@ fun TransactionsListScreen(
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(
-                    id = R.string.to,
+                    id = R.string.untill,
                     it.first.toDateMonthName(),
                     it.second.toDateMonthName()
                 ),

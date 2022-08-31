@@ -1,6 +1,7 @@
 package lib.dehaat.ledger.presentation.ledger.details.payments
 
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cleanarch.base.entity.result.api.APIResultEntity
@@ -109,5 +110,7 @@ class PaymentDetailViewModel @Inject constructor(
             putString(KEY_LEDGER_ID, data.ledgerId)
             putString(KEY_PAYMENT_MODE, data.paymentMode)
         }
+
+        fun getBundle(ledgerId: String) = bundleOf(Pair(KEY_LEDGER_ID, ledgerId))
     }
 }

@@ -11,7 +11,6 @@ import androidx.navigation.Navigator
 import lib.dehaat.ledger.presentation.LedgerConstants
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
-import lib.dehaat.ledger.util.withArgs
 
 fun navigateToInvoiceDetailScreen(
     navController: NavHostController,
@@ -36,59 +35,6 @@ fun navigateToPaymentDetailScreen(
     route = LedgerRoutes.LedgerPaymentDetailScreen.screen,
     args = args
 )
-
-fun navigateToInvoiceDetailScreen(
-    navController: NavHostController,
-    ledgerId: String,
-    erpId: String?,
-    locusId: String?,
-    source: String,
-    isLMSActivated: Boolean
-) {
-    navController.navigate(
-        LedgerRoutes.LedgerInvoiceDetailScreen.screen.withArgs(
-            ledgerId,
-            erpId,
-            locusId,
-            source,
-            isLMSActivated
-        )
-    )
-}
-
-fun navigateToCreditNoteDetailScreen(
-    navController: NavHostController,
-    ledgerId: String,
-    erpId: String?,
-    locusId: String?
-) {
-    navController.navigate(
-        LedgerRoutes.LedgerCreditNoteDetailScreen.screen.withArgs(
-            ledgerId,
-            erpId,
-            locusId
-        )
-    )
-}
-
-fun navigateToPaymentDetailScreen(
-    navController: NavHostController,
-    ledgerId: String,
-    erpId: String?,
-    locusId: String?,
-    mode: String?,
-    isLMSActivated: Boolean
-) {
-    navController.navigate(
-        LedgerRoutes.LedgerPaymentDetailScreen.screen.withArgs(
-            ledgerId,
-            erpId,
-            locusId,
-            mode,
-            isLMSActivated
-        )
-    )
-}
 
 fun navigateToOutstandingDetailPage(
     navController: NavHostController,

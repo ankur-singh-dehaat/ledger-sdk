@@ -24,9 +24,7 @@
     <string name="invoice_download_success">Invoice downloaded successfully</string>
     <string name="invoice_download_in_progress">Invoice download in progress</string>
 
-    /*changesTODO*/
     <string name="total_outstanding_details">Total Outstanding Details</string>
-    <string name="ledger">Ledger</string>
     <string name="total_outstanding_calculation_method">Total Outstanding Calculation Method:</string>
     <string name="total_outstanding_footer">Total\nO/S</string>
     <string name="total_purchase_rs">Total Purchase (₹)</string>
@@ -47,14 +45,13 @@
     <string name="filter_last_three_months">Last 3 Months</string>
     <string name="filter_add_custom_date">Add Custom Date</string>
     <string name="from">From</string>
-    <string name="to">To</string>
+    <string name="untill">To</string>
     <string name="apply_filter">Apply Filter</string>
     <string name="total_purchase">Total Purchase</string>
     <string name="interest_till_date">Interest till Date</string>
     <string name="total_payment">Total Payment</string>
     <string name="purchases_till_date">Purchases till Date</string>
     <string name="total_credit_note_amount">Total Credit Note Amount</string>
-    <string name="available_credit_limit">Available Credit Limit</string>
     <string name="total_credit_limit">Total credit Limit</string>
     <string name="total_outstanding_plus_products_to_be_deliver">Total Outstanding + Products to be Delivered</string>
     <string name="total_credit_limit_calculation_method">Total Credit Limit Calculation Method:</string>
@@ -72,7 +69,6 @@
     <string name="other_payment_modes">Other Payment Modes</string>
     <string name="other_payment_modes_header">नीचे दिया गया खाता सीधा आपके लेजर से जुड़ा हैं। कृपया इन विवरणों को अन्य देहातियों के साथ साझा न करें।</string>
     <string name="payment_detail">Payment Details</string>
-    <string name="payment_amount">Payment Amount</string>
     <string name="payment_date">Payment Date</string>
     <string name="payment_method">Payment Method</string>
     <string name="reference_id">Reference I.D.</string>
@@ -86,7 +82,6 @@
     <string name="product_details">Product Details</string>
     <string name="total_items">Total Items: %s</string>
     <string name="quantity">Qty. %s</string>
-    <string name="purchase_amount">Purchase Amount</string>
     <string name="discount">Discount</string>
     <string name="gst">G.S.T</string>
     <string name="total_amount">Total Amount</string>

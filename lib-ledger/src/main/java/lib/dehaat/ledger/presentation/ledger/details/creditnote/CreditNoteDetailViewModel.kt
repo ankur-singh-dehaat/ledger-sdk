@@ -57,7 +57,7 @@ class CreditNoteDetailViewModel @Inject constructor(
     private fun getCreditNoteDetailFromServer() {
         callInViewModelScope {
             updateProgressDialog(true)
-            val response = getCreditNoteDetailUseCase.invoke(ledgerId)
+            val response = getCreditNoteDetailUseCase.getCreditNoteDetail(ledgerId)
             updateProgressDialog(false)
             processCreditNoteDetailResponse(response)
         }

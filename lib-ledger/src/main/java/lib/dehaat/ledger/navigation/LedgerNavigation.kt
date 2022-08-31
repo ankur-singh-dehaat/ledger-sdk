@@ -2,7 +2,6 @@ package lib.dehaat.ledger.navigation
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,8 +30,6 @@ import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewMod
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.ui.InvoiceListScreen
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailScreen
-import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
-import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.RevampPaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
@@ -95,10 +92,7 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.RevampLedgerScreen.screen.withArgsPath(
-                LedgerConstants.KEY_PARTNER_ID,
-                LedgerConstants.KEY_DC_NAME
-            ),
+            route = LedgerRoutes.RevampLedgerScreen.screen,
             arguments = listOf(
                 navArgument(LedgerConstants.KEY_PARTNER_ID) {
                     type = NavType.StringType
@@ -316,9 +310,7 @@ fun provideDetailPageNavCallBacks(
         navigateToRevampCreditNoteDetailPage(navController, bundle)
     }
 
-    override fun navigateToRevampPaymentDetailPage(
-        bundle: Bundle
-    ) {
+    override fun navigateToRevampPaymentDetailPage(bundle: Bundle) {
         navigateToRevampPaymentDetailPage(navController, bundle)
     }
 

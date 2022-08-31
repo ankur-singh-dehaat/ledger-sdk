@@ -22,9 +22,7 @@
     <string name="invoice_download_success">चालान सफलतापूर्वक डाउनलोड किया गया</string>
     <string name="invoice_download_in_progress">चालान डाउनलोड हो रहा है</string>
 
-    /*changesTODO*/
     <string name="total_outstanding_details">कुल बकाया विवरण</string>
-    <string name="ledger">बही खाता</string>
     <string name="total_outstanding_calculation_method">कुल बकाया कैल्क्युलेशन विधि:</string>
     <string name="total_outstanding_footer">कुल\nबकाया</string>
     <string name="total_purchase_rs">कुल ख़रीदी (₹)</string>
@@ -45,14 +43,13 @@
     <string name="filter_last_three_months">पिछले 3 महीने</string>
     <string name="filter_add_custom_date">कस्टम तारीख़ डालें</string>
     <string name="from">कब से</string>
-    <string name="to">कब तक</string>
+    <string name="untill">कब तक</string>
     <string name="apply_filter">लागू करें</string>
     <string name="total_purchase">कुल ख़रीदी</string>
     <string name="interest_till_date">आज तक का ब्याज</string>
     <string name="total_payment">कुल भुगतान</string>
     <string name="purchases_till_date">आज तक की ख़रीदी</string>
     <string name="total_credit_note_amount">कुल क्रेडिट नोट राशि</string>
-    <string name="available_credit_limit">उपलब्ध क्रेडिट लिमिट</string>
     <string name="total_credit_limit">कुल क्रेडिट लिमिट\n</string>
     <string name="total_outstanding_plus_products_to_be_deliver">कुल बकाया + डिलिवर होने वाले ऑर्डर</string>
     <string name="total_credit_limit_calculation_method">कुल क्रेडिट लिमिट कैल्क्युलेशन विधि:</string>
@@ -70,7 +67,6 @@
     <string name="other_payment_modes">भुगतान के अन्य तरीक़े</string>
     <string name="other_payment_modes_header">नीचे दिया गया खाता सीधा आपके लेजर से जुड़ा हैं। कृपया इन विवरणों को अन्य देहातियों के साथ साझा न करें।</string>
     <string name="payment_detail">भुगतान विवरण</string>
-    <string name="payment_amount">भुगतान राशि</string>
     <string name="payment_date">भुगतान तिथि</string>
     <string name="payment_method">भुगतान विधि</string>
     <string name="reference_id">रेफ़्रेन्स आई.डी.</string>
@@ -84,7 +80,6 @@
     <string name="product_details">प्रोडक्ट विवरण</string>
     <string name="total_items">कुल आइटम: %s</string>
     <string name="quantity">Qty. %s</string>
-    <string name="purchase_amount">ख़रीदी राशि</string>
     <string name="discount">डिस्काउंट</string>
     <string name="gst">जी.ऐस.टी</string>
     <string name="total_amount">कुल राशि</string>
