@@ -96,6 +96,7 @@ fun InvoiceListScreen(
     viewModel: InvoiceListViewModel,
     ledgerColors: LedgerColors,
     detailPageNavigationCallback: DetailPageNavigationCallback,
+    onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -136,7 +137,7 @@ fun InvoiceListScreen(
                         interestDueDate = viewModel.dueDate,
                         amountDue = viewModel.amountDue
                     )
-                    NoDataFound((uiState.state as? UIState.ERROR)?.message)
+                    NoDataFound((uiState.state as? UIState.ERROR)?.message, onError)
                 }
             }
         }

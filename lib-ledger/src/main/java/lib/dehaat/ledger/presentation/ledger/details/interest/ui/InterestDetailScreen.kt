@@ -1,6 +1,5 @@
 package lib.dehaat.ledger.presentation.ledger.details.interest.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -40,15 +39,16 @@ private fun InterestDetailScreenPreview() = LedgerTheme {
     InterestDetailScreen(
         viewModel = hiltViewModel(),
         ledgerColors = DBAColors(),
-        onBackPress = {}
+        onBackPress = {},
+        onError = {}
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InterestDetailScreen(
     viewModel: InterestDetailsViewModel,
     ledgerColors: LedgerColors,
+    onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
     CommonContainer(

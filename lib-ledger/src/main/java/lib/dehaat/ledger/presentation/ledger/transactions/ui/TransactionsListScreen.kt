@@ -51,6 +51,7 @@ fun TransactionsListScreen(
     ledgerDetailViewModel: LedgerDetailViewModel,
     openDaysFilter: () -> Unit,
     openRangeFilter: () -> Unit,
+    onError: (Exception) -> Unit,
     isLmsActivated: () -> Boolean?
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -115,7 +116,7 @@ fun TransactionsListScreen(
                         item { ShowProgress(ledgerColors) }
                     }
                     loadState.append is LoadState.NotLoading && loadState.append.endOfPaginationReached && itemCount == 0 -> {
-                        item { NoDataFound() }
+                        item { NoDataFound{} }
                     }
                 }
             }

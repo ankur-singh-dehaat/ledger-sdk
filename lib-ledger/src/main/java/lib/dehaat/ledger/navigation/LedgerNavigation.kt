@@ -87,7 +87,8 @@ fun LedgerNavigation(
                 },
                 onPaymentOptionsClick = {
                     ledgerCallbacks.onPaymentOptionsClick(resultLauncher)
-                }
+                },
+                onError = { ledgerCallbacks.exceptionHandler(it) }
             )
         }
 
@@ -111,7 +112,8 @@ fun LedgerNavigation(
                 onBackPress = finishActivity,
                 detailPageNavigationCallback = provideDetailPageNavCallBacks(navController),
                 onPayNowClick = { ledgerCallbacks.onRevampPayNowClick(it) },
-                onOtherPaymentModeClick = { ledgerCallbacks.onPaymentOptionsClick(resultLauncher) }
+                onOtherPaymentModeClick = { ledgerCallbacks.onPaymentOptionsClick(resultLauncher) },
+                onError = { ledgerCallbacks.exceptionHandler(it) }
             )
         }
 
@@ -128,6 +130,7 @@ fun LedgerNavigation(
             TotalOutstandingScreen(
                 viewModel = totalOutstandingViewModel,
                 ledgerColors = ledgerColors,
+                onError = { ledgerCallbacks.exceptionHandler(it) },
                 onBackPress = {
                     navController.popBackStack()
                 }
@@ -140,25 +143,19 @@ fun LedgerNavigation(
                 viewModel = invoiceListViewModel,
                 ledgerColors = ledgerColors,
                 detailPageNavigationCallback = provideDetailPageNavCallBacks(navController),
+                onError = { ledgerCallbacks.exceptionHandler(it) }
             ) {
                 navController.popBackStack()
             }
         }
 
-        composable(
-            route = LedgerRoutes.TotalAvailableCreditLimitScreen.screen,
-            arguments = listOf(
-                navArgument(LedgerConstants.KEY_AVAILABLE_CREDIT) {
-                    type = NavType.ParcelableType(AvailableCreditLimitViewState::class.java)
-                    nullable = true
-                }
-            )
-        ) {
+        composable(LedgerRoutes.TotalAvailableCreditLimitScreen.screen) {
             val availableCreditLimitViewModel = hiltViewModel<AvailableCreditLimitViewModel>()
 
             AvailableCreditLimitDetailsScreen(
                 viewModel = availableCreditLimitViewModel,
-                ledgerColors = ledgerColors
+                ledgerColors = ledgerColors,
+                onError = { ledgerCallbacks.exceptionHandler(it) }
             ) {
                 navController.popBackStack()
             }
@@ -187,7 +184,8 @@ fun LedgerNavigation(
             RevampInvoiceDetailScreen(
                 viewModel = invoiceDetailViewModel,
                 ledgerColors = ledgerColors,
-                onDownloadInvoiceClick = { invoiceId, source -> }
+                onDownloadInvoiceClick = { invoiceId, source -> },
+                onError = { ledgerCallbacks.exceptionHandler(it) }
             ) {
                 navController.popBackStack()
             }
@@ -213,7 +211,8 @@ fun LedgerNavigation(
             val creditNoteDetailsViewModel = hiltViewModel<CreditNoteDetailsViewModel>()
             RevampCreditNoteDetailsScreen(
                 viewModel = creditNoteDetailsViewModel,
-                ledgerColors = ledgerColors
+                ledgerColors = ledgerColors,
+                onError = { ledgerCallbacks.exceptionHandler(it) },
             ) {
                 navController.popBackStack()
             }
@@ -239,7 +238,8 @@ fun LedgerNavigation(
             val paymentDetailViewModel = hiltViewModel<PaymentDetailViewModel>()
             RevampPaymentDetailScreen(
                 viewModel = paymentDetailViewModel,
-                ledgerColors = ledgerColors
+                ledgerColors = ledgerColors,
+                onError = { ledgerCallbacks.exceptionHandler(it) }
             ) {
                 navController.popBackStack()
             }
@@ -252,7 +252,8 @@ fun LedgerNavigation(
 
             InterestDetailScreen(
                 viewModel = interestDetailsViewModel,
-                ledgerColors = ledgerColors
+                ledgerColors = ledgerColors,
+                onError = { ledgerCallbacks.exceptionHandler(it) }
             ) {
                 navController.popBackStack()
             }

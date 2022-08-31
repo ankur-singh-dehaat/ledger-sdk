@@ -49,6 +49,7 @@ private fun TotalOutstandingPreview() = LedgerTheme {
     TotalOutstandingScreen(
         viewModel = hiltViewModel(),
         ledgerColors = DBAColors(),
+        onError = {},
         onBackPress = {}
     )
 }
@@ -57,6 +58,7 @@ private fun TotalOutstandingPreview() = LedgerTheme {
 fun TotalOutstandingScreen(
     viewModel: TotalOutstandingViewModel,
     ledgerColors: LedgerColors,
+    onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
     val uiState = viewModel.viewState
@@ -149,6 +151,6 @@ fun TotalOutstandingScreen(
                     )
                 )
             }
-        } ?: NoDataFound()
+        } ?: NoDataFound(onError = onError)
     }
 }

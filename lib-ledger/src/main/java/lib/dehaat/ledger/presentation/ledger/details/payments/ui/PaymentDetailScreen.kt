@@ -55,7 +55,7 @@ fun PaymentDetailScreen(
                 }
             }
             uiState.state is UIState.ERROR -> {
-                NoDataFound()
+                NoDataFound{}
             }
             else -> {
                 Column(

@@ -15,6 +15,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.dehaat.androidbase.helper.showToast
+import lib.dehaat.ledger.R
+import lib.dehaat.ledger.initializer.LedgerSDK
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.RevampLedgerViewModel
@@ -35,6 +37,7 @@ import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionType
 fun TransactionsScreen(
     ledgerViewModel: RevampLedgerViewModel,
     ledgerColors: LedgerColors,
+    onError: (Exception) -> Unit,
     detailPageNavigationCallback: DetailPageNavigationCallback,
     showFilterSheet: () -> Unit
 ) {
@@ -100,7 +103,7 @@ fun TransactionsScreen(
                     item { ShowProgress(ledgerColors) }
                 }
                 loadState.append is LoadState.NotLoading && loadState.append.endOfPaginationReached && itemCount == 0 -> {
-                    item { NoDataFound() }
+                    item { NoDataFound {} }
                 }
             }
         }
@@ -112,7 +115,14 @@ fun TransactionsScreen(
         ).collect { event ->
             when (event) {
                 UiEvent.RefreshList -> transactions.refresh()
-                is UiEvent.ShowSnackbar -> context.showToast(event.message)
+                is UiEvent.ShowSnackbar -> {
+                    onError(Exception(event.message))
+                    if (LedgerSDK.isDebug) {
+                        context.showToast(event.message)
+                    } else {
+                        context.showToast(R.string.tech_problem)
+                    }
+                }
                 UiEvent.Success -> Unit
             }
         }

@@ -82,6 +82,7 @@ private fun AvailableCreditLimitDetailsScreenPreview() = LedgerTheme {
 fun AvailableCreditLimitDetailsScreen(
     viewModel: AvailableCreditLimitViewModel,
     ledgerColors: LedgerColors,
+    onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
     val uiState = viewModel.viewState
@@ -94,7 +95,7 @@ fun AvailableCreditLimitDetailsScreen(
     ) {
         uiState?.let {
             CreditLimitDetailsScreen(uiState = it)
-        } ?: NoDataFound()
+        } ?: NoDataFound(onError = onError)
     }
 }
 

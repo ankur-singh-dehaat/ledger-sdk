@@ -48,10 +48,11 @@ import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
 fun RevampLedgerScreen(
     viewModel: RevampLedgerViewModel,
     ledgerColors: LedgerColors,
-    onBackPress: () -> Unit,
     detailPageNavigationCallback: DetailPageNavigationCallback,
     onPayNowClick: (String?) -> Unit,
-    onOtherPaymentModeClick: () -> Unit
+    onOtherPaymentModeClick: () -> Unit,
+    onError: (Exception) -> Unit,
+    onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val scaffoldState = rememberScaffoldState()
@@ -152,6 +153,7 @@ fun RevampLedgerScreen(
                             TransactionsScreen(
                                 viewModel,
                                 ledgerColors,
+                                onError,
                                 detailPageNavigationCallback
                             ) {
                                 scope.launch {
@@ -169,7 +171,7 @@ fun RevampLedgerScreen(
                 }
             }
             is UIState.ERROR -> {
-                NoDataFound((uiState.state as? UIState.ERROR)?.message)
+                NoDataFound((uiState.state as? UIState.ERROR)?.message, onError)
             }
         }
     }

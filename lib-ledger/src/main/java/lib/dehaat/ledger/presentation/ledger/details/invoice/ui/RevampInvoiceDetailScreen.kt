@@ -65,6 +65,7 @@ fun RevampInvoiceDetailScreen(
     viewModel: RevampInvoiceDetailViewModel,
     ledgerColors: LedgerColors,
     onDownloadInvoiceClick: (String, String) -> Unit,
+    onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -92,7 +93,7 @@ fun RevampInvoiceDetailScreen(
                 }
             }
             is UIState.ERROR -> {
-                NoDataFound((uiState.state as? UIState.ERROR)?.message)
+                NoDataFound((uiState.state as? UIState.ERROR)?.message, onError)
             }
         }
     }

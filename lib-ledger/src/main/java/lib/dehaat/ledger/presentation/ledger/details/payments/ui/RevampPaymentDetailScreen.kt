@@ -51,6 +51,7 @@ private fun PaymentDetailsScreenPreview() = LedgerTheme {
 fun RevampPaymentDetailScreen(
     viewModel: PaymentDetailViewModel,
     ledgerColors: LedgerColors,
+    onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -70,7 +71,7 @@ fun RevampPaymentDetailScreen(
                 }
             }
             is UIState.ERROR -> {
-                NoDataFound((uiState.state as? UIState.ERROR)?.message)
+                NoDataFound((uiState.state as? UIState.ERROR)?.message, onError)
             }
         }
     }

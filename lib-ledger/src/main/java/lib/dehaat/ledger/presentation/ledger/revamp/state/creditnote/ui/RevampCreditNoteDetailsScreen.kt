@@ -39,6 +39,7 @@ import lib.dehaat.ledger.resources.textParagraphT2Highlight
 fun RevampCreditNoteDetailsScreen(
     viewModel: CreditNoteDetailsViewModel,
     ledgerColors: LedgerColors,
+    onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -144,7 +145,7 @@ fun RevampCreditNoteDetailsScreen(
                 }
             }
             is UIState.ERROR -> {
-                NoDataFound((uiState.state as? UIState.ERROR)?.message)
+                NoDataFound((uiState.state as? UIState.ERROR)?.message, onError)
             }
         }
     }

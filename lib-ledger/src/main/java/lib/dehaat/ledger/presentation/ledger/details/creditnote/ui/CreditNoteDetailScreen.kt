@@ -64,7 +64,7 @@ fun CreditNoteDetailScreen(
                 }
             }
             uiState.isError -> {
-                NoDataFound()
+                NoDataFound {}
             }
             else -> {
                 Column(
