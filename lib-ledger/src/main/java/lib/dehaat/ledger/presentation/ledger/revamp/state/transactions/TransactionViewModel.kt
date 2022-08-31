@@ -70,7 +70,7 @@ class TransactionViewModel @Inject constructor(
         pageNumber: Int
     ): APIResultEntity<List<TransactionEntityV2>> {
         val (fromDate, toDate) = getFromAndToDate()
-        return getTransactionsUseCase.getTransactions(
+        return getTransactionsUseCase.getTransactionsV2(
             partnerId = partnerId,
             fromDate = fromDate,
             toDate = toDate,

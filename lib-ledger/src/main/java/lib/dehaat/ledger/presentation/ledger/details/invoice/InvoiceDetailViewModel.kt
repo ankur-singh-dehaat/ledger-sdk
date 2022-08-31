@@ -73,7 +73,7 @@ class InvoiceDetailViewModel @Inject constructor(
     private fun getInvoiceDetailFromServer() {
         callInViewModelScope {
             callingAPI()
-            val response = getInvoiceDetailUseCase.invoke(ledgerId)
+            val response = getInvoiceDetailUseCase.getInvoiceDetail(ledgerId)
             calledAPI()
             processInvoiceDetailResponse(response)
         }

@@ -67,7 +67,7 @@ class RevampLedgerViewModel @Inject constructor(
     private fun getCreditSummaryFromServer() {
         callInViewModelScope {
             callingAPI()
-            val response = getCreditSummaryUseCase.getCreditSummary(partnerId)
+            val response = getCreditSummaryUseCase.getCreditSummaryV2(partnerId)
             calledAPI()
             processCreditSummaryResponse(response)
         }
