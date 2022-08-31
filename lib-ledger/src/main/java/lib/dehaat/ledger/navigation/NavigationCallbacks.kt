@@ -1,8 +1,6 @@
 package lib.dehaat.ledger.navigation
 
 import android.os.Bundle
-import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
-import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 
 interface DetailPageNavigationCallback {
     fun navigateToInvoiceDetailPage(args: Bundle)
@@ -13,13 +11,9 @@ interface DetailPageNavigationCallback {
 
     fun navigateToOutstandingDetailPage(args: Bundle)
 
-    fun navigateToInvoiceListPage(
-        args: Bundle
-    )
+    fun navigateToInvoiceListPage(args: Bundle)
 
-    fun navigateToAvailableCreditLimitDetailPage(
-        viewState: AvailableCreditLimitViewState?
-    )
+    fun navigateToAvailableCreditLimitDetailPage(args: Bundle)
 
     fun navigateToRevampInvoiceDetailPage(args: Bundle)
 

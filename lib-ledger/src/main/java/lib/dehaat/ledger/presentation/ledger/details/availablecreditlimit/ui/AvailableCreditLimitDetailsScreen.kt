@@ -38,7 +38,6 @@ import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.HorizontalSpacer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
-import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.AvailableCreditLimitViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.ui.component.CalculationMethodScreen
@@ -82,7 +81,6 @@ private fun AvailableCreditLimitDetailsScreenPreview() = LedgerTheme {
 fun AvailableCreditLimitDetailsScreen(
     viewModel: AvailableCreditLimitViewModel,
     ledgerColors: LedgerColors,
-    onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
     val uiState = viewModel.viewState
@@ -93,9 +91,7 @@ fun AvailableCreditLimitDetailsScreen(
         scaffoldState = scaffoldState,
         backgroundColor = Background
     ) {
-        uiState?.let {
-            CreditLimitDetailsScreen(uiState = it)
-        } ?: NoDataFound(onError = onError)
+        CreditLimitDetailsScreen(uiState = uiState)
     }
 }
 

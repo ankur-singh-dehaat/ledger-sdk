@@ -35,7 +35,6 @@ import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutst
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.CreditNoteDetailsViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.ui.RevampCreditNoteDetailsScreen
-import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
 import lib.dehaat.ledger.presentation.ledger.ui.RevampLedgerScreen
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
@@ -145,16 +144,13 @@ fun LedgerNavigation(
 
             AvailableCreditLimitDetailsScreen(
                 viewModel = availableCreditLimitViewModel,
-                ledgerColors = ledgerColors,
-                onError = { ledgerCallbacks.exceptionHandler(it) }
+                ledgerColors = ledgerColors
             ) {
                 navController.popBackStack()
             }
         }
 
-        composable(
-            route = LedgerRoutes.LedgerInvoiceDetailScreen.screen
-        ) {
+        composable(LedgerRoutes.LedgerInvoiceDetailScreen.screen) {
             val invoiceDetailViewModel = hiltViewModel<InvoiceDetailViewModel>()
             invoiceDetailViewModel.setIsLmsActivated(viewModel.isLMSActivated())
 
@@ -168,9 +164,7 @@ fun LedgerNavigation(
             )
         }
 
-        composable(
-            route = LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen
-        ) {
+        composable(LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen) {
             val invoiceDetailViewModel = hiltViewModel<RevampInvoiceDetailViewModel>()
             RevampInvoiceDetailScreen(
                 viewModel = invoiceDetailViewModel,
@@ -182,9 +176,7 @@ fun LedgerNavigation(
             }
         }
 
-        composable(
-            route = LedgerRoutes.LedgerCreditNoteDetailScreen.screen
-        ) {
+        composable(LedgerRoutes.LedgerCreditNoteDetailScreen.screen) {
             val creditNoteDetailViewModel = hiltViewModel<CreditNoteDetailViewModel>()
 
             CreditNoteDetailScreen(
@@ -196,9 +188,7 @@ fun LedgerNavigation(
 
         }
 
-        composable(
-            route = LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen
-        ) {
+        composable(LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen) {
             val creditNoteDetailsViewModel = hiltViewModel<CreditNoteDetailsViewModel>()
             RevampCreditNoteDetailsScreen(
                 viewModel = creditNoteDetailsViewModel,
@@ -209,9 +199,7 @@ fun LedgerNavigation(
             }
         }
 
-        composable(
-            route = LedgerRoutes.LedgerPaymentDetailScreen.screen
-        ) {
+        composable(LedgerRoutes.LedgerPaymentDetailScreen.screen) {
             val paymentDetailViewModel = hiltViewModel<PaymentDetailViewModel>()
             paymentDetailViewModel.setIsLmsActivated(viewModel.isLMSActivated())
 
@@ -223,9 +211,7 @@ fun LedgerNavigation(
             }
         }
 
-        composable(
-            route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen
-        ) {
+        composable(LedgerRoutes.RevampLedgerPaymentDetailScreen.screen) {
             val paymentDetailViewModel = hiltViewModel<PaymentDetailViewModel>()
             RevampPaymentDetailScreen(
                 viewModel = paymentDetailViewModel,
@@ -236,9 +222,7 @@ fun LedgerNavigation(
             }
         }
 
-        composable(
-            route = LedgerRoutes.RevampLedgerWeeklyInterestDetailScreen.screen
-        ) {
+        composable(LedgerRoutes.RevampLedgerWeeklyInterestDetailScreen.screen) {
             val interestDetailsViewModel = hiltViewModel<InterestDetailsViewModel>()
 
             InterestDetailScreen(
@@ -286,10 +270,8 @@ fun provideDetailPageNavCallBacks(
         navigateToInvoiceListPage(navController, args)
     }
 
-    override fun navigateToAvailableCreditLimitDetailPage(
-        viewState: AvailableCreditLimitViewState?
-    ) {
-        navigateToAvailableCreditLimitDetailPage(navController, viewState)
+    override fun navigateToAvailableCreditLimitDetailPage(args: Bundle) {
+        navigateToAvailableCreditLimitDetailPage(navController, args)
     }
 
     override fun navigateToRevampInvoiceDetailPage(args: Bundle) {

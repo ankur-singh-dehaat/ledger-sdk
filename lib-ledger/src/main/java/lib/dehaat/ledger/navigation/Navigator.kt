@@ -53,12 +53,10 @@ fun navigateToInvoiceListPage(
 
 fun navigateToAvailableCreditLimitDetailPage(
     navController: NavHostController,
-    viewState: AvailableCreditLimitViewState?
+    args: Bundle
 ) = navController.navigateTo(
     LedgerRoutes.TotalAvailableCreditLimitScreen.screen,
-    args = Bundle().apply {
-        putParcelable(LedgerConstants.KEY_AVAILABLE_CREDIT, viewState)
-    }
+    args = args
 )
 
 fun navigateToRevampInvoiceDetailPage(

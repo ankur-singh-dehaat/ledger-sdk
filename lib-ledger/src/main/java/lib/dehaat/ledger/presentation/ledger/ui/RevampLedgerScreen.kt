@@ -33,6 +33,7 @@ import lib.dehaat.ledger.presentation.ledger.bottomsheets.FilterScreen
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
 import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitScreen
+import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.AvailableCreditLimitViewModel
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
@@ -142,7 +143,7 @@ fun RevampLedgerScreen(
                                 uiState.summaryViewData?.totalAvailableCreditLimit?.let { amount ->
                                     AvailableCreditLimitScreen(amount.getAmountInRupees()) {
                                         detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage(
-                                            viewModel.availableCreditLimitViewState
+                                            AvailableCreditLimitViewModel.getArgs(viewModel.availableCreditLimitViewState)
                                         )
                                     }
                                 }
