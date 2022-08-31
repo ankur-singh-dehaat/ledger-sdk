@@ -1,8 +1,10 @@
 package lib.dehaat.ledger.initializer
 
 import android.content.Context
+import android.os.Environment
 import androidx.annotation.DrawableRes
 import com.facebook.drawee.backends.pipeline.Fresco
+import java.io.File
 import lib.dehaat.ledger.presentation.ledger.LedgerDetailActivity
 
 object LedgerSDK {
@@ -16,30 +18,51 @@ object LedgerSDK {
         context: Context,
         app: LedgerParentApp,
         bucket: String,
-        @DrawableRes appIcon: Int
+        @DrawableRes appIcon: Int,
+        debugMode: Boolean
     ) {
         currentApp = app
         this.bucket = bucket
         this.appIcon = appIcon
+        this.isDebug = debugMode
         Fresco.initialize(context)
     }
 
     fun isCurrentAppAvailable() = ::currentApp.isInitialized && ::bucket.isInitialized
 
+    @Throws(Exception::class)
     fun openLedger(
         context: Context,
         partnerId: String,
         dcName: String,
         isDCFinanced: Boolean,
         language: String? = null
-    ) = LedgerDetailActivity.Companion.Args(
-        partnerId = partnerId,
-        dcName = dcName,
-        isDCFinanced = isDCFinanced,
-        language = language
-    ).also {
-        language?.let { lang -> locale = lang }
-        context.startActivity(it.build(context))
+    ) = if (isCurrentAppAvailable()) {
+        LedgerDetailActivity.Companion.Args(
+            partnerId = partnerId,
+            dcName = dcName,
+            isDCFinanced = isDCFinanced,
+            language = language
+        ).also {
+            language?.let { lang -> locale = lang }
+            context.startActivity(it.build(context))
+        }
+    } else {
+        throw Exception("Ledger not initialised Exception")
+    }
+
+    fun getFile(context: Context): File? = try {
+        File(
+            context.getExternalFilesDir(
+                Environment.DIRECTORY_DOWNLOADS
+            ),
+            "DeHaat"
+        ).apply { mkdir() }
+    } catch (e: Exception) {
+        if (::currentApp.isInitialized) {
+            currentApp.ledgerCallBack.exceptionHandler(e)
+        }
+        null
     }
 
     val isDBA: Boolean
@@ -47,4 +70,7 @@ object LedgerSDK {
 
     val isAIMS: Boolean
         get() = currentApp is LedgerParentApp.AIMS
+
+    var isDebug: Boolean = false
+        private set
 }

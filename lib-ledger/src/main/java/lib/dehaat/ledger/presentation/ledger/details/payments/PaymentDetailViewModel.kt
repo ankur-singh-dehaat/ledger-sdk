@@ -1,6 +1,6 @@
 package lib.dehaat.ledger.presentation.ledger.details.payments
 
-import androidx.core.os.bundleOf
+import android.os.Bundle
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.cleanarch.base.entity.result.api.APIResultEntity
@@ -17,15 +17,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import lib.dehaat.ledger.domain.usecases.GetPaymentDetailUseCase
 import lib.dehaat.ledger.entities.detail.payment.PaymentDetailEntity
-import lib.dehaat.ledger.presentation.LedgerConstants.KEY_ERP_ID
 import lib.dehaat.ledger.presentation.LedgerConstants.KEY_LEDGER_ID
-import lib.dehaat.ledger.presentation.LedgerConstants.KEY_LMS_ACTIVATED
-import lib.dehaat.ledger.presentation.LedgerConstants.KEY_LOCUS_ID
 import lib.dehaat.ledger.presentation.LedgerConstants.KEY_PAYMENT_MODE
 import lib.dehaat.ledger.presentation.common.BaseViewModel
 import lib.dehaat.ledger.presentation.common.UiEvent
 import lib.dehaat.ledger.presentation.ledger.details.payments.state.PaymentDetailViewModelState
 import lib.dehaat.ledger.presentation.mapper.LedgerViewDataMapper
+import lib.dehaat.ledger.presentation.model.transactions.TransactionViewData
 import lib.dehaat.ledger.util.processAPIResponseWithFailureSnackBar
 
 @HiltViewModel
@@ -41,13 +39,9 @@ class PaymentDetailViewModel @Inject constructor(
         )
     }
 
-    private val locusId by lazy { savedStateHandle.get<String>(KEY_LOCUS_ID) }
-
-    private val erpId by lazy { savedStateHandle.get<String>(KEY_ERP_ID) }
-
     val paymentMode by lazy { savedStateHandle.get<String>(KEY_PAYMENT_MODE) }
 
-    private val lmsActivated by lazy { savedStateHandle.get<Boolean>(KEY_LMS_ACTIVATED) }
+    private var lmsActivated: Boolean? = null
 
     private val _uiEvent = MutableSharedFlow<UiEvent>()
     val uiEvent: SharedFlow<UiEvent> get() = _uiEvent
@@ -65,7 +59,11 @@ class PaymentDetailViewModel @Inject constructor(
         getPaymentDetailFromServer()
     }
 
-    fun isLmsActivated() = lmsActivated == true
+    fun isLmsActivated() = lmsActivated
+
+    fun setIsLmsActivated(activated: Boolean?) {
+        lmsActivated = activated
+    }
 
     private fun getPaymentDetailFromServer() {
         callInViewModelScope {
@@ -92,12 +90,14 @@ class PaymentDetailViewModel @Inject constructor(
     }
 
     private fun sendShowSnackBarEvent(message: String) {
-        viewModelState.update {
-            it.copy(isError = true, errorMessage = message)
-        }
+        updateAPIFailure()
         viewModelScope.launch {
             _uiEvent.emit(UiEvent.ShowSnackbar(message))
         }
+    }
+
+    private fun updateAPIFailure() = viewModelState.update {
+        it.copy(isError = true)
     }
 
     fun updateProgressDialog(show: Boolean) = viewModelState.update {
@@ -105,6 +105,9 @@ class PaymentDetailViewModel @Inject constructor(
     }
 
     companion object {
-        fun getBundle(ledgerId: String) = bundleOf(Pair(KEY_LEDGER_ID, ledgerId))
+        fun getArgs(data: TransactionViewData) = Bundle().apply {
+            putString(KEY_LEDGER_ID, data.ledgerId)
+            putString(KEY_PAYMENT_MODE, data.paymentMode)
+        }
     }
 }

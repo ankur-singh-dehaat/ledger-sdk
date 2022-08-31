@@ -32,70 +32,87 @@ class AppChooserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Dummy(
-                onClickDBAButton = {
-                    LedgerSDK.init(
-                        applicationContext,
-                        LedgerParentApp.DBA(
-                            ledgerCallBack = LedgerCallBack(
-                                onClickPayNow = { showToast(it.toString()) },
-                                onRevampPayNowClick = { showToast("summaryViewData?.minInterestAmountDue".toString()) },
-                                onDownloadInvoiceSuccess = { showToast(it.toString()) },
-                                onPaymentOptionsClick = { resultLauncher ->
-                                    showToast(resultLauncher.toString())
-                                },
-                                downloadInvoiceIntent = { context, path ->
-                                    PendingIntent.getActivity(
-                                        this,
-                                        0,
-                                        Intent(
-                                            this,
-                                            LedgerDetailActivity::class.java
-                                        ).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) },
-                                        -PendingIntent.FLAG_ONE_SHOT
-                                    )
-                                }
-                            )
-                        ),
-                        bucket = "fnfsandboxec2odoo",
-                        appIcon = R.drawable.ic_transactions_interest
-                    )
-                    LedgerSDK.openLedger(
-                        context = this,
-                        partnerId = "123456",
-                        dcName = "DC DBA",
-                        isDCFinanced = true,
-                        language = "hi"
+                onClickDBAButton = { openDBA() },
+                onClickAIMSButton = { openAIMS() }
+            )
+        }
+    }
+
+    private fun openDBA() {
+        LedgerSDK.init(
+            applicationContext,
+            LedgerParentApp.DBA(
+                ledgerCallBack = LedgerCallBack(
+                    onClickPayNow = { showToast(it.toString()) },
+                    onRevampPayNowClick = { showToast("summaryViewData?.minInterestAmountDue".toString()) },
+                    onDownloadInvoiceSuccess = { showToast(it.toString()) },
+                    onPaymentOptionsClick = { resultLauncher ->
+                        showToast(resultLauncher.toString())
+                    },
+                    downloadInvoiceIntent = { context, path ->
+                        PendingIntent.getActivity(
+                            this,
+                            0,
+                            Intent(
+                                this,
+                                LedgerDetailActivity::class.java
+                            ).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) },
+                            -PendingIntent.FLAG_ONE_SHOT
+                        )
+                    },
+                    exceptionHandler = {}
+                )
+            ),
+            bucket = "fnfsandboxec2odoo",
+            appIcon = R.drawable.ic_payment,
+            debugMode = true
+        )
+
+        try {
+            LedgerSDK.openLedger(
+                context = this,
+                partnerId = "123456",
+                dcName = "DC DBA",
+                isDCFinanced = true,
+                language = "en"
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun openAIMS() {
+        LedgerSDK.init(
+            applicationContext,
+            LedgerParentApp.AIMS(
+                downloadInvoiceClick = { showToast(it.toString()) },
+                downloadInvoiceIntent = { context, path ->
+                    PendingIntent.getActivity(
+                        this,
+                        0,
+                        Intent(
+                            this,
+                            LedgerDetailActivity::class.java
+                        ).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) },
+                        -PendingIntent.FLAG_ONE_SHOT
                     )
                 },
-                onClickAIMSButton = {
-                    LedgerSDK.init(
-                        applicationContext,
-                        LedgerParentApp.AIMS(
-                            downloadInvoiceClick = { showToast(it.toString()) },
-                            downloadInvoiceIntent = { context, path ->
-                                PendingIntent.getActivity(
-                                    this,
-                                    0,
-                                    Intent(
-                                        this,
-                                        LedgerDetailActivity::class.java
-                                    ).apply { addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) },
-                                    -PendingIntent.FLAG_ONE_SHOT
-                                )
-                            }
-                        ),
-                        bucket = "fnfsandboxec2odoo",
-                        appIcon = R.drawable.ic_transactions_interest
-                    )
-                    LedgerSDK.openLedger(
-                        context = this,
-                        partnerId = "123456",
-                        dcName = "DC AIMS",
-                        isDCFinanced = true,
-                        language = "en"
-                    )
-                }
+                exceptionHandler = {}
+            ),
+            bucket = "fnfsandboxec2odoo",
+            appIcon = R.drawable.ic_payment,
+            debugMode = true
+        )
+        try {
+            LedgerSDK.openLedger(
+                context = this,
+                partnerId = "123456",
+                dcName = "DC AIMS",
+                isDCFinanced = true,
+                language = "hi"
             )
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

@@ -22,6 +22,18 @@ fun <D> APIResultEntity<D>.processAPIResponseWithFailureSnackBar(
     )
 }
 
+fun getErrorMessage(message: String, extraInfo: ApiExtraInfo?) = extraInfo?.let {
+    buildString {
+        append(message)
+        it[API_REQUEST_TRACE_ID]?.let {
+            append("\n$API_REQUEST_TRACE_ID - $it")
+        }
+        it[IB_REQUEST_IDENTIFIER]?.let {
+            append("\n$IB_REQUEST_IDENTIFIER - $it")
+        }
+    }
+} ?: message
+
 fun APIResultEntity.Failure.getFailureError() = when (this) {
     is APIResultEntity.Failure.ErrorException -> this.exceptionError.message.nullToValue("API Exception")
     is APIResultEntity.Failure.ErrorFailure -> parseAPIErrorBody(

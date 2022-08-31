@@ -5,22 +5,11 @@ import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecredi
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 
 interface DetailPageNavigationCallback {
-    fun navigateToInvoiceDetailPage(
-        legerId: String,
-        erpId: String?,
-        locusId: String?,
-        source: String,
-        isLMSActivated: Boolean
-    )
+    fun navigateToInvoiceDetailPage(args: Bundle)
 
-    fun navigateToCreditNoteDetailPage(legerId: String, erpId: String?, locusId: String?)
-    fun navigateToPaymentDetailPage(
-        legerId: String,
-        erpId: String?,
-        locusId: String?,
-        mode: String?,
-        isLMSActivated: Boolean
-    )
+    fun navigateToCreditNoteDetailPage(args: Bundle)
+
+    fun navigateToPaymentDetailPage(args: Bundle)
 
     fun navigateToOutstandingDetailPage(
         viewState: OutstandingCreditLimitViewState?
@@ -41,4 +30,5 @@ interface DetailPageNavigationCallback {
     fun navigateToRevampPaymentDetailPage(bundle: Bundle)
 
     fun navigateToRevampWeeklyInterestDetailPage(bundle: Bundle)
+
 }

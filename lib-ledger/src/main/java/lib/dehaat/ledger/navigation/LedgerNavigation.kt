@@ -2,6 +2,7 @@ package lib.dehaat.ledger.navigation
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,6 +31,8 @@ import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewMod
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.ui.InvoiceListScreen
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailScreen
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.RevampPaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
@@ -40,7 +43,6 @@ import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcre
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
 import lib.dehaat.ledger.presentation.ledger.ui.RevampLedgerScreen
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
-import lib.dehaat.ledger.util.withArgsPath
 
 @Composable
 fun LedgerNavigation(
@@ -60,24 +62,19 @@ fun LedgerNavigation(
     NavHost(
         navController = navController,
         startDestination = if (isDCFinanced) {
-            LedgerRoutes.RevampLedgerScreen.screen.withArgsPath(
-                LedgerConstants.KEY_PARTNER_ID,
-                LedgerConstants.KEY_DC_NAME
-            )
+            LedgerRoutes.RevampLedgerScreen.screen
         } else {
-            LedgerRoutes.LedgerDetailScreen.screen.withArgsPath(
-                LedgerConstants.KEY_PARTNER_ID
-            )
+            LedgerRoutes.LedgerDetailScreen.screen
         }
     ) {
         composable(
-            route = LedgerRoutes.LedgerDetailScreen.screen.withArgsPath(
-                LedgerConstants.KEY_PARTNER_ID
-            ),
-            arguments = listOf(navArgument(LedgerConstants.KEY_PARTNER_ID) {
-                type = NavType.StringType
-                defaultValue = partnerId
-            })
+            route = LedgerRoutes.LedgerDetailScreen.screen,
+            arguments = listOf(
+                navArgument(LedgerConstants.KEY_PARTNER_ID) {
+                    type = NavType.StringType
+                    defaultValue = partnerId
+                }
+            )
         ) {
             viewModel.dcName = dcName
             LedgerDetailScreen2(
@@ -174,39 +171,13 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.LedgerInvoiceDetailScreen.screen.withArgsPath(
-                LedgerConstants.KEY_LEDGER_ID,
-                LedgerConstants.KEY_ERP_ID,
-                LedgerConstants.KEY_LOCUS_ID,
-                LedgerConstants.KEY_SOURCE,
-                LedgerConstants.KEY_LMS_ACTIVATED
-            ),
-            arguments = listOf(
-                navArgument(LedgerConstants.KEY_LEDGER_ID) {
-                    type = NavType.StringType
-                },
-                navArgument(LedgerConstants.KEY_ERP_ID) {
-                    type = NavType.StringType
-                    nullable = true
-                },
-                navArgument(LedgerConstants.KEY_SOURCE) {
-                    type = NavType.StringType
-                },
-                navArgument(LedgerConstants.KEY_LMS_ACTIVATED) {
-                    type = NavType.BoolType
-                }
-            )
+            route = LedgerRoutes.LedgerInvoiceDetailScreen.screen
         ) {
-
-            val erpId = it.arguments?.get(LedgerConstants.KEY_ERP_ID) as String?
-            val source = it.arguments?.get(LedgerConstants.KEY_SOURCE) as String
-
             val invoiceDetailViewModel = hiltViewModel<InvoiceDetailViewModel>()
+            invoiceDetailViewModel.setIsLmsActivated(viewModel.isLMSActivated())
 
             InvoiceDetailScreen(
                 viewModel = invoiceDetailViewModel,
-                erpId = erpId,
-                source = source,
                 ledgerColors = ledgerColors,
                 onBackPress = {
                     navController.popBackStack()
@@ -229,26 +200,8 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.LedgerCreditNoteDetailScreen.screen.withArgsPath(
-                LedgerConstants.KEY_LEDGER_ID,
-                LedgerConstants.KEY_ERP_ID,
-                LedgerConstants.KEY_LOCUS_ID,
-            ),
-            arguments = listOf(
-                navArgument(LedgerConstants.KEY_LEDGER_ID) {
-                    type = NavType.StringType
-                },
-                navArgument(LedgerConstants.KEY_ERP_ID) {
-                    type = NavType.StringType
-                    nullable = true
-                },
-                navArgument(LedgerConstants.KEY_LOCUS_ID) {
-                    type = NavType.StringType
-                    nullable = true
-                }
-            )
+            route = LedgerRoutes.LedgerCreditNoteDetailScreen.screen
         ) {
-
             val creditNoteDetailViewModel = hiltViewModel<CreditNoteDetailViewModel>()
 
             CreditNoteDetailScreen(
@@ -273,36 +226,11 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.LedgerPaymentDetailScreen.screen.withArgsPath(
-                LedgerConstants.KEY_LEDGER_ID,
-                LedgerConstants.KEY_ERP_ID,
-                LedgerConstants.KEY_LOCUS_ID,
-                LedgerConstants.KEY_PAYMENT_MODE,
-                LedgerConstants.KEY_LMS_ACTIVATED
-            ),
-            arguments = listOf(
-                navArgument(LedgerConstants.KEY_LEDGER_ID) {
-                    type = NavType.StringType
-                },
-                navArgument(LedgerConstants.KEY_ERP_ID) {
-                    type = NavType.StringType
-                    nullable = true
-                },
-                navArgument(LedgerConstants.KEY_LOCUS_ID) {
-                    type = NavType.StringType
-                    nullable = true
-                },
-                navArgument(LedgerConstants.KEY_PAYMENT_MODE) {
-                    type = NavType.StringType
-                    nullable = true
-                },
-                navArgument(LedgerConstants.KEY_LMS_ACTIVATED) {
-                    type = NavType.BoolType
-                    nullable = false
-                }
-            )
+            route = LedgerRoutes.LedgerPaymentDetailScreen.screen
         ) {
             val paymentDetailViewModel = hiltViewModel<PaymentDetailViewModel>()
+            paymentDetailViewModel.setIsLmsActivated(viewModel.isLMSActivated())
+
             PaymentDetailScreen(
                 viewModel = paymentDetailViewModel,
                 ledgerColors = ledgerColors
@@ -341,52 +269,28 @@ fun LedgerNavigation(
 fun provideDetailPageNavCallBacks(
     navController: NavHostController
 ) = object : DetailPageNavigationCallback {
-    override fun navigateToInvoiceDetailPage(
-        legerId: String,
-        erpId: String?,
-        locusId: String?,
-        source: String,
-        isLMSActivated: Boolean
-    ) {
+
+    override fun navigateToInvoiceDetailPage(args: Bundle) {
         navigateToInvoiceDetailScreen(
             navController = navController,
-            ledgerId = legerId,
-            erpId = erpId,
-            locusId = locusId,
-            source = source,
-            isLMSActivated = isLMSActivated
+            args = args
         )
     }
 
-    override fun navigateToCreditNoteDetailPage(
-        legerId: String,
-        erpId: String?,
-        locusId: String?
-    ) {
+    override fun navigateToCreditNoteDetailPage(args: Bundle) {
         navigateToCreditNoteDetailScreen(
             navController = navController,
-            ledgerId = legerId,
-            erpId = erpId,
-            locusId = locusId
+            args = args
         )
     }
 
-    override fun navigateToPaymentDetailPage(
-        legerId: String,
-        erpId: String?,
-        locusId: String?,
-        mode: String?,
-        isLMSActivated: Boolean
-    ) {
+    override fun navigateToPaymentDetailPage(args: Bundle) {
         navigateToPaymentDetailScreen(
             navController = navController,
-            ledgerId = legerId,
-            erpId = erpId,
-            locusId = locusId,
-            mode = mode,
-            isLMSActivated = isLMSActivated
+            args = args
         )
     }
+
 
     override fun navigateToOutstandingDetailPage(
         viewState: OutstandingCreditLimitViewState?

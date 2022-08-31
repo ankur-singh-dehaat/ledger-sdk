@@ -25,11 +25,13 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
+import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.navigation.DetailPageNavigationCallback
 import lib.dehaat.ledger.presentation.LedgerDetailViewModel
@@ -45,6 +47,7 @@ import lib.dehaat.ledger.presentation.ledger.transactions.ui.TransactionsListScr
 import lib.dehaat.ledger.presentation.ledger.ui.component.Header
 import lib.dehaat.ledger.presentation.ledger.ui.component.Tabs
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionSummary
+import lib.dehaat.ledger.presentation.model.transactions.DaysToFilter
 import lib.dehaat.ledger.util.HandleAPIErrors
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
@@ -56,7 +59,7 @@ fun LedgerDetailScreen2(
     ledgerColors: LedgerColors,
     onBackPress: () -> Unit,
     detailPageNavigationCallback: DetailPageNavigationCallback,
-    isLmsActivated: () -> Boolean,
+    isLmsActivated: () -> Boolean?,
     onPayNowClick: () -> Unit,
     onPaymentOptionsClick: () -> Unit
 ) {
@@ -72,15 +75,18 @@ fun LedgerDetailScreen2(
     if (uiState.isFilteringWithRange) {
         RangeFilterDialog(
             ledgerColors = ledgerColors,
-            filtered = {
-                viewModel.getTransactionSummaryFromServer()
+            filtered = { startDate, endDate ->
+                if (startDate != null && endDate != null) {
+                    viewModel.updateSelectedFilter(DaysToFilter.CustomDays(startDate, endDate))
+                    viewModel.getTransactionSummaryFromServer(DaysToFilter.CustomDays(startDate, endDate))
+                }
                 viewModel.showDaysRangeFilterDialog(false)
             }
         )
     }
     if (uiState.showOutstandingDialog) {
         AvailableCreditLimitInfoForLmsAndNonLmsUseModal(
-            title = "Total Outstanding = Total Purchase Amount + Interest Till Date - Total Payment Amount",
+            title = stringResource(R.string.total_outstanding_formula),
             ledgerColors = ledgerColors,
             lmsActivated = isLmsActivated(),
             onOkClick = {
@@ -111,7 +117,6 @@ fun LedgerDetailScreen2(
             ModalBottomSheetLayout(
                 modifier = Modifier.padding(it),
                 sheetContent = {
-
                     when (val bottomSheetType = uiState.bottomSheetType) {
                         is BottomSheetType.LenderOutStanding -> LenderOutStandingDetails(
                             data = bottomSheetType.data,
@@ -127,7 +132,7 @@ fun LedgerDetailScreen2(
                             ledgerColors = ledgerColors,
                             onFilterSelected = { daysToFilter ->
                                 viewModel.updateSelectedFilter(daysToFilter)
-                                viewModel.getTransactionSummaryFromServer()
+                                viewModel.getTransactionSummaryFromServer(daysToFilter)
                                 scope.launch {
                                     sheetState.animateTo(ModalBottomSheetValue.Hidden)
                                 }
@@ -144,23 +149,25 @@ fun LedgerDetailScreen2(
                 VerticalNestedScrollView(
                     state = nestedScrollViewState,
                     header = {
-                        Header(
-                            creditSummaryData = uiState.creditSummaryViewData,
-                            ledgerColors = ledgerColors,
-                            isLmsActivated = isLmsActivated,
-                            onPayNowClick = onPayNowClick,
-                            onClickTotalOutstandingInfo = {
-                                scope.launch {
-                                    if (isLmsActivated()) {
-                                        viewModel.openOutstandingDialog()
-                                    } else {
-                                        viewModel.openAllOutstandingModal()
-                                        sheetState.animateTo(ModalBottomSheetValue.Expanded)
+                        if (!uiState.isError) {
+                            Header(
+                                creditSummaryData = uiState.creditSummaryViewData,
+                                ledgerColors = ledgerColors,
+                                isLmsActivated = isLmsActivated,
+                                onPayNowClick = onPayNowClick,
+                                onClickTotalOutstandingInfo = {
+                                    scope.launch {
+                                        if (isLmsActivated() == true) {
+                                            viewModel.openOutstandingDialog()
+                                        } else {
+                                            viewModel.openAllOutstandingModal()
+                                            sheetState.animateTo(ModalBottomSheetValue.Expanded)
+                                        }
                                     }
-                                }
-                            },
-                            onPaymentOptionsClick = onPaymentOptionsClick
-                        )
+                                },
+                                onPaymentOptionsClick = onPaymentOptionsClick
+                            )
+                        }
                     },
                     content = {
                         val pagerState = rememberPagerState(pageCount = 2)

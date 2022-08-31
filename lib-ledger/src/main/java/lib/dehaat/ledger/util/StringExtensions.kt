@@ -31,21 +31,3 @@ private fun String.getAmountWithoutTrailingZeroes() = if (this.endsWith(".00")) 
 fun String?.getAmountInRupeesOrDash(): String = this?.let {
     it.getAmountInRupees()
 } ?: "-"
-
-fun String.withArgs(
-    vararg args: Any?
-) = buildString {
-    append(this@withArgs)
-    args.forEach { arg ->
-        append("/$arg")
-    }
-}
-
-fun String.withArgsPath(
-    vararg args: String
-) = buildString {
-    append(this@withArgsPath)
-    args.forEach { arg ->
-        append("/{$arg}")
-    }
-}

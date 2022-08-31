@@ -11,6 +11,7 @@ typealias PayNowClick = (creditSummaryViewData: CreditSummaryViewData?) -> Unit
 typealias RevampPayNowClick = (String?) -> Unit
 typealias DownloadInvoiceIntent = (Context, String) -> PendingIntent?
 typealias DownloadInvoiceSuccess = (invoiceDownloadData: InvoiceDownloadData) -> Unit
+typealias ExceptionHandler = (ex: Exception) -> Unit
 
 typealias PaymentOptionsClick = (
     resultLauncher: ActivityResultLauncher<Intent?>
@@ -21,5 +22,6 @@ data class LedgerCallBack(
     val onRevampPayNowClick: RevampPayNowClick,
     val onDownloadInvoiceSuccess: DownloadInvoiceSuccess,
     val onPaymentOptionsClick: PaymentOptionsClick,
-    val downloadInvoiceIntent: DownloadInvoiceIntent
+    val downloadInvoiceIntent: DownloadInvoiceIntent,
+    val exceptionHandler: ExceptionHandler
 )
