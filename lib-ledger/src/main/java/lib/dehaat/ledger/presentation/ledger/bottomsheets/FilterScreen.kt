@@ -218,7 +218,7 @@ private fun CustomFilterOption(
 
             FilterDateSelector(
                 modifier = Modifier.weight(1F),
-                title = stringResource(id = R.string.to),
+                title = stringResource(id = R.string.to_),
                 onDateChange = {
                     isFilterSelected(null, it)
                 },

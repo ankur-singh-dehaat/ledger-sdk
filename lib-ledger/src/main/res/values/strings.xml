@@ -6,6 +6,7 @@
     <string name="purchase_amount">Purchase Amount</string>
     <string name="payment_amount">Payment Amount</string>
     <string name="to">%s to %s</string>
+    <string name="to_">to</string>
     <string name="pay_now_text">Pay Now</string>
     <string name="using_this_app">Using this App</string>
     <string name="pay_by_bank_deposit_net_banking_amp_upi">Pay by Bank deposit, Net banking &amp; UPI</string>

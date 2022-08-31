@@ -5,6 +5,7 @@
     <string name="purchase_amount">खरीद राशि</string>
     <string name="payment_amount">भुगतान राशि</string>
     <string name="to">%s से %s</string>
+    <string name="to_">to</string>
     <string name="pay_now_text">अभी भुगतान करें</string>
     <string name="using_this_app">ऐप के जरिये</string>
     <string name="pay_by_bank_deposit_net_banking_amp_upi">नेट बैंकिंग, यूपीआई और कार्ड द्वारा भुगतान करें</string>
