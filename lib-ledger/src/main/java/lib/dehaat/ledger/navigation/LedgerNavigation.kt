@@ -36,7 +36,6 @@ import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOu
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.CreditNoteDetailsViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.ui.RevampCreditNoteDetailsScreen
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
-import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.ui.LedgerDetailScreen2
 import lib.dehaat.ledger.presentation.ledger.ui.RevampLedgerScreen
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
@@ -118,23 +117,15 @@ fun LedgerNavigation(
         }
 
         composable(
-            route = LedgerRoutes.TotalOutstandingDetailScreen.screen,
-            arguments = listOf(
-                navArgument(LedgerConstants.KEY_OUTSTANDING_CREDIT) {
-                    type = NavType.ParcelableType(OutstandingCreditLimitViewState::class.java)
-                    nullable = true
-                }
-            )
+            route = LedgerRoutes.TotalOutstandingDetailScreen.screen
         ) {
             val totalOutstandingViewModel = hiltViewModel<TotalOutstandingViewModel>()
             TotalOutstandingScreen(
                 viewModel = totalOutstandingViewModel,
-                ledgerColors = ledgerColors,
-                onError = { ledgerCallbacks.exceptionHandler(it) },
-                onBackPress = {
-                    navController.popBackStack()
-                }
-            )
+                ledgerColors = ledgerColors
+            ) {
+                navController.popBackStack()
+            }
         }
 
         composable(LedgerRoutes.InvoiceListScreen.screen) {
@@ -287,14 +278,12 @@ fun provideDetailPageNavCallBacks(
     }
 
 
-    override fun navigateToOutstandingDetailPage(
-        viewState: OutstandingCreditLimitViewState?
-    ) {
-        navigateToOutstandingDetailPage(navController, viewState)
+    override fun navigateToOutstandingDetailPage(args: Bundle) {
+        navigateToOutstandingDetailPage(navController, args)
     }
 
-    override fun navigateToInvoiceListPage(bundle: Bundle) {
-        navigateToInvoiceListPage(navController, bundle)
+    override fun navigateToInvoiceListPage(args: Bundle) {
+        navigateToInvoiceListPage(navController, args)
     }
 
     override fun navigateToAvailableCreditLimitDetailPage(
@@ -303,19 +292,19 @@ fun provideDetailPageNavCallBacks(
         navigateToAvailableCreditLimitDetailPage(navController, viewState)
     }
 
-    override fun navigateToRevampInvoiceDetailPage(bundle: Bundle) {
-        navigateToRevampInvoiceDetailPage(navController, bundle)
+    override fun navigateToRevampInvoiceDetailPage(args: Bundle) {
+        navigateToRevampInvoiceDetailPage(navController, args)
     }
 
-    override fun navigateToRevampCreditNoteDetailPage(bundle: Bundle) {
-        navigateToRevampCreditNoteDetailPage(navController, bundle)
+    override fun navigateToRevampCreditNoteDetailPage(args: Bundle) {
+        navigateToRevampCreditNoteDetailPage(navController, args)
     }
 
-    override fun navigateToRevampPaymentDetailPage(bundle: Bundle) {
-        navigateToRevampPaymentDetailPage(navController, bundle)
+    override fun navigateToRevampPaymentDetailPage(args: Bundle) {
+        navigateToRevampPaymentDetailPage(navController, args)
     }
 
-    override fun navigateToRevampWeeklyInterestDetailPage(bundle: Bundle) {
-        navigateToRevampWeeklyInterestDetailPage(navController, bundle)
+    override fun navigateToRevampWeeklyInterestDetailPage(args: Bundle) {
+        navigateToRevampWeeklyInterestDetailPage(navController, args)
     }
 }

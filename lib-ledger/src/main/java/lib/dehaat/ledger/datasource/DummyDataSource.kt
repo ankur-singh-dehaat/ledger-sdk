@@ -5,6 +5,7 @@ import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.LedgerParentApp
 import lib.dehaat.ledger.initializer.LedgerSDK
 import lib.dehaat.ledger.initializer.callbacks.LedgerCallBack
+import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.model.creditlines.CreditLineViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditSummaryViewData
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditViewData
@@ -143,6 +144,15 @@ object DummyDataSource {
         advanceComponent = null,
         paidTo = null,
         belongsToGapl = null
+    )
+
+    val outstandingCreditLimitViewState = OutstandingCreditLimitViewState(
+        totalOutstandingAmount = "1000",
+        totalPurchaseAmount = "2000",
+        interestTillDate = "3000",
+        paymentAmountTillDate = "5000",
+        purchaseAmountTillDate = "4000",
+        creditNoteAmountTillDate = "6000"
     )
 
     private val dbaApp by lazy {

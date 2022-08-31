@@ -10,7 +10,6 @@ import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
 import lib.dehaat.ledger.presentation.LedgerConstants
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
-import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 
 fun navigateToInvoiceDetailScreen(
     navController: NavHostController,
@@ -38,20 +37,18 @@ fun navigateToPaymentDetailScreen(
 
 fun navigateToOutstandingDetailPage(
     navController: NavHostController,
-    viewState: OutstandingCreditLimitViewState?
+    args: Bundle
 ) = navController.navigateTo(
-    LedgerRoutes.TotalOutstandingDetailScreen.screen,
-    args = Bundle().apply {
-        putParcelable(LedgerConstants.KEY_OUTSTANDING_CREDIT, viewState)
-    }
+    route = LedgerRoutes.TotalOutstandingDetailScreen.screen,
+    args = args
 )
 
 fun navigateToInvoiceListPage(
     navController: NavHostController,
-    bundle: Bundle
+    args: Bundle
 ) = navController.navigateTo(
     route = LedgerRoutes.InvoiceListScreen.screen,
-    args = bundle
+    args = args
 )
 
 fun navigateToAvailableCreditLimitDetailPage(
@@ -66,34 +63,34 @@ fun navigateToAvailableCreditLimitDetailPage(
 
 fun navigateToRevampInvoiceDetailPage(
     navController: NavHostController,
-    bundle: Bundle
+    args: Bundle
 ) = navController.navigateTo(
     route = LedgerRoutes.RevampLedgerInvoiceDetailScreen.screen,
-    args = bundle
+    args = args
 )
 
 fun navigateToRevampCreditNoteDetailPage(
     navController: NavHostController,
-    bundle: Bundle
+    args: Bundle
 ) = navController.navigateTo(
     route = LedgerRoutes.RevampLedgerCreditNoteDetailScreen.screen,
-    args = bundle
+    args = args
 )
 
 fun navigateToRevampPaymentDetailPage(
     navController: NavHostController,
-    bundle: Bundle
+    args: Bundle
 ) = navController.navigateTo(
     route = LedgerRoutes.RevampLedgerPaymentDetailScreen.screen,
-    args = bundle
+    args = args
 )
 
 fun navigateToRevampWeeklyInterestDetailPage(
     navController: NavHostController,
-    bundle: Bundle
+    args: Bundle
 ) = navController.navigateTo(
     route = LedgerRoutes.RevampLedgerWeeklyInterestDetailScreen.screen,
-    args = bundle
+    args = args
 )
 
 fun NavController.navigateTo(

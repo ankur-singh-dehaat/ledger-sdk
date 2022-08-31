@@ -11,24 +11,22 @@ interface DetailPageNavigationCallback {
 
     fun navigateToPaymentDetailPage(args: Bundle)
 
-    fun navigateToOutstandingDetailPage(
-        viewState: OutstandingCreditLimitViewState?
-    )
+    fun navigateToOutstandingDetailPage(args: Bundle)
 
     fun navigateToInvoiceListPage(
-        bundle: Bundle
+        args: Bundle
     )
 
     fun navigateToAvailableCreditLimitDetailPage(
         viewState: AvailableCreditLimitViewState?
     )
 
-    fun navigateToRevampInvoiceDetailPage(bundle: Bundle)
+    fun navigateToRevampInvoiceDetailPage(args: Bundle)
 
-    fun navigateToRevampCreditNoteDetailPage(bundle: Bundle)
+    fun navigateToRevampCreditNoteDetailPage(args: Bundle)
 
-    fun navigateToRevampPaymentDetailPage(bundle: Bundle)
+    fun navigateToRevampPaymentDetailPage(args: Bundle)
 
-    fun navigateToRevampWeeklyInterestDetailPage(bundle: Bundle)
+    fun navigateToRevampWeeklyInterestDetailPage(args: Bundle)
 
 }
