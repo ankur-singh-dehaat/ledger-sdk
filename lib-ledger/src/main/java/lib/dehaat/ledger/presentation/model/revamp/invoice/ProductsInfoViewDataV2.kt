@@ -4,7 +4,7 @@ data class ProductsInfoViewDataV2(
     val count: Int,
     val discount: String?,
     val gst: String?,
-    val productList: List<ProductViewDataV2>,
+    val productList: List<ProductViewDataV2>?,
     val itemTotal: String,
     val subTotal: String
 )

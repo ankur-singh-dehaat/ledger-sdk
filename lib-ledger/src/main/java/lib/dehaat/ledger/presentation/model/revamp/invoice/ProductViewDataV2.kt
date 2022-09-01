@@ -5,5 +5,5 @@ data class ProductViewDataV2(
     val name: String,
     val priceTotal: String,
     val priceTotalDiscexcl: String,
-    val quantity: Int
+    val quantity: Int?
 )

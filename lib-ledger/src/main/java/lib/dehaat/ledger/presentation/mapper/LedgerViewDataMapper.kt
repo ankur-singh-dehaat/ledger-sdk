@@ -13,8 +13,6 @@ import lib.dehaat.ledger.entities.detail.creditnote.SummaryEntity
 import lib.dehaat.ledger.entities.detail.invoice.InvoiceDetailDataEntity
 import lib.dehaat.ledger.entities.detail.invoice.LoanEntity
 import lib.dehaat.ledger.entities.detail.invoice.OverdueInfoEntity
-import lib.dehaat.ledger.entities.revamp.creditnote.CreditNoteDetailsEntity
-import lib.dehaat.ledger.entities.revamp.creditnote.SummaryEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.InvoiceDataEntity
 import lib.dehaat.ledger.entities.revamp.invoice.ProductEntityV2
 import lib.dehaat.ledger.entities.revamp.invoice.ProductsInfoEntityV2
@@ -107,14 +105,14 @@ class LedgerViewDataMapper @Inject constructor() {
         )
     }
 
-    fun toCreditNoteDetailsDataEntity(data: CreditNoteDetailsEntity) = with(data) {
+    fun toCreditNoteDetailsDataEntity(data: CreditNoteDetailEntity) = with(data) {
         CreditNoteDetailsViewData(
             summary = getCreditNoteDetailsSummaryViewData(summary),
             productsInfo = getProductInfoViewData(productsInfo),
         )
     }
 
-    private fun getCreditNoteDetailsSummaryViewData(summary: SummaryEntityV2) = with(summary) {
+    private fun getCreditNoteDetailsSummaryViewData(summary: SummaryEntity) = with(summary) {
         CreditNoteSummaryViewData(
             amount = amount,
             invoiceDate = invoiceDate,
@@ -135,6 +133,17 @@ class LedgerViewDataMapper @Inject constructor() {
         )
     }
 
+    private fun getProductInfoViewData(data: ProductsInfoEntity) = with(data) {
+        ProductsInfoViewDataV2(
+            count = count,
+            discount = discount,
+            gst = gst,
+            productList = getProductList(productList),
+            itemTotal = itemTotal,
+            subTotal = subTotal
+        )
+    }
+
     private fun getProductList(
         productList: List<ProductEntityV2>
     ) = productList.map {
@@ -144,6 +153,19 @@ class LedgerViewDataMapper @Inject constructor() {
             priceTotal = it.priceTotal,
             priceTotalDiscexcl = it.priceTotalDiscexcl,
             quantity = it.quantity
+        )
+    }
+
+    @JvmName("product_list")
+    private fun getProductList(
+        productList: List<ProductEntity>?
+    ) = productList?.map {
+        ProductViewDataV2(
+            fname = it.fname,
+            name = it.name,
+            priceTotal = it.priceTotal,
+            priceTotalDiscexcl = it.priceTotalDiscexcl,
+            quantity = it.quantity.toIntOrNull()
         )
     }
 

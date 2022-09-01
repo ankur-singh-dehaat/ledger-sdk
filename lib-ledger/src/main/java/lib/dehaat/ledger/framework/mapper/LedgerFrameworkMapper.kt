@@ -303,7 +303,8 @@ class LedgerFrameworkMapper @Inject constructor() {
             subTotal = subTotal,
             productList = productList?.map {
                 getCreditNoteDetailProductEntity(it)
-            }
+            },
+            discount = discount
         )
     }
 
@@ -323,7 +324,8 @@ class LedgerFrameworkMapper @Inject constructor() {
             amount = amount,
             invoiceNumber = invoiceNumber,
             timestamp = timestamp,
-            reason = reason
+            reason = reason,
+            invoiceDate = invoiceDate
         )
     }
 

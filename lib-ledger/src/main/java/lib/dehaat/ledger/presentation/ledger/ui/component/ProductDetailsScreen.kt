@@ -157,7 +157,7 @@ private fun RevampProductView(
             )
 
             Text(
-                text = stringResource(id = R.string.product_quantity, product.quantity),
+                text = stringResource(id = R.string.product_quantity, product.quantity ?: 0),
                 style = textParagraphT2Highlight(Neutral80)
             )
         }
