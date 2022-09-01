@@ -130,8 +130,8 @@ class LedgerViewDataMapper @Inject constructor() {
             discount = discount,
             gst = gst,
             productList = getProductList(productList),
-            purchaseAmount = purchaseAmount,
-            totalAmount = totalAmount
+            itemTotal = itemTotal,
+            subTotal = subTotal
         )
     }
 

@@ -10,11 +10,11 @@ data class ProductsInfo(
     @Json(name = "discount")
     val discount: String?,
     @Json(name = "gst")
-    val gst: String,
+    val gst: String?,
     @Json(name = "product_list")
     val productList: List<Product>,
-    @Json(name = "purchase_amount")
-    val purchaseAmount: String?,
-    @Json(name = "total_amount")
-    val totalAmount: String?
+    @Json(name = "item_total")
+    val itemTotal: String,
+    @Json(name = "sub_total")
+    val subTotal: String
 )

@@ -12,7 +12,7 @@ data class Product(
     @Json(name = "price_total")
     val priceTotal: String,
     @Json(name = "price_total_discexcl")
-    val priceTotalDiscexcl: Double,
+    val priceTotalDiscexcl: String,
     @Json(name = "quantity")
-    val quantity: Double
+    val quantity: Int
 )

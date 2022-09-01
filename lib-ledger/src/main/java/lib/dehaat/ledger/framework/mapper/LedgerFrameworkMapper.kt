@@ -188,14 +188,16 @@ class LedgerFrameworkMapper @Inject constructor() {
         )
     }
 
-    private fun getProductInfoEntityV2(data: ProductsInfoV2) = with(data) {
+    private fun getProductInfoEntityV2(
+        data: ProductsInfoV2
+    ) = with(data) {
         ProductsInfoEntityV2(
             count = count,
             discount = discount,
             gst = gst,
             productList = getProductListV2(productList),
-            purchaseAmount = purchaseAmount,
-            totalAmount = totalAmount
+            itemTotal = itemTotal,
+            subTotal = subTotal
         )
     }
 

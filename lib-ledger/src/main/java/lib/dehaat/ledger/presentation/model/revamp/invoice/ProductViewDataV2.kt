@@ -4,6 +4,6 @@ data class ProductViewDataV2(
     val fname: String?,
     val name: String,
     val priceTotal: String,
-    val priceTotalDiscexcl: Double,
-    val quantity: Double
+    val priceTotalDiscexcl: String,
+    val quantity: Int
 )

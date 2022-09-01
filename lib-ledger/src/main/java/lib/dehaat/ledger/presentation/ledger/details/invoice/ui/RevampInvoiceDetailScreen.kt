@@ -153,7 +153,7 @@ private fun InvoiceDetailScreen(
         }
 
         summary?.totalOutstandingAmount?.let {
-            if (!summary.interestBeingCharged && summary.invoiceAmount != it && it.toDoubleOrNull() == 0.0) {
+            if (summary.interestBeingCharged == true && summary.invoiceAmount != it && it.toDoubleOrNull() == 0.0) {
                 VerticalSpacer(height = 20.dp)
                 RevampKeyValuePair(
                     pair = Pair(

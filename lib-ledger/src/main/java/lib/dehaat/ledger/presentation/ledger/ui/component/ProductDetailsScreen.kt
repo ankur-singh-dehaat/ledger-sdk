@@ -77,7 +77,7 @@ fun ProductDetailsScreen(
         RevampKeyValuePair(
             pair = Pair(
                 stringResource(id = R.string.purchase_amount),
-                productDetails?.purchaseAmount.getAmountInRupees()
+                productDetails?.itemTotal.getAmountInRupees()
             ),
             style = Pair(commonStyle, commonStyle)
         )
@@ -107,7 +107,7 @@ fun ProductDetailsScreen(
         RevampKeyValuePair(
             pair = Pair(
                 stringResource(id = R.string.total_amount),
-                productDetails?.totalAmount.getAmountInRupees()
+                productDetails?.subTotal.getAmountInRupees()
             ),
             style = Pair(totalAmountStyle, totalAmountStyle)
         )
@@ -164,7 +164,7 @@ private fun RevampProductView(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = product.priceTotalDiscexcl.toString(),
+                text = product.fname.toString(),
                 style = textParagraphT2Highlight(Neutral80)
             )
 
@@ -175,20 +175,3 @@ private fun RevampProductView(
         }
     }
 }
-
-data class ProductDetails(
-    val totalCount: String,
-    val products: List<RevampProduct>,
-    val purchaseAmount: String,
-    val discount: String,
-    val gst: String,
-    val totalAmount: String
-)
-
-data class RevampProduct(
-    val name: String,
-    val iconUrl: String? = null,
-    val quantity: String,
-    val price: String,
-    val size: String
-)
