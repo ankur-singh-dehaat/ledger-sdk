@@ -81,8 +81,8 @@
     <string name="invoice">Invoice</string>
     <string name="invoice_details">Invoice Details</string>
     <string name="product_details">Product Details</string>
-    <string name="total_items">Total Items: %s</string>
-    <string name="quantity">Qty. %s</string>
+    <string name="total_items_">Total Items: %d</string>
+    <string name="product_quantity">Qty. %d</string>
     <string name="discount">Discount</string>
     <string name="gst">G.S.T</string>
     <string name="total_amount">Total Amount</string>

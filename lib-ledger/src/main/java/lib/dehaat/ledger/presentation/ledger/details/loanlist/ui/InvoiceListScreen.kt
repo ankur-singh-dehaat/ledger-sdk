@@ -182,7 +182,7 @@ private fun InvoiceList(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_attention),
+                        painter = painterResource(id = R.drawable.ledger_attention),
                         contentDescription = stringResource(id = R.string.accessibility_icon),
                         tint = Error100
                     )

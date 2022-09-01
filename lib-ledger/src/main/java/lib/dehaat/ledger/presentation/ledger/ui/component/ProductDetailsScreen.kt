@@ -50,12 +50,15 @@ fun ProductDetailsScreen(
         style = textSubHeadingS3(Neutral80)
     )
 
-    Text(
-        modifier = Modifier
-            .padding(horizontal = 20.dp),
-        text = stringResource(id = R.string.total_items, productDetails?.count.toString()),
-        style = textCaptionCP1(Neutral70)
-    )
+    productDetails?.count?.let {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            text = stringResource(id = R.string.total_items_, it),
+            style = textCaptionCP1(Neutral70)
+        )
+    }
 
     VerticalSpacer(height = 12.dp)
 
@@ -154,7 +157,7 @@ private fun RevampProductView(
             )
 
             Text(
-                text = stringResource(id = R.string.quantity, product.quantity),
+                text = stringResource(id = R.string.product_quantity, product.quantity),
                 style = textParagraphT2Highlight(Neutral80)
             )
         }

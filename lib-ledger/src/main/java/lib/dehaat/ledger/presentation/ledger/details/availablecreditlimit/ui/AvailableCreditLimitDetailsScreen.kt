@@ -138,7 +138,7 @@ fun CreditLimitDetailsScreen(uiState: AvailableCreditLimitViewState) = Column(
 
             Icon(
                 modifier = Modifier.padding(horizontal = 8.dp),
-                painter = painterResource(id = R.drawable.ic_minus),
+                painter = painterResource(id = R.drawable.ledger_minus),
                 contentDescription = stringResource(id = R.string.accessibility_icon),
                 tint = Neutral80
             )
