@@ -205,7 +205,7 @@ class LedgerFrameworkMapper @Inject constructor() {
         productList: List<lib.dehaat.ledger.framework.model.revamp.invoicedetails.Product>
     ) = productList.map {
         ProductEntityV2(
-            fname = it.name,
+            fname = it.fname,
             name = it.name,
             priceTotal = it.priceTotal,
             priceTotalDiscexcl = it.priceTotalDiscexcl,

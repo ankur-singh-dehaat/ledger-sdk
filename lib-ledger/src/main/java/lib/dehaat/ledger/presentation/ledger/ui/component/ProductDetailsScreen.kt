@@ -164,7 +164,7 @@ private fun RevampProductView(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = product.fname.toString(),
+                text = product.fname ?: "",
                 style = textParagraphT2Highlight(Neutral80)
             )
 
