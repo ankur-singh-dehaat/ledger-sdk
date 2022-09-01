@@ -93,7 +93,7 @@ interface LedgerAPIService {
 
     @GET("/finance/invoice/v2")
     suspend fun getInvoiceList(
-        @Query("partnerId") partnerId: String,
+        @Query("partner_id") partnerId: String,
         @Query("limit") limit: Int,
         @Query("offset") offset: Int,
         @Query("filter") filter: String
