@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -31,6 +35,7 @@ import lib.dehaat.ledger.presentation.ledger.revamp.state.transactions.Transacti
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionCard
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionListHeader
 import lib.dehaat.ledger.presentation.ledger.ui.component.TransactionType
+import lib.dehaat.ledger.presentation.model.transactions.DaysToFilter
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -45,6 +50,7 @@ fun TransactionsScreen(
     val transactions = viewModel.transactionsList.collectAsLazyPagingItems()
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
+    var weeklyInterestVisibility by remember { mutableStateOf(true) }
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         stickyHeader {
             TransactionListHeader(
@@ -82,17 +88,21 @@ fun TransactionsScreen(
                             PaymentDetailViewModel.getBundle(transaction.ledgerId)
                         )
                     }
-                    TransactionType.Interest().interestType -> TransactionCard(
-                        transactionType = TransactionType.Interest(),
-                        transaction = transaction
-                    ) {
-                        detailPageNavigationCallback.navigateToRevampWeeklyInterestDetailPage(
-                            InterestDetailsViewModel.getBundle(
-                                transaction.amount,
-                                transaction.interestStartDate,
-                                transaction.interestEndDate
-                            )
-                        )
+                    TransactionType.Interest().interestType -> {
+                        if (weeklyInterestVisibility) {
+                            TransactionCard(
+                                transactionType = TransactionType.Interest(),
+                                transaction = transaction
+                            ) {
+                                detailPageNavigationCallback.navigateToRevampWeeklyInterestDetailPage(
+                                    InterestDetailsViewModel.getBundle(
+                                        transaction.amount,
+                                        transaction.interestStartDate,
+                                        transaction.interestEndDate
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -133,6 +143,7 @@ fun TransactionsScreen(
             lifecycleOwner.lifecycle,
             Lifecycle.State.STARTED
         ).collect { event ->
+            weeklyInterestVisibility = event == DaysToFilter.All
             viewModel.updateSelectedFilter(event)
         }
     }
