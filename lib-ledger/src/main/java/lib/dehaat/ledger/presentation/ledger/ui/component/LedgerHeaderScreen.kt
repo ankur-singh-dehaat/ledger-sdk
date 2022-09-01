@@ -99,7 +99,6 @@ fun LedgerHeaderScreen(
     }
 
     if (saveInterest) {
-
         Spacer(modifier = Modifier.height(12.dp))
 
         SaveInterestScreen(
