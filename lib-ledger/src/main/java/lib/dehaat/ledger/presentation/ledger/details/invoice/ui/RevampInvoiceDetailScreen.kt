@@ -327,7 +327,7 @@ fun DownloadInvoiceButton(
         horizontalArrangement = Arrangement.Center
     ) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_download),
+            painter = painterResource(id = R.drawable.ic_invoice_download_button),
             contentDescription = stringResource(id = R.string.accessibility_icon),
             tint = SeaGreen100
         )

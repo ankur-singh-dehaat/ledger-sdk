@@ -35,7 +35,7 @@ import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
     showBackground = true,
-    name = "LedgerHeaderScreen Preview"
+    name = "LedgerHeaderScreen Preview DBA"
 )
 @Composable
 private fun LedgerHeaderScreenPreview() {
@@ -43,6 +43,22 @@ private fun LedgerHeaderScreenPreview() {
         summaryViewData = DummyDataSource.summaryViewData,
         saveInterest = true,
         showPayNowButton = true,
+        onPayNowClick = {},
+        onTotalOutstandingDetailsClick = {},
+        onShowInvoiceListDetailsClick = {}
+    ) {}
+}
+
+@Preview(
+    showBackground = true,
+    name = "LedgerHeaderScreen Preview AIMS"
+)
+@Composable
+private fun LedgerHeaderScreenAIMSPreview() {
+    LedgerHeaderScreen(
+        summaryViewData = DummyDataSource.summaryViewData,
+        saveInterest = true,
+        showPayNowButton = false,
         onPayNowClick = {},
         onTotalOutstandingDetailsClick = {},
         onShowInvoiceListDetailsClick = {}
