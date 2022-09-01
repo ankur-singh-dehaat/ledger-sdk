@@ -223,9 +223,11 @@ private fun InvoiceDetailScreen(
 
     VerticalSpacer(height = 16.dp)
 
-    CreditNoteDetails(creditNotes)
+    if (!creditNotes.isNullOrEmpty()) {
+        CreditNoteDetails(creditNotes)
 
-    VerticalSpacer(height = 16.dp)
+        VerticalSpacer(height = 16.dp)
+    }
 
     ProductDetailsScreen(productsInfo)
 
@@ -238,21 +240,21 @@ private fun InvoiceDetailScreen(
 
 @Composable
 private fun CreditNoteDetails(
-    creditNotes: List<CreditNoteViewData>?
+    creditNotes: List<CreditNoteViewData>
 ) = Column(
     modifier = Modifier.background(Color.White)
 ) {
     VerticalSpacer(height = 20.dp)
-
     Text(
         modifier = Modifier.padding(horizontal = 20.dp),
         text = stringResource(id = R.string.credit_note_received)
     )
+
     VerticalSpacer(height = 12.dp)
 
     Divider()
 
-    creditNotes?.forEach {
+    creditNotes.forEach {
         CreditNoteCard(it)
     }
 }
