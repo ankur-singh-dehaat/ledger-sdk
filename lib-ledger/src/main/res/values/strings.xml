@@ -113,6 +113,8 @@
     <string name="interest_charged_from_tomorrow">Interest will be charged from tomorrow</string>
     <string name="load_more">Load More (10)</string>
     <string name="close_list">Close List</string>
+    <string name="interest_arrears">Interest Arrears</string>
+    <string name="total_interest_payment">Total Interest Payment</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

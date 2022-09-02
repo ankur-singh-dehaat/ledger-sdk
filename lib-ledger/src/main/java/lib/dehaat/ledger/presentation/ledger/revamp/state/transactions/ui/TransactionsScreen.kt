@@ -27,7 +27,7 @@ import lib.dehaat.ledger.presentation.RevampLedgerViewModel
 import lib.dehaat.ledger.presentation.common.UiEvent
 import lib.dehaat.ledger.presentation.ledger.components.NoDataFound
 import lib.dehaat.ledger.presentation.ledger.components.ShowProgress
-import lib.dehaat.ledger.presentation.ledger.details.interest.InterestDetailsViewModel
+import lib.dehaat.ledger.presentation.ledger.details.interest.InterestDetailScreenArgs
 import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.CreditNoteDetailsViewModel
@@ -95,11 +95,7 @@ fun TransactionsScreen(
                                 transaction = transaction
                             ) {
                                 detailPageNavigationCallback.navigateToRevampWeeklyInterestDetailPage(
-                                    InterestDetailsViewModel.getBundle(
-                                        transaction.amount,
-                                        transaction.interestStartDate,
-                                        transaction.interestEndDate
-                                    )
+                                    InterestDetailScreenArgs.getBundle(transaction)
                                 )
                             }
                         }

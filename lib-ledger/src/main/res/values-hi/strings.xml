@@ -111,6 +111,8 @@
     <string name="interest_charged_from_tomorrow">ब्याज कल से लगेगा</string>
     <string name="load_more">और लोड करें (10)</string>
     <string name="close_list">लिस्ट बंद करें</string>
+    <string name="interest_arrears">ब्याज बकाया</string>
+    <string name="total_interest_payment">कुल ब्याज भुगतान</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>

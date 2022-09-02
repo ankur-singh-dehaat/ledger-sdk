@@ -151,7 +151,7 @@ fun TransactionCard(
                     style = textCaptionCP1(Neutral60)
                 )
 
-                if (transactionType is TransactionType.Invoice) {
+                if (transactionType is TransactionType.Invoice && transaction.interestStartDate != null) {
                     Text(
                         modifier = Modifier
                             .background(color = Warning10, RoundedCornerShape(8.dp))
