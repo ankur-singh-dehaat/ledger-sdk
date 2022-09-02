@@ -16,12 +16,12 @@ import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.LedgerConstants
 import lib.dehaat.ledger.presentation.LedgerDetailViewModel
 import lib.dehaat.ledger.presentation.RevampLedgerViewModel
-import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.AvailableCreditLimitViewModel
+import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.AvailableCreditLimitScreenArgs
 import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.ui.AvailableCreditLimitDetailsScreen
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.CreditNoteDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.creditnote.ui.CreditNoteDetailScreen
-import lib.dehaat.ledger.presentation.ledger.details.interest.ui.InterestDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.interest.InterestDetailScreenArgs
+import lib.dehaat.ledger.presentation.ledger.details.interest.ui.InterestDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.invoice.InvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.invoice.ui.InvoiceDetailScreen
@@ -140,10 +140,9 @@ fun LedgerNavigation(
         }
 
         composable(LedgerRoutes.TotalAvailableCreditLimitScreen.screen) {
-            val availableCreditLimitViewModel = hiltViewModel<AvailableCreditLimitViewModel>()
-
+            val uiState = it.arguments?.let { args -> AvailableCreditLimitScreenArgs(args) }
             AvailableCreditLimitDetailsScreen(
-                viewModel = availableCreditLimitViewModel,
+                uiState = uiState?.getArgs(),
                 ledgerColors = ledgerColors
             ) {
                 navController.popBackStack()
@@ -223,11 +222,10 @@ fun LedgerNavigation(
         }
 
         composable(LedgerRoutes.RevampLedgerWeeklyInterestDetailScreen.screen) {
-            val interestViewData = it.arguments?.let { args -> InterestDetailScreenArgs.getArgs(args) }
-
+            val interestViewData = it.arguments?.let { args -> InterestDetailScreenArgs(args) }
             InterestDetailScreen(
                 ledgerColors = ledgerColors,
-                interestViewData = interestViewData
+                interestViewData = interestViewData?.getArgs()
             ) {
                 navController.popBackStack()
             }
