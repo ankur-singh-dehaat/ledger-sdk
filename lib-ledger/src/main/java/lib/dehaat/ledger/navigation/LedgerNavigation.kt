@@ -31,7 +31,7 @@ import lib.dehaat.ledger.presentation.ledger.details.loanlist.ui.InvoiceListScre
 import lib.dehaat.ledger.presentation.ledger.details.payments.PaymentDetailViewModel
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.PaymentDetailScreen
 import lib.dehaat.ledger.presentation.ledger.details.payments.ui.RevampPaymentDetailScreen
-import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
+import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingScreenArgs
 import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.ui.TotalOutstandingScreen
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.CreditNoteDetailsViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.creditnote.ui.RevampCreditNoteDetailsScreen
@@ -118,9 +118,9 @@ fun LedgerNavigation(
         composable(
             route = LedgerRoutes.TotalOutstandingDetailScreen.screen
         ) {
-            val totalOutstandingViewModel = hiltViewModel<TotalOutstandingViewModel>()
+            val outstandingArgs = it.arguments?.let { args -> TotalOutstandingScreenArgs(args) }
             TotalOutstandingScreen(
-                viewModel = totalOutstandingViewModel,
+                uiState = outstandingArgs?.viewState,
                 ledgerColors = ledgerColors
             ) {
                 navController.popBackStack()

@@ -1,27 +1,19 @@
 package lib.dehaat.ledger.presentation.ledger.details.totaloutstanding
 
 import android.os.Bundle
-import androidx.lifecycle.SavedStateHandle
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import lib.dehaat.ledger.presentation.common.BaseViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 
-@HiltViewModel
-class TotalOutstandingViewModel @Inject constructor(
-    val savedStateHandle: SavedStateHandle
-) : BaseViewModel() {
-    val viewState: OutstandingCreditLimitViewState
-        get() = OutstandingCreditLimitViewState(
-            totalOutstandingAmount = savedStateHandle.getNonNullString(TOTAL_OUTSTANDING_AMOUNT),
-            totalPurchaseAmount = savedStateHandle.getNonNullString(TOTAL_PURCHASE_AMOUNT),
-            interestTillDate = savedStateHandle.getNonNullString(INTEREST_TILL_DATE),
-            paymentAmountTillDate = savedStateHandle.getNonNullString(PAYMENT_AMOUNT_TILL_DATE),
-            purchaseAmountTillDate = savedStateHandle.getNonNullString(PURCHASE_AMOUNT_TILL_DATE),
-            creditNoteAmountTillDate = savedStateHandle.getNonNullString(
-                CREDIT_NOTE_AMOUNT_TILL_DATE
-            ),
-        )
+class TotalOutstandingScreenArgs constructor(
+    val bundle: Bundle
+) {
+    val viewState = OutstandingCreditLimitViewState(
+        totalOutstandingAmount = bundle.getString(TOTAL_OUTSTANDING_AMOUNT, ""),
+        totalPurchaseAmount = bundle.getString(TOTAL_PURCHASE_AMOUNT, ""),
+        interestTillDate = bundle.getString(INTEREST_TILL_DATE, ""),
+        paymentAmountTillDate = bundle.getString(PAYMENT_AMOUNT_TILL_DATE, ""),
+        purchaseAmountTillDate = bundle.getString(PURCHASE_AMOUNT_TILL_DATE, ""),
+        creditNoteAmountTillDate = bundle.getString(CREDIT_NOTE_AMOUNT_TILL_DATE, ""),
+    )
 
     companion object {
         private const val TOTAL_OUTSTANDING_AMOUNT = "TOTAL_OUTSTANDING_AMOUNT"
@@ -43,5 +35,3 @@ class TotalOutstandingViewModel @Inject constructor(
         }
     }
 }
-
-fun SavedStateHandle.getNonNullString(key: String): String = this.get<String>(key) ?: ""

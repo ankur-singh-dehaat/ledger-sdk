@@ -23,7 +23,6 @@ import lib.dehaat.ledger.datasource.DummyDataSource
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
-import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.ui.component.CalculationMethodScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValueChip
@@ -50,11 +49,10 @@ private fun OutstandingScreen() = LedgerTheme {
 
 @Composable
 fun TotalOutstandingScreen(
-    viewModel: TotalOutstandingViewModel,
+    uiState: OutstandingCreditLimitViewState?,
     ledgerColors: LedgerColors,
     onBackPress: () -> Unit
 ) {
-    val uiState = viewModel.viewState
     val scaffoldState = rememberScaffoldState()
     CommonContainer(
         title = stringResource(id = R.string.total_outstanding_details),
@@ -62,7 +60,7 @@ fun TotalOutstandingScreen(
         scaffoldState = scaffoldState,
         backgroundColor = Background
     ) {
-        OutstandingScreen(viewState = uiState)
+        uiState?.let { OutstandingScreen(viewState = uiState) }
     }
 }
 

@@ -35,7 +35,7 @@ import lib.dehaat.ledger.presentation.ledger.components.ShowProgressDialog
 import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitScreen
 import lib.dehaat.ledger.presentation.ledger.details.availablecreditlimit.AvailableCreditLimitScreenArgs
 import lib.dehaat.ledger.presentation.ledger.details.loanlist.InvoiceListViewModel
-import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingViewModel
+import lib.dehaat.ledger.presentation.ledger.details.totaloutstanding.TotalOutstandingScreenArgs
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.transactions.ui.TransactionsScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.LedgerHeaderScreen
@@ -123,7 +123,7 @@ fun RevampLedgerScreen(
                                     onPayNowClick = { onPayNowClick(uiState.summaryViewData?.minInterestAmountDue) },
                                     onTotalOutstandingDetailsClick = {
                                         detailPageNavigationCallback.navigateToOutstandingDetailPage(
-                                            TotalOutstandingViewModel.getBundle(viewModel.outstandingCreditLimitViewState)
+                                            TotalOutstandingScreenArgs.getBundle(viewModel.outstandingCreditLimitViewState)
                                         )
                                     },
                                     onShowInvoiceListDetailsClick = {

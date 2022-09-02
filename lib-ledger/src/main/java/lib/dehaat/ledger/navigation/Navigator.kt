@@ -8,8 +8,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import lib.dehaat.ledger.presentation.LedgerConstants
-import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 
 fun navigateToInvoiceDetailScreen(
     navController: NavHostController,
