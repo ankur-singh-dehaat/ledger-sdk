@@ -227,6 +227,7 @@ private fun InformationalScreen(
 ) = Column(
     modifier = Modifier
         .fillMaxWidth()
+        .clip(RoundedCornerShape(8.dp))
         .background(color = Neutral10, shape = RoundedCornerShape(8.dp))
 ) {
     var isDetailsVisible by remember { mutableStateOf(false) }

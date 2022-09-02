@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -58,6 +57,7 @@ import lib.dehaat.ledger.resources.textButtonB2
 import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2Highlight
+import lib.dehaat.ledger.util.clickableWithCorners
 import lib.dehaat.ledger.util.getAmountInRupees
 
 @Composable
@@ -314,9 +314,11 @@ fun DownloadInvoiceButton(
 ) {
     Row(
         modifier = Modifier
-            .clickable(onClick = onClick)
             .padding(top = 16.dp)
-            .background(shape = RoundedCornerShape(48.dp), color = Color.White)
+            .clickableWithCorners(
+                borderSize = 48.dp,
+                onClick = onClick
+            )
             .border(
                 width = 1.dp,
                 color = Primary80,
