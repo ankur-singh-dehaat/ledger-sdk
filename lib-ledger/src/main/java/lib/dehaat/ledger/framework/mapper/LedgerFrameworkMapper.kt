@@ -392,16 +392,17 @@ class LedgerFrameworkMapper @Inject constructor() {
         data: List<InterestInvoice>?
     ) = data?.map {
         InvoiceListEntity(
-            it.amount,
-            it.date,
-            it.interestStartDate,
-            it.interestFreePeriodEndDate,
-            it.ledgerId,
-            it.locusId,
-            it.outstandingAmount,
-            it.partnerId,
-            it.source,
-            it.type
+            amount = it.amount,
+            date = it.date,
+            interestStartDate = it.interestStartDate,
+            interestFreePeriodEndDate = it.interestFreePeriodEndDate,
+            ledgerId = it.ledgerId,
+            locusId = it.locusId,
+            outstandingAmount = it.outstandingAmount,
+            partnerId = it.partnerId,
+            source = it.source,
+            type = it.type,
+            interestDays = it.interestDays
         )
     }
 }

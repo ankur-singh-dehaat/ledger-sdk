@@ -68,6 +68,24 @@ import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
     showBackground = true,
+    name = "Invoices not attracting Interest"
+)
+@Composable
+private fun InvoiceWithUpcomingInterestPreview() = LedgerTheme {
+    InvoiceWithUpcomingInterest(DummyDataSource.invoice) {}
+}
+
+@Preview(
+    showBackground = true,
+    name = "Invoices on which Interest is charged"
+)
+@Composable
+private fun InvoiceWithAccumulatedInterestPreview() = LedgerTheme {
+    InvoiceWithAccumulatedInterest(DummyDataSource.invoice) {}
+}
+
+@Preview(
+    showBackground = true,
     name = "Invoice List Screen Preview"
 )
 @Composable
@@ -78,11 +96,19 @@ private fun InvoiceListScreenPreview() = LedgerTheme {
         amountDue = "40000",
         interestApproachedInvoices = InvoiceUiState(
             loadingState = InvoiceLoadingState.Minimize,
-            invoices = DummyDataSource.invoices
+            invoices = listOf(
+                DummyDataSource.invoice,
+                DummyDataSource.invoice,
+                DummyDataSource.invoice
+            )
         ),
         interestApproachingInvoices = InvoiceUiState(
             loadingState = InvoiceLoadingState.Minimize,
-            invoices = DummyDataSource.invoices
+            invoices = listOf(
+                DummyDataSource.invoice,
+                DummyDataSource.invoice,
+                DummyDataSource.invoice
+            )
         ),
         interestApproachingMinimizeList = {},
         interestApproachingLoadMore = {},
@@ -416,10 +442,16 @@ fun InvoiceWithUpcomingInterest(
                 )
 
                 InvoiceInformationChip(
-                    title = stringResource(
-                        R.string.interest_will_be_starting_in,
-                        invoiceListViewData.date
-                    ),
+                    title = invoiceListViewData.interestDays?.let {
+                        if (it == 0) {
+                            stringResource(id = R.string.interest_charged_from_tomorrow)
+                        } else {
+                            stringResource(
+                                R.string.interest_will_be_starting_in,
+                                invoiceListViewData.interestDays.toString()
+                            )
+                        }
+                    } ?: "",
                     backgroundColor = Warning10,
                     textColor = Pumpkin120
                 )

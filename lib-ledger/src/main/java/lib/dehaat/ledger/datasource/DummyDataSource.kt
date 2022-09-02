@@ -86,7 +86,7 @@ object DummyDataSource {
         )
     }
 
-    private val invoice = InvoiceListViewData(
+    val invoice = InvoiceListViewData(
         amount = "20000",
         date = 6237462923,
         interestStartDate = 623847623,
@@ -96,11 +96,9 @@ object DummyDataSource {
         outstandingAmount = "26348",
         partnerId = "26384",
         source = "SAP",
-        type = "INVOICE"
+        type = "INVOICE",
+        interestDays = 45
     )
-
-    val invoices =
-        listOf(invoice, invoice, invoice, invoice, invoice, invoice, invoice, invoice, invoice)
 
     val transactionViewData by lazy {
         TransactionViewData(

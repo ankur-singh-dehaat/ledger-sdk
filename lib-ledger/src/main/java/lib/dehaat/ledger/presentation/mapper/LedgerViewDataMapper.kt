@@ -377,7 +377,8 @@ class LedgerViewDataMapper @Inject constructor() {
             outstandingAmount = it.outstandingAmount,
             partnerId = it.partnerId,
             source = it.source,
-            type = it.type
+            type = it.type,
+            interestDays = it.interestDays
         )
     }
 }

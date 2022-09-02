@@ -160,21 +160,15 @@ class LedgerDataSource @Inject constructor(
         {
             apiService.getInvoiceList(
                 partnerId, limit, offset, if (isInterestApproached) {
-                    "interest-approached-invoices"
+                    "interest_approached_invoices"
                 } else {
-                    "interest-approaching-invoices"
+                    "interest_approaching_invoices"
                 }
             )
         }
     ) {
-        if (isInterestApproached) {
-            it?.data?.interestApproachedInvoices?.let { data ->
-                mapper.toInterestApproachedInvoiceListEntity(data)
-            }
-        } else {
-            it?.data?.interestApproachingInvoices?.let { data ->
-                mapper.toInterestApproachedInvoiceListEntity(data)
-            }
+        it?.data?.let { data ->
+            mapper.toInterestApproachedInvoiceListEntity(data)
         }
     }
 

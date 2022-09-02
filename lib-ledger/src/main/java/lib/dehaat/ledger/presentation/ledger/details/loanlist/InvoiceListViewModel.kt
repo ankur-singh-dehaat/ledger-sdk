@@ -45,9 +45,7 @@ class InvoiceListViewModel @Inject constructor(
 
     init {
         viewModelState.update { it.copy(isLoading = true) }
-        interestApproachedLoading()
         getInterestApproachedInvoicesFromServer()
-        interestApproachingLoading()
         getInterestApproachingInvoicesFromServer()
     }
 
@@ -121,8 +119,9 @@ class InvoiceListViewModel @Inject constructor(
         result: APIResultEntity<List<InvoiceListEntity>?>
     ) = result.processAPIResponseWithFailureSnackBar(::sendFailureEvent) { entity ->
         val viewData = mapper.toInvoiceListViewData(entity)
-        val data = viewModelState.value.interestApproachingInvoices?.toMutableList()
-        viewData?.let { list -> data?.addAll(list) }
+        val data =
+            viewModelState.value.interestApproachingInvoices?.toMutableList() ?: mutableListOf()
+        viewData?.let { list -> data.addAll(list) }
         viewModelState.update {
             it.copy(
                 interestApproachingInvoices = data,
@@ -144,6 +143,7 @@ class InvoiceListViewModel @Inject constructor(
         viewModelState.update {
             it.copy(
                 isError = true,
+                isLoading = false,
                 errorMessage = message
             )
         }

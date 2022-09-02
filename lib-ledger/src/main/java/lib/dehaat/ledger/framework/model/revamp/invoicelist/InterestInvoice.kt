@@ -11,13 +11,13 @@ data class InterestInvoice(
     @Json(name = "date")
     val date: Long,
     @Json(name = "interest_start_date")
-    val interestStartDate: Long?,
+    val interestStartDate: Long,
     @Json(name = "interest_free_period_end_date")
-    val interestFreePeriodEndDate: Long?,
+    val interestFreePeriodEndDate: Long,
     @Json(name = "ledger_id")
     val ledgerId: String,
     @Json(name = "locus_id")
-    val locusId: Int,
+    val locusId: Int?,
     @Json(name = "outstanding_amount")
     val outstandingAmount: String,
     @Json(name = "partner_id")
@@ -25,5 +25,7 @@ data class InterestInvoice(
     @Json(name = "source")
     val source: String,
     @Json(name = "type")
-    val type: String
+    val type: String,
+    @Json(name = "interest_days")
+    val interestDays: Int?
 )
