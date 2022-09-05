@@ -53,6 +53,12 @@ class LedgerDetailActivity : ComponentActivity() {
             return
         }
 
+        if (args.partnerId.isEmpty() && LedgerSDK.isDebug) {
+            showToast("PartnerId missing (check dehaat-center-API)")
+            finish()
+            return
+        }
+
         AWSMobileClient.getInstance().initialize(this).execute()
 
         setContent {
