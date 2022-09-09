@@ -32,6 +32,7 @@ import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.resources.textParagraphT2
 import lib.dehaat.ledger.util.getAmountInRupees
+import lib.dehaat.ledger.util.getAmountInRupeesWithoutDecimal
 
 @Preview(
     showBackground = true,
@@ -93,7 +94,7 @@ fun LedgerHeaderScreen(
         verticalAlignment = Alignment.Bottom
     ) {
         Text(
-            text = summaryViewData?.totalOutstandingAmount.getAmountInRupees(),
+            text = summaryViewData?.totalOutstandingAmount.getAmountInRupeesWithoutDecimal(),
             style = textHeadingH3(
                 textColor = if (totalOutstandingAmount < 0) SeaGreen110 else Neutral80
             )
@@ -108,7 +109,7 @@ fun LedgerHeaderScreen(
         Text(
             text = stringResource(
                 id = R.string.your_advance_amount,
-                outstandingAmount.toString().getAmountInRupees()
+                outstandingAmount.toString().getAmountInRupeesWithoutDecimal()
             ),
             style = textCaptionCP1(Neutral80)
         )
@@ -119,7 +120,7 @@ fun LedgerHeaderScreen(
 
         SaveInterestScreen(
             summaryViewData = summaryViewData,
-            showDetails = true,
+            showDetails = false,
             onViewDetailsClick = onShowInvoiceListDetailsClick
         )
     }

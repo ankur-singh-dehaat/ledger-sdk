@@ -154,31 +154,33 @@ fun CreditLimitDetailsScreen(uiState: AvailableCreditLimitViewState) = Column(
 
         VerticalSpacer(height = 16.dp)
 
-        Divider()
+        if (uiState.bufferLimit.toDoubleOrNull().orZero() > 1) {
+            Divider()
 
-        VerticalSpacer(height = 32.dp)
+            VerticalSpacer(height = 32.dp)
 
-        VerticalSpacer(height = 8.dp)
+            VerticalSpacer(height = 8.dp)
 
-        CalculationMethodScreen(
-            backgroundColor = BlueGreen10,
-            dividerColor = Color.White,
-            title = stringResource(id = R.string.total_credit_limit_calculation_method),
-            first = Pair(
-                stringResource(id = R.string.permanent_credit_limit),
-                uiState.permanentCreditLimit.getAmountInRupees()
-            ),
-            second = Pair(
-                stringResource(id = R.string.buffer_limit),
-                uiState.bufferLimit.getAmountInRupees()
-            ),
-            total = Pair(
-                stringResource(id = R.string.total_credit_limit),
-                uiState.totalLimit.getAmountInRupees()
+            CalculationMethodScreen(
+                backgroundColor = BlueGreen10,
+                dividerColor = Color.White,
+                title = stringResource(id = R.string.total_credit_limit_calculation_method),
+                first = Pair(
+                    stringResource(id = R.string.permanent_credit_limit),
+                    uiState.permanentCreditLimit.getAmountInRupees()
+                ),
+                second = Pair(
+                    stringResource(id = R.string.buffer_limit),
+                    uiState.bufferLimit.getAmountInRupees()
+                ),
+                total = Pair(
+                    stringResource(id = R.string.total_credit_limit),
+                    uiState.totalLimit.getAmountInRupees()
+                )
             )
-        )
 
-        VerticalSpacer(height = 16.dp)
+            VerticalSpacer(height = 16.dp)
+        }
     }
 
     VerticalSpacer(height = 16.dp)

@@ -125,6 +125,7 @@ fun TransactionCard(
                 }
                 Text(
                     text = name,
+                    modifier = Modifier.weight(1f),
                     style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(
@@ -141,11 +142,7 @@ fun TransactionCard(
             ) {
                 Text(
                     text = when (transactionType) {
-                        is TransactionType.Interest -> buildString {
-                            append("${transaction.interestStartDate.toDateMonthYear()} ")
-                            append(stringResource(id = R.string.to))
-                            append(" ${transaction.interestEndDate.toDateMonthYear()}")
-                        }
+                        is TransactionType.Interest -> stringResource(R.string.till_date)
                         else -> transaction.date.toDateMonthYear()
                     },
                     style = textCaptionCP1(Neutral60)
@@ -179,7 +176,7 @@ sealed class TransactionType(@StringRes val name: Int, val type: String) {
     )
 
     data class CreditNote(
-        val creditNoteName: Int = R.string.credit_note,
+        val creditNoteName: Int = R.string.credit_note_ledger,
         val creditNoteType: String = "CREDIT_NOTE"
     ) : TransactionType(
         name = creditNoteName, type = creditNoteType
@@ -193,7 +190,7 @@ sealed class TransactionType(@StringRes val name: Int, val type: String) {
     )
 
     data class Interest(
-        val interestName: Int = R.string.interest_amount,
+        val interestName: Int = R.string.interest_amount_ledger,
         val interestType: String = "INTEREST"
     ) : TransactionType(
         name = interestName, type = interestType

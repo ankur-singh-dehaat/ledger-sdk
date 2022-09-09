@@ -1,20 +1,9 @@
 package lib.dehaat.ledger.presentation.ledger.details.invoice.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -24,10 +13,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.dehaat.androidbase.helper.showToast
 import lib.dehaat.ledger.R
+import lib.dehaat.ledger.initializer.LedgerSDK
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.initializer.toDateMonthYear
 import lib.dehaat.ledger.presentation.common.uicomponent.CommonContainer
@@ -39,24 +31,12 @@ import lib.dehaat.ledger.presentation.ledger.details.invoice.RevampInvoiceDetail
 import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.ledger.ui.component.ProductDetailsScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.RevampKeyValuePair
+import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
 import lib.dehaat.ledger.presentation.model.revamp.invoice.CreditNoteViewData
 import lib.dehaat.ledger.presentation.model.revamp.invoice.ProductsInfoViewDataV2
 import lib.dehaat.ledger.presentation.model.revamp.invoice.SummaryViewDataV2
-import lib.dehaat.ledger.resources.Background
-import lib.dehaat.ledger.resources.Error10
-import lib.dehaat.ledger.resources.Error100
-import lib.dehaat.ledger.resources.Neutral60
-import lib.dehaat.ledger.resources.Neutral80
-import lib.dehaat.ledger.resources.Neutral90
-import lib.dehaat.ledger.resources.Primary80
-import lib.dehaat.ledger.resources.Pumpkin10
-import lib.dehaat.ledger.resources.Pumpkin120
-import lib.dehaat.ledger.resources.SeaGreen100
-import lib.dehaat.ledger.resources.Success10
-import lib.dehaat.ledger.resources.textButtonB2
-import lib.dehaat.ledger.resources.textCaptionCP1
-import lib.dehaat.ledger.resources.textParagraphT1Highlight
-import lib.dehaat.ledger.resources.textParagraphT2Highlight
+import lib.dehaat.ledger.resources.*
+import lib.dehaat.ledger.util.HandleAPIErrors
 import lib.dehaat.ledger.util.clickableWithCorners
 import lib.dehaat.ledger.util.getAmountInRupees
 
@@ -64,11 +44,13 @@ import lib.dehaat.ledger.util.getAmountInRupees
 fun RevampInvoiceDetailScreen(
     viewModel: RevampInvoiceDetailViewModel,
     ledgerColors: LedgerColors,
-    onDownloadInvoiceClick: (String, String) -> Unit,
+    onDownloadInvoiceClick: (InvoiceDownloadData) -> Unit,
     onError: (Exception) -> Unit,
     onBackPress: () -> Unit
 ) {
+    HandleAPIErrors(viewModel.uiEvent)
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
     CommonContainer(
         title = stringResource(id = R.string.invoice_details),
         onBackPress = onBackPress,
@@ -84,7 +66,19 @@ fun RevampInvoiceDetailScreen(
                     uiState.invoiceDetailsViewData?.creditNotes,
                     uiState.invoiceDetailsViewData?.productsInfo
                 ) {
-                    onDownloadInvoiceClick(it, viewModel.source)
+                    LedgerSDK
+                        .getFile(context)
+                        ?.let {
+                            viewModel.downloadInvoice(
+                                it,
+                                onDownloadInvoiceClick
+                            )
+                        } ?: run {
+                        context.showToast(R.string.tech_problem)
+                        LedgerSDK.currentApp.ledgerCallBack.exceptionHandler(
+                            Exception("Unable to create file")
+                        )
+                    }
                 }
             }
             UIState.LOADING -> {
@@ -110,8 +104,9 @@ private fun InvoiceDetailScreen(
         .fillMaxWidth()
         .verticalScroll(rememberScrollState())
 ) {
-    val undeliveredInvoice = summary?.interestStartDate == null
-    val interestPaid = summary?.totalOutstandingAmount?.toDoubleOrNull() == 0.0
+    val unDeliveredInvoice = summary?.interestStartDate == null
+    val deliveredInvoice = summary?.interestStartDate != null
+    val interestPaid = deliveredInvoice && summary?.totalOutstandingAmount?.toDoubleOrNull() == 0.0
     val interestRunning = summary?.interestBeingCharged == true
     val interestStarting = summary?.interestBeingCharged == false
     Column(
@@ -134,10 +129,14 @@ private fun InvoiceDetailScreen(
             }
             interestStarting -> summary?.interestDays?.let {
                 InvoiceInformationChip(
-                    title = stringResource(
-                        id = R.string.interest_starting,
-                        it.toString()
-                    ),
+                    title = if (it == 0) {
+                        stringResource(R.string.interest_charged_from_tomorrow)
+                    } else {
+                        stringResource(
+                            id = R.string.interest_starting,
+                            it.toString()
+                        )
+                    },
                     backgroundColor = Pumpkin10,
                     textColor = Pumpkin120
                 )
@@ -153,7 +152,7 @@ private fun InvoiceDetailScreen(
         }
 
         summary?.totalOutstandingAmount?.let {
-            if (summary.interestBeingCharged == true && summary.invoiceAmount != it && it.toDoubleOrNull() == 0.0) {
+            if (summary.interestBeingCharged == true && summary.invoiceAmount != it && it.toDoubleOrNull() != 0.0) {
                 VerticalSpacer(height = 20.dp)
                 RevampKeyValuePair(
                     pair = Pair(
@@ -283,7 +282,10 @@ private fun CreditNoteCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = stringResource(id = R.string.credit_note, creditNote.creditNoteType),
+                    text = stringResource(
+                        id = R.string.credit_note_ledger,
+                        creditNote.creditNoteType
+                    ),
                     style = textParagraphT1Highlight(Neutral80)
                 )
                 Text(

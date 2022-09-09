@@ -52,7 +52,7 @@ fun InterestDetailScreen(
     onBackPress: () -> Unit
 ) {
     CommonContainer(
-        title = stringResource(id = R.string.interest_amount),
+        title = stringResource(id = R.string.interest_amount_ledger),
         onBackPress = onBackPress,
         backgroundColor = Background
     ) {
@@ -68,7 +68,7 @@ fun InterestDetailScreen(
             ) {
 
                 Text(
-                    text = stringResource(id = R.string.interest_amount),
+                    text = stringResource(id = R.string.interest_amount_ledger),
                     style = textParagraphT1Highlight(Neutral90)
                 )
                 VerticalSpacer(height = 4.dp)

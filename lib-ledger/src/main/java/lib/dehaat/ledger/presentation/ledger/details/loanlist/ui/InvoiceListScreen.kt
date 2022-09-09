@@ -149,7 +149,8 @@ fun InvoiceListScreen(
                     detailPageNavigationCallback.navigateToRevampInvoiceDetailPage(
                         RevampInvoiceDetailViewModel.getBundle(
                             transaction.ledgerId,
-                            transaction.source
+                            transaction.source,
+                            null
                         )
                     )
                 }
@@ -254,7 +255,7 @@ private fun InvoiceList(
                     modifier = Modifier
                         .padding(horizontal = 20.dp)
                         .padding(top = 20.dp, bottom = 12.dp),
-                    text = stringResource(id = R.string.invoices_not_attracting_interest),
+                    text = stringResource(id = R.string.invoice_on_which_interest_going_to_charged),
                     style = textSubHeadingS3(Neutral80)
                 )
 

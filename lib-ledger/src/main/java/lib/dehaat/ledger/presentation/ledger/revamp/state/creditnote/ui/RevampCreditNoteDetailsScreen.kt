@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.dehaat.androidbase.helper.isNotNull
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.initializer.themes.LedgerColors
 import lib.dehaat.ledger.initializer.toDateMonthYear
@@ -87,7 +88,7 @@ fun RevampCreditNoteDetailsScreen(
 
                         RevampKeyValuePair(
                             pair = Pair(
-                                stringResource(id = R.string.received_date),
+                                stringResource(id = R.string.credit_note_creation_date),
                                 summary?.timestamp.toDateMonthYear()
                             ),
                             style = Pair(
@@ -119,16 +120,18 @@ fun RevampCreditNoteDetailsScreen(
                             )
                         )
 
-                        RevampKeyValuePair(
-                            pair = Pair(
-                                stringResource(id = R.string.invoice_date),
-                                summary?.invoiceDate.toDateMonthYear()
-                            ),
-                            style = Pair(
-                                textParagraphT2Highlight(Neutral80),
-                                textParagraphT2Highlight(Neutral90)
+                        if (summary?.invoiceDate.isNotNull()) {
+                            RevampKeyValuePair(
+                                pair = Pair(
+                                    stringResource(id = R.string.invoice_date),
+                                    summary?.invoiceDate.toDateMonthYear()
+                                ),
+                                style = Pair(
+                                    textParagraphT2Highlight(Neutral80),
+                                    textParagraphT2Highlight(Neutral90)
+                                )
                             )
-                        )
+                        }
 
                         VerticalSpacer(height = 12.dp)
                     }

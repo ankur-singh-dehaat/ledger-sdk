@@ -14,9 +14,9 @@ data class TransactionV2(
     val date: Long,
     @Json(name = "erp_id")
     val erpId: String?,
-    @Json(name = "Interest_end_date")
+    @Json(name = "interest_end_date")
     val interestEndDate: Long?,
-    @Json(name = "interest_start_Date")
+    @Json(name = "interest_start_date")
     val interestStartDate: Long?,
     @Json(name = "ledger_id")
     val ledgerId: String,

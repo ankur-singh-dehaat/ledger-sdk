@@ -6,9 +6,10 @@ import android.content.Intent
 import androidx.activity.result.ActivityResultLauncher
 import lib.dehaat.ledger.presentation.model.creditsummary.CreditSummaryViewData
 import lib.dehaat.ledger.presentation.model.invoicedownload.InvoiceDownloadData
+import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 
 typealias PayNowClick = (creditSummaryViewData: CreditSummaryViewData?) -> Unit
-typealias RevampPayNowClick = (String?) -> Unit
+typealias RevampPayNowClick = (SummaryViewData?) -> Unit
 typealias DownloadInvoiceIntent = (Context, String) -> PendingIntent?
 typealias DownloadInvoiceSuccess = (invoiceDownloadData: InvoiceDownloadData) -> Unit
 typealias ExceptionHandler = (ex: Exception) -> Unit

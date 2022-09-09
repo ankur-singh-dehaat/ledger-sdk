@@ -24,6 +24,8 @@
     <string name="tech_problem">Technical problem occurred, try again after some time</string>
     <string name="invoice_download_success">Invoice downloaded successfully</string>
     <string name="invoice_download_in_progress">Invoice download in progress</string>
+    <string name="to_">to</string>
+
 
     <string name="total_outstanding_details">Total Outstanding Details</string>
     <string name="total_outstanding_calculation_method">Total Outstanding Calculation Method:</string>
@@ -54,7 +56,7 @@
     <string name="purchases_till_date">Purchases till Date</string>
     <string name="total_credit_note_amount">Total Credit Note Amount</string>
     <string name="total_credit_limit">Total credit Limit</string>
-    <string name="total_outstanding_plus_products_to_be_deliver">Total Outstanding + Products to be Delivered</string>
+    <string name="total_outstanding_plus_products_to_be_deliver">Total Outstanding + Orders to be Delivered</string>
     <string name="total_credit_limit_calculation_method">Total Credit Limit Calculation Method:</string>
     <string name="permanent_credit_limit">Permanent Credit Limit</string>
     <string name="buffer_limit">Buffer Limit(Temporary)</string>
@@ -73,11 +75,11 @@
     <string name="payment_date">Payment Date</string>
     <string name="payment_method">Payment Method</string>
     <string name="reference_id">Reference I.D.</string>
-    <string name="interest_amount">Interest Amount</string>
+    <string name="interest_amount_ledger">Interest Amount</string>
     <string name="daily_interest_details">Daily Interest Details</string>
     <string name="invoice_list">Invoice List</string>
     <string name="invoice_on_which_interest_is_charged">Invoices on which Interest is charged</string>
-    <string name="invoices_not_attracting_interest">Invoices not attracting Interest</string>
+    <string name="invoice_on_which_interest_going_to_charged">Invoices on which interest is going to be charged</string>
     <string name="invoice">Invoice</string>
     <string name="invoice_details">Invoice Details</string>
     <string name="product_details">Product Details</string>
@@ -95,15 +97,15 @@
     <string name="credit_note_received">Credit Note Received</string>
     <string name="pay_till_date">Pay by %s</string>
     <string name="your_advance_amount">%s is your advance amount</string>
-    <string name="credit_note">Credit Note: %s</string>
+    <string name="credit_note_ledger">Credit Note: %s</string>
     <string name="payment">Payment</string>
     <string name="till_today">%s till today</string>
-    <string name="interest_running">Interest accumulating from %s days</string>
+    <string name="interest_running">Interest already charged from %s days</string>
     <string name="interest_starting">Interest going to be started in %s days</string>
     <string name="full_payment_complete">Full payment complete</string>
     <string name="credit_note_details">Credit Note Details</string>
     <string name="credit_note_amount">Credit Note Amount</string>
-    <string name="received_date">Received Date</string>
+    <string name="credit_note_creation_date">Credit note creation date</string>
     <string name="download_invoice">Download Invoice"</string>
     <string name="from_to">%s to %s</string>
     <string name="outstanding_amount_rs">Outstanding Amount: %s</string>
@@ -113,9 +115,10 @@
     <string name="interest_charged_from_tomorrow">Interest will be charged from tomorrow</string>
     <string name="load_more">Load More (10)</string>
     <string name="close_list">Close List</string>
-    <string name="interest_arrears">Interest Arrears</string>
+    <string name="interest_arrears">Interest Outstanding</string>
     <string name="total_interest_payment">Total Interest Payment</string>
 
 
     <string name="accessibility_icon">Accessibility Icon</string>
+    <string name="till_date">till date</string>
 </resources>

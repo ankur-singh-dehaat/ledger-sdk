@@ -40,8 +40,10 @@ import lib.dehaat.ledger.presentation.ledger.revamp.state.UIState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.transactions.ui.TransactionsScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.LedgerHeaderScreen
 import lib.dehaat.ledger.presentation.ledger.ui.component.TotalOutstandingCalculation
+import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.Background
 import lib.dehaat.ledger.util.getAmountInRupees
+import lib.dehaat.ledger.util.getAmountInRupeesWithoutDecimal
 import moe.tlaster.nestedscrollview.VerticalNestedScrollView
 import moe.tlaster.nestedscrollview.rememberNestedScrollViewState
 
@@ -51,7 +53,7 @@ fun RevampLedgerScreen(
     viewModel: RevampLedgerViewModel,
     ledgerColors: LedgerColors,
     detailPageNavigationCallback: DetailPageNavigationCallback,
-    onPayNowClick: (String?) -> Unit,
+    onPayNowClick: (SummaryViewData?) -> Unit,
     onOtherPaymentModeClick: () -> Unit,
     onError: (Exception) -> Unit,
     onBackPress: () -> Unit
@@ -120,7 +122,7 @@ fun RevampLedgerScreen(
                                     summaryViewData = uiState.summaryViewData,
                                     saveInterest = true,
                                     showPayNowButton = LedgerSDK.isDBA,
-                                    onPayNowClick = { onPayNowClick(uiState.summaryViewData?.minInterestAmountDue) },
+                                    onPayNowClick = { onPayNowClick(uiState.summaryViewData) },
                                     onTotalOutstandingDetailsClick = {
                                         detailPageNavigationCallback.navigateToOutstandingDetailPage(
                                             TotalOutstandingScreenArgs.getBundle(viewModel.outstandingCreditLimitViewState)
@@ -141,7 +143,7 @@ fun RevampLedgerScreen(
                                 SpaceMedium()
 
                                 uiState.summaryViewData?.totalAvailableCreditLimit?.let { amount ->
-                                    AvailableCreditLimitScreen(amount.getAmountInRupees()) {
+                                    AvailableCreditLimitScreen(amount.getAmountInRupeesWithoutDecimal()) {
                                         detailPageNavigationCallback.navigateToAvailableCreditLimitDetailPage(
                                             AvailableCreditLimitScreenArgs.getBundle(viewModel.availableCreditLimitViewState)
                                         )

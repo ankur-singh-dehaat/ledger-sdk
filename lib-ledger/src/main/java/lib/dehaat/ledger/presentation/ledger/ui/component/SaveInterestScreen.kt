@@ -32,68 +32,74 @@ import lib.dehaat.ledger.resources.textSubHeadingS3
 import lib.dehaat.ledger.util.getAmountInRupees
 
 @Preview(
-    showBackground = true
+	showBackground = true
 )
 @Composable
 private fun SaveInterestScreenPreview() {
-    SaveInterestScreen(
-        summaryViewData = DummyDataSource.summaryViewData,
-        showDetails = true,
-        onViewDetailsClick = {}
-    )
+	SaveInterestScreen(
+		summaryViewData = DummyDataSource.summaryViewData,
+		showDetails = false,
+		onViewDetailsClick = {}
+	)
 }
 
 @Composable
 fun SaveInterestScreen(
-    summaryViewData: SummaryViewData?,
-    showDetails: Boolean,
-    onViewDetailsClick: () -> Unit
-) = Column(
-    modifier = Modifier
-        .fillMaxWidth()
-        .background(shape = RoundedCornerShape(8.dp), color = Warning10)
-        .padding(horizontal = 12.dp),
+	summaryViewData: SummaryViewData?,
+	showDetails: Boolean,
+	onViewDetailsClick: () -> Unit
 ) {
-    Spacer(modifier = Modifier.height(12.dp))
+	if (summaryViewData?.minOutstandingAmountDue?.toDoubleOrNull().orZero() > 0) {
+		Column(
+			modifier = Modifier
+				.fillMaxWidth()
+				.background(shape = RoundedCornerShape(8.dp), color = Warning10)
+				.padding(horizontal = 12.dp),
+		) {
+			Spacer(modifier = Modifier.height(12.dp))
 
-    Text(
-        text = stringResource(id = R.string.save_interest),
-        style = textSubHeadingS3(Pumpkin120)
-    )
+			Text(
+				text = stringResource(id = R.string.save_interest),
+				style = textSubHeadingS3(Pumpkin120)
+			)
 
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            modifier = Modifier.padding(),
-            text = stringResource(
-                id = R.string.pay_till_date,
-                summaryViewData?.minInterestOutstandingDate?.toDateMonthName() ?: ""
-            ),
-            style = textParagraphT1(Neutral90)
-        )
+			Row(
+				horizontalArrangement = Arrangement.SpaceBetween,
+				modifier = Modifier.fillMaxWidth()
+			) {
+				Text(
+					modifier = Modifier.padding(),
+					text = stringResource(
+						id = R.string.pay_till_date,
+						summaryViewData?.minInterestOutstandingDate?.toDateMonthName() ?: ""
+					),
+					style = textParagraphT1(Neutral90)
+				)
 
-        Text(
-            text = summaryViewData?.minOutstandingAmountDue.getAmountInRupees(),
-            style = textSubHeadingS3(Neutral90)
-        )
-    }
+				Text(
+					text = summaryViewData?.minOutstandingAmountDue.getAmountInRupees(),
+					style = textSubHeadingS3(Neutral90)
+				)
+			}
 
-    if (showDetails) {
-        Spacer(modifier = Modifier.height(20.dp))
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable(onClick = onViewDetailsClick),
-            text = stringResource(id = R.string.view_details),
-            style = textParagraphT2(
-                textColor = Neutral70,
-                textDecoration = TextDecoration.Underline
-            ),
-            textAlign = TextAlign.End
-        )
-    }
+			if (showDetails) {
+				Spacer(modifier = Modifier.height(20.dp))
+				Text(
+					modifier = Modifier
+						.fillMaxWidth()
+						.clickable(onClick = onViewDetailsClick),
+					text = stringResource(id = R.string.view_details),
+					style = textParagraphT2(
+						textColor = Neutral70,
+						textDecoration = TextDecoration.Underline
+					),
+					textAlign = TextAlign.End
+				)
+			}
 
-    Spacer(modifier = Modifier.height(16.dp))
+			Spacer(modifier = Modifier.height(16.dp))
+		}
+	}
 }
+
+fun Double?.orZero() = this ?: 0.0

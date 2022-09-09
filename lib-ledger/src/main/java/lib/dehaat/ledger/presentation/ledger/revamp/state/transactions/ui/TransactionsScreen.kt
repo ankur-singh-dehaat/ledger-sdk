@@ -68,7 +68,8 @@ fun TransactionsScreen(
                         detailPageNavigationCallback.navigateToRevampInvoiceDetailPage(
                             RevampInvoiceDetailViewModel.getBundle(
                                 transaction.ledgerId,
-                                transaction.source
+                                transaction.source,
+                                transaction.erpId
                             )
                         )
                     }
@@ -95,7 +96,7 @@ fun TransactionsScreen(
                                 transaction = transaction
                             ) {
                                 detailPageNavigationCallback.navigateToRevampWeeklyInterestDetailPage(
-                                    InterestDetailScreenArgs.getBundle(transaction)
+                                    InterestDetailScreenArgs.getBundle(transaction, ledgerViewModel.uiState.value.summaryViewData)
                                 )
                             }
                         }
