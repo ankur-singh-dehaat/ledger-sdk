@@ -8,8 +8,15 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.cleanarch.base.entity.result.api.APIResultEntity
 import com.dehaat.androidbase.helper.callInViewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import java.io.File
 import javax.inject.Inject
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import lib.dehaat.ledger.domain.usecases.GetInvoiceDetailUseCase
 import lib.dehaat.ledger.domain.usecases.GetInvoiceDownloadUseCase
@@ -25,7 +32,6 @@ import lib.dehaat.ledger.presentation.model.invoicedownload.ProgressData
 import lib.dehaat.ledger.util.DownloadFileUtil
 import lib.dehaat.ledger.util.FileUtils
 import lib.dehaat.ledger.util.processAPIResponseWithFailureSnackBar
-import java.io.File
 
 @HiltViewModel
 class RevampInvoiceDetailViewModel @Inject constructor(
@@ -68,15 +74,13 @@ class RevampInvoiceDetailViewModel @Inject constructor(
     }
 
     private fun processInvoiceDetailResponse(result: APIResultEntity<InvoiceDataEntity?>) {
-        result.processAPIResponseWithFailureSnackBar(::sendFailureEvent) { entity ->
-            entity?.let { invoiceDataEntity ->
-                val invoiceDetailsViewData = mapper.toInvoiceDetailsViewData(invoiceDataEntity)
-                viewModelState.update {
-                    it.copy(
-                        isSuccess = true,
-                        invoiceDetailsViewData = invoiceDetailsViewData
-                    )
-                }
+        result.processAPIResponseWithFailureSnackBar(::sendFailureEvent) { invoiceDataEntity ->
+            val invoiceDetailsViewData = mapper.toInvoiceDetailsViewData(invoiceDataEntity)
+            viewModelState.update {
+                it.copy(
+                    isSuccess = true,
+                    invoiceDetailsViewData = invoiceDetailsViewData
+                )
             }
         }
     }
@@ -121,39 +125,37 @@ class RevampInvoiceDetailViewModel @Inject constructor(
     ) = callInViewModelScope {
         updateProgressDialog(true)
         val result = getInvoiceDownloadUseCase.invoke(identityId, source)
-        result.processAPIResponseWithFailureSnackBar(::sendShowSnackBarEvent) {
-            it?.let { invoiceDownloadDataEntity ->
-                when (invoiceDownloadDataEntity.source) {
-                    "SAP" -> {
-                        updateProgressDialog(false)
-                        FileUtils.getFileFromBase64(
-                            base64 = invoiceDownloadDataEntity.pdf.orEmpty(),
-                            fileType = invoiceDownloadDataEntity.docType,
-                            fileName = identityId,
-                            dir = file
-                        )?.let {
-                            updateDownloadPathAndProgress(file, identityId)
-                            invoiceDownloadStatus(invoiceDownloadData)
-                        } ?: kotlin.run {
-                            invoiceDownloadData.isFailed = true
-                            invoiceDownloadStatus(invoiceDownloadData)
-                        }
-                    }
-                    "ODOO" -> {
-                        updateProgressDialog(false)
-                        invoiceDownloadDataEntity.fileName
-                            ?: return@processAPIResponseWithFailureSnackBar
-                        downloadFile(
-                            invoiceDownloadDataEntity.fileName,
-                            file,
-                            invoiceDownloadStatus
-                        )
-                    }
-                    else -> {
+        result.processAPIResponseWithFailureSnackBar(::sendShowSnackBarEvent) { invoiceDownloadDataEntity ->
+            when (invoiceDownloadDataEntity.source) {
+                SAP -> {
+                    updateProgressDialog(false)
+                    FileUtils.getFileFromBase64(
+                        base64 = invoiceDownloadDataEntity.pdf.orEmpty(),
+                        fileType = invoiceDownloadDataEntity.docType,
+                        fileName = identityId,
+                        dir = file
+                    )?.let {
+                        updateDownloadPathAndProgress(file, identityId)
+                        invoiceDownloadStatus(invoiceDownloadData)
+                    } ?: kotlin.run {
                         invoiceDownloadData.isFailed = true
                         invoiceDownloadStatus(invoiceDownloadData)
-                        updateProgressDialog(false)
                     }
+                }
+                ODOO -> {
+                    updateProgressDialog(false)
+                    invoiceDownloadDataEntity.fileName
+                        ?: return@processAPIResponseWithFailureSnackBar
+                    downloadFile(
+                        invoiceDownloadDataEntity.fileName,
+                        file,
+                        invoiceDownloadStatus
+                    )
+                }
+                else -> {
+                    invoiceDownloadData.isFailed = true
+                    invoiceDownloadStatus(invoiceDownloadData)
+                    updateProgressDialog(false)
                 }
             }
         }
@@ -218,6 +220,8 @@ class RevampInvoiceDetailViewModel @Inject constructor(
 
     companion object {
         private const val KEY_ERP_ID = "KEY_ERP_ID"
+        private const val SAP = "SAP"
+        private const val ODOO = "ODOO"
         fun getBundle(ledgerId: String, source: String, erpId: String?) = Bundle().apply {
             putString(LedgerConstants.KEY_LEDGER_ID, ledgerId)
             putString(KEY_ERP_ID, erpId)

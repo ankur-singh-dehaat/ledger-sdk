@@ -89,12 +89,10 @@ class InvoiceDetailViewModel @Inject constructor(
     }
 
     private fun processInvoiceDetailResponse(result: APIResultEntity<InvoiceDetailDataEntity?>) {
-        result.processAPIResponseWithFailureSnackBar(::sendShowSnackBarEvent) {
-            it?.let { creditSummaryEntity ->
-                val invoiceDetailViewData = mapper.toInvoiceDetailDataViewData(creditSummaryEntity)
-                viewModelState.update { it ->
-                    it.copy(isLoading = false, invoiceDetailDataViewData = invoiceDetailViewData)
-                }
+        result.processAPIResponseWithFailureSnackBar(::sendShowSnackBarEvent) { creditSummaryEntity ->
+            val invoiceDetailViewData = mapper.toInvoiceDetailDataViewData(creditSummaryEntity)
+            viewModelState.update {
+                it.copy(isLoading = false, invoiceDetailDataViewData = invoiceDetailViewData)
             }
         }
     }
@@ -119,8 +117,8 @@ class InvoiceDetailViewModel @Inject constructor(
     ) = callInViewModelScope {
         invoiceDownloadData.partnerId = ledgerId
         val identityId = when (source) {
-            "SAP" -> erpId?.substringAfterLast('$')
-            "ODOO" -> erpId
+            SAP -> erpId?.substringAfterLast('$')
+            ODOO -> erpId
             else -> null
         }
         identityId?.let {
@@ -140,39 +138,37 @@ class InvoiceDetailViewModel @Inject constructor(
     ) = callInViewModelScope {
         updateProgressDialog(true)
         val result = getInvoiceDownloadUseCase.invoke(identityId, source)
-        result.processAPIResponseWithFailureSnackBar(::sendShowSnackBarEvent) {
-            it?.let { invoiceDownloadDataEntity ->
-                when (invoiceDownloadDataEntity.source) {
-                    "SAP" -> {
-                        updateProgressDialog(false)
-                        FileUtils.getFileFromBase64(
-                            base64 = invoiceDownloadDataEntity.pdf.orEmpty(),
-                            fileType = invoiceDownloadDataEntity.docType,
-                            fileName = identityId,
-                            dir = file
-                        )?.let {
-                            updateDownloadPathAndProgress(file, identityId)
-                            invoiceDownloadStatus(invoiceDownloadData)
-                        } ?: kotlin.run {
-                            invoiceDownloadData.isFailed = true
-                            invoiceDownloadStatus(invoiceDownloadData)
-                        }
-                    }
-                    "ODOO" -> {
-                        updateProgressDialog(false)
-                        invoiceDownloadDataEntity.fileName
-                            ?: return@processAPIResponseWithFailureSnackBar
-                        downloadFile(
-                            invoiceDownloadDataEntity.fileName,
-                            file,
-                            invoiceDownloadStatus
-                        )
-                    }
-                    else -> {
+        result.processAPIResponseWithFailureSnackBar(::sendShowSnackBarEvent) { invoiceDownloadDataEntity ->
+            when (invoiceDownloadDataEntity.source) {
+                SAP -> {
+                    updateProgressDialog(false)
+                    FileUtils.getFileFromBase64(
+                        base64 = invoiceDownloadDataEntity.pdf.orEmpty(),
+                        fileType = invoiceDownloadDataEntity.docType,
+                        fileName = identityId,
+                        dir = file
+                    )?.let {
+                        updateDownloadPathAndProgress(file, identityId)
+                        invoiceDownloadStatus(invoiceDownloadData)
+                    } ?: kotlin.run {
                         invoiceDownloadData.isFailed = true
                         invoiceDownloadStatus(invoiceDownloadData)
-                        updateProgressDialog(false)
                     }
+                }
+                ODOO -> {
+                    updateProgressDialog(false)
+                    invoiceDownloadDataEntity.fileName
+                        ?: return@processAPIResponseWithFailureSnackBar
+                    downloadFile(
+                        invoiceDownloadDataEntity.fileName,
+                        file,
+                        invoiceDownloadStatus
+                    )
+                }
+                else -> {
+                    invoiceDownloadData.isFailed = true
+                    invoiceDownloadStatus(invoiceDownloadData)
+                    updateProgressDialog(false)
                 }
             }
         }
@@ -235,6 +231,8 @@ class InvoiceDetailViewModel @Inject constructor(
 
     companion object {
         private const val KEY_ERP_ID = "KEY_ERP_ID"
+        private const val SAP = "SAP"
+        private const val ODOO = "ODOO"
         fun getArgs(data: TransactionViewData) = Bundle().apply {
             putString(KEY_LEDGER_ID, data.ledgerId)
             putString(KEY_ERP_ID, data.erpId)
