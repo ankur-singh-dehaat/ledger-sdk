@@ -181,24 +181,7 @@ fun RevampLedgerScreen(
 					VerticalNestedScrollView(
 						state = nestedScrollViewState,
 						header = {
-							val outstanding by LedgerSDK.outstandingDataFlow.collectAsState(
-								OutstandingData(false)
-							)
 							Column {
-								if (outstanding.showDialog) {
-									OutStandingPaymentView(outstanding.amount)
-								}
-								uiState.summaryViewData?.let {
-									if (it.totalAvailableCreditLimit.toDoubleOrZero() < 0.0)
-										it.minimumRepaymentAmount?.let {
-											if (it.toDoubleOrZero() > 0.0) {
-												AvailableCreditLimitNudgeScreen(
-													it.getAmountInRupeesWithoutDecimal()
-												)
-												SpaceMedium()
-											}
-										}
-								}
 								LedgerHeaderScreen(
 									summaryViewData = uiState.summaryViewData,
 

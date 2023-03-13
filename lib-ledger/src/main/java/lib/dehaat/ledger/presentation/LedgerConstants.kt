@@ -10,4 +10,9 @@ object LedgerConstants {
     const val EMPTY_API_RESPONSE = "Null / EMPTY API response"
     const val UNREALIZED_PAYMENT = "unrealizedPayment"
     const val ABS_AMOUNT = "abs_amount"
+    const val ON_HOLD = "Onhold"
+    const val MISCELLANEOUS = "Miscellaneous"
+    const val AGED_OUTSTANDING = "Aged Outstanding"
+    const val REPAYMENT_FREQUENCY = "Repayment Frequency"
+    const val ON_BOARDING_POD = "Onboarding POD"
 }

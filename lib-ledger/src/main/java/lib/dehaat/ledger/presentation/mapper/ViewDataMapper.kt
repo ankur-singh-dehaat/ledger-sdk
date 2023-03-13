@@ -7,12 +7,12 @@ import lib.dehaat.ledger.entities.transactionsummary.TransactionSummaryEntity
 import lib.dehaat.ledger.initializer.toDateMonthName
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
+import lib.dehaat.ledger.presentation.ledger.revamp.state.outstandingcalculation.OutstandingCalculationUiState
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.presentation.model.revamp.transactionsummary.ABSViewData
 import lib.dehaat.ledger.presentation.model.revamp.transactionsummary.TransactionSummaryViewData
-import lib.dehaat.ledger.util.getRoundedAmountInRupees
-import lib.dehaat.ledger.presentation.ledger.revamp.state.outstandingcalculation.OutstandingCalculationUiState
 import lib.dehaat.ledger.util.getAmountInRupees
+import lib.dehaat.ledger.util.getRoundedAmountInRupees
 import lib.dehaat.ledger.util.toDoubleOrZero
 
 class ViewDataMapper @Inject constructor() {
@@ -40,7 +40,12 @@ class ViewDataMapper @Inject constructor() {
             hideMinimumRepaymentSection = minimumRepaymentAmount.toDoubleOrZero() <= 0 || repaymentDate == null,
             isOrderingBlocked = minimumRepaymentAmount.toDoubleOrZero() > 0 && overdueAmount.toDoubleOrZero() > overdueCreditLimit.toDoubleOrZero(),
             repaymentDate = repaymentDate.toDateMonthName(),
-            showToolTipInformation = overdueAmount.toDoubleOrZero() > 0
+            showToolTipInformation = overdueAmount.toDoubleOrZero() > 0,
+            creditLineStatus = creditLineStatus,
+            creditLineSubStatus = creditLineSubStatus,
+            agedOutstandingAmount = agedOutstandingAmount,
+            repaymentUnblockAmount = repaymentUnblockAmount,
+            repaymentUnblockDays = repaymentUnblockDays
         )
     }
 
