@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,7 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import lib.dehaat.ledger.R
 import lib.dehaat.ledger.datasource.DummyDataSource
+import lib.dehaat.ledger.framework.model.outstanding.OutstandingData
+import lib.dehaat.ledger.initializer.LedgerSDK
+import lib.dehaat.ledger.presentation.LedgerConstants
+import lib.dehaat.ledger.presentation.common.uicomponent.SpaceMedium
 import lib.dehaat.ledger.presentation.common.uicomponent.VerticalSpacer
+import lib.dehaat.ledger.presentation.ledger.creditlimit.AvailableCreditLimitNudgeScreen
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.resources.Neutral80
 import lib.dehaat.ledger.resources.Neutral90
@@ -25,6 +32,7 @@ import lib.dehaat.ledger.resources.textCaptionCP1
 import lib.dehaat.ledger.resources.textHeadingH3
 import lib.dehaat.ledger.resources.textParagraphT1Highlight
 import lib.dehaat.ledger.util.getAmountInRupeesWithoutDecimal
+import lib.dehaat.ledger.util.toDoubleOrZero
 
 @Preview(
     showBackground = true,
@@ -69,6 +77,35 @@ fun LedgerHeaderScreen(
         .background(Color.White)
         .fillMaxWidth()
 ) {
+    val outstanding by LedgerSDK.outstandingDataFlow.collectAsState(
+        OutstandingData(false)
+    )
+    if (outstanding.showDialog) {
+        OutStandingPaymentView(outstanding.amount)
+    }
+    summaryViewData?.let {
+        if (it.totalAvailableCreditLimit.toDoubleOrZero() < 0.0)
+            it.minimumRepaymentAmount?.let {
+                if (it.toDoubleOrZero() > 0.0) {
+                    AvailableCreditLimitNudgeScreen(
+                        it.getAmountInRupeesWithoutDecimal()
+                    )
+                    SpaceMedium()
+                }
+            }
+    }
+
+    summaryViewData?.let {
+        if (it.creditLineStatus == LedgerConstants.ON_HOLD) {
+            OverduePaymentView(
+                it.creditLineSubStatus,
+                it.agedOutstandingAmount,
+                it.repaymentUnblockDays,
+                it.repaymentUnblockAmount
+            )
+        }
+    }
+
     val totalOutstandingAmount = summaryViewData?.totalOutstandingAmount?.toDoubleOrNull() ?: 0.0
     VerticalSpacer(height = 24.dp)
     Text(
