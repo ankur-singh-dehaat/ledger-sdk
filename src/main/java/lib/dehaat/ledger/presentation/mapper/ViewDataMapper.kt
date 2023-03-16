@@ -1,5 +1,6 @@
 package lib.dehaat.ledger.presentation.mapper
 
+import com.dehaat.androidbase.helper.orZero
 import javax.inject.Inject
 import lib.dehaat.ledger.entities.revamp.creditsummary.CreditSummaryEntityV2
 import lib.dehaat.ledger.entities.transactionsummary.ABSEntity
@@ -8,6 +9,7 @@ import lib.dehaat.ledger.initializer.toDateMonthName
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.availablecreditlimit.AvailableCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.credits.outstandingcreditlimit.OutstandingCreditLimitViewState
 import lib.dehaat.ledger.presentation.ledger.revamp.state.outstandingcalculation.OutstandingCalculationUiState
+import lib.dehaat.ledger.presentation.ledger.ui.component.orZero
 import lib.dehaat.ledger.presentation.model.revamp.SummaryViewData
 import lib.dehaat.ledger.presentation.model.revamp.transactionsummary.ABSViewData
 import lib.dehaat.ledger.presentation.model.revamp.transactionsummary.TransactionSummaryViewData
@@ -43,9 +45,9 @@ class ViewDataMapper @Inject constructor() {
             showToolTipInformation = overdueAmount.toDoubleOrZero() > 0,
             creditLineStatus = creditLineStatus,
             creditLineSubStatus = creditLineSubStatus,
-            agedOutstandingAmount = agedOutstandingAmount,
-            repaymentUnblockAmount = repaymentUnblockAmount,
-            repaymentUnblockDays = repaymentUnblockDays
+            agedOutstandingAmount = agedOutstandingAmount.orZero(),
+            repaymentUnblockAmount = repaymentUnblockAmount.orZero(),
+            repaymentUnblockDays = repaymentUnblockDays.orZero()
         )
     }
 

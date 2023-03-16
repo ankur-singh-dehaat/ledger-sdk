@@ -1,7 +1,5 @@
 package lib.dehaat.ledger.presentation.model.revamp
 
-import androidx.annotation.StringRes
-
 data class SummaryViewData(
     val bufferLimit: String,
     val creditNoteAmountTillDate: String,
@@ -27,7 +25,7 @@ data class SummaryViewData(
     val showToolTipInformation: Boolean,
     val creditLineStatus: String?,
     val creditLineSubStatus: String,
-    val agedOutstandingAmount: Double?,
-    val repaymentUnblockAmount: Double?,
-    val repaymentUnblockDays: Long?
+    val agedOutstandingAmount: Double,
+    val repaymentUnblockAmount: Double,
+    val repaymentUnblockDays: Long
 )
