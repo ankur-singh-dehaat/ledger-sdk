@@ -31,7 +31,8 @@ private fun OverduePaymentPreview() = LedgerTheme{
 	OverduePaymentView(
 		creditLineSubStatus = LedgerConstants.MISCELLANEOUS,
 		agedOutstandingAmount = 100.00,
-		repaymentUnblockDays = 200
+		repaymentUnblockDays = 200,
+		repaymentUnblockAmount = 400.00
 	)
 }
 
@@ -39,7 +40,8 @@ private fun OverduePaymentPreview() = LedgerTheme{
 fun OverduePaymentView(
 	creditLineSubStatus: String,
 	agedOutstandingAmount: Double,
-	repaymentUnblockDays: Long
+	repaymentUnblockDays: Long,
+	repaymentUnblockAmount: Double
 ) = when (creditLineSubStatus) {
 	LedgerConstants.MISCELLANEOUS -> stringResource(id = R.string.ledger_credit_line_status_miscellaneous)
 	LedgerConstants.AGED_OUTSTANDING -> stringResource(
@@ -48,7 +50,7 @@ fun OverduePaymentView(
 	)
 	LedgerConstants.REPAYMENT_FREQUENCY -> stringResource(
 		id = R.string.ledger_credit_line_status_repayment_frequency,
-		agedOutstandingAmount,
+		repaymentUnblockAmount,
 		repaymentUnblockDays
 	)
 	LedgerConstants.ON_BOARDING_POD -> stringResource(id = R.string.ledger_credit_line_status_onboarding_pod)
