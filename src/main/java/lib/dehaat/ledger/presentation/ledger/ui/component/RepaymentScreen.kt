@@ -68,7 +68,7 @@ fun RepaymentScreen(
 		var toolTipVisibility by remember { mutableStateOf(LedgerSDK.showOutstandingTooltip) }
 		var viewOffset by remember { mutableStateOf(ViewOffset()) }
 
-		if (summaryViewData.hideMinimumRepaymentSection) {
+		if (summaryViewData.hideMinimumRepaymentSection && LedgerSDK.isDBA) {
 			VerticalSpacer(height = 24.dp)
 
 			Column(modifier = Modifier.padding(horizontal = 20.dp)) {
@@ -146,9 +146,11 @@ fun RepaymentScreen(
 					style = textCaptionCP1(Neutral70)
 				)
 
-				VerticalSpacer(height = 24.dp)
+				if (LedgerSDK.isDBA) {
+					VerticalSpacer(height = 24.dp)
 
-				PaymentButton(payNowClick = onPayNowClick)
+					PaymentButton(payNowClick = onPayNowClick)
+				}
 
 				VerticalSpacer(height = 16.dp)
 			}
